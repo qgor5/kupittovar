@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Корзина</title>
+</head>
+<body>
+  <h1>Корзина</h1>
+  <a href="catalog.html">← Каталог</a> | <a href="checkout.html">Оформить заказ</a>
+  <div id="cart"></div>
+
+  <script>
+    const cart = JSON.parse(localStorage.getItem('cart') || '{}');
+
+    Promise.all([
+      fetch('products.json').then(res => res.json()),
+      JSON.parse(localStorage.getItem('customProducts') || '[]')
+    ]).then(([products, customProducts]) => {
+      const allProducts = [...products, ...customProducts];
+      let total = 0;
+      const cartDiv = document.getElementById('cart');
+
+      Object.entries(cart).forEach(([id, qty]) => {
+        const product = allProducts.find(p => p.id === id);
+        if (!product) return;
+        const price = product.price * qty;
+        total += price;
+        cartDiv.innerHTML += `
+          <div>
+            <h3>\${product.title}</h3>
+            <p>Цена: \${product.price} ₽ × \${qty} = \${price} ₽</p>
+          </div>
+        `;
+      });
+
+      cartDiv.innerHTML += `<h2>Итого: \${total} ₽</h2>`;
+    });
+  </script>
+</body>
+</html>
