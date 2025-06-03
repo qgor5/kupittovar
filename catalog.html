@@ -3,102 +3,109 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Каталог товарів | Kupittovar</title>
-  <meta name="description" content="Каталог товарів інтернет-магазину Kupittovar. Обирайте з широкого асортименту побутової техніки, електроніки, гаджетів та товарів для дому." />
-  <meta name="keywords" content="каталог товарів, інтернет магазин, побутова техніка, електроніка, гаджети, товари для дому" />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
-  <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      margin: 0;
-      padding: 20px;
-      background: #f4f4f4;
-    }
-    h1 {
-      text-align: center;
-      color: #2c3e50;
-    }
-    .product-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      padding: 20px 0;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .product-card {
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      padding: 15px;
-      text-align: center;
-      transition: transform 0.2s;
-    }
-    .product-card:hover {
-      transform: translateY(-4px);
-    }
-    .product-card img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 4px;
-    }
-    .product-card h2 {
-      font-size: 1.2rem;
-      color: #34495e;
-      margin: 10px 0;
-    }
-    .product-card p {
-      margin: 0 0 8px;
-      color: #555;
-    }
-    .product-card .price {
-      font-weight: bold;
-      color: #e67e22;
-      margin-bottom: 10px;
-    }
-    .product-card a {
-      display: inline-block;
-      padding: 10px 15px;
-      background: #3498db;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-      transition: background 0.3s ease;
-    }
-    .product-card a:hover {
-      background: #2980b9;
-    }
-  </style>
+  <title>Kupittovar — Каталог товарів</title>
+  <meta name="description" content="Каталог товарів інтернет-магазину Kupittovar: електроніка, побутова техніка, аксесуари. Доставка по Україні." />
+  <meta name="keywords" content="каталог товарів, побутова техніка, електроніка, аксесуари, інтернет-магазин Україна" />
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <h1>Каталог товарів</h1>
-  <div class="product-list" id="product-list">
-    <!-- Товари будуть підвантажуватись тут -->
-  </div>
-  <script>
-    fetch('products.json')
-      .then(response => response.json())
-      .then(products => {
-        const container = document.getElementById('product-list');
-        products.forEach(product => {
-          const card = document.createElement('div');
-          card.className = 'product-card';
+  <header>
+    <h1>Каталог товарів Kupittovar</h1>
+    <nav>
+      <a href="/index.html">Головна</a>
+      <a href="/catalog.html">Каталог</a>
+    </nav>
+  </header>
 
-          card.innerHTML = `
-            <img src="${product.image}" alt="${product.name}" loading="lazy" />
-            <h2>${product.name}</h2>
-            <p class="price">${product.price} ${product.currency}</p>
-            <p>${product.description}</p>
-            <a href="${product.url}">Дивитись товар</a>
-          `;
+  <main>
+    <section class="catalog">
+      <article class="product">
+        <a href="/kozhani-remintsi-nato-dlya-godynnykiv.html">
+          <img src="/images/nato-remen.jpg" alt="Шкіряні ремінці NATO для годинників">
+        </a>
+        <h2><a href="/kozhani-remintsi-nato-dlya-godynnykiv.html">Шкіряні ремінці NATO для годинників</a></h2>
+        <p class="price">Ціна: <span class="product-price">349</span> грн</p>
+        <a class="cta" href="/kozhani-remintsi-nato-dlya-godynnykiv.html">Переглянути</a>
+      </article>
 
-          container.appendChild(card);
-        });
-      })
-      .catch(error => {
-        document.getElementById('product-list').innerHTML = '<p>Не вдалося завантажити каталог.</p>';
-        console.error('Помилка завантаження:', error);
-      });
+      <!-- Додайте інші товари за шаблоном -->
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Kupittovar — Всі права захищені.</p>
+  </footer>
+
+  <!-- JSON-LD мікророзмітка каталогу -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Каталог товарів",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "url": "https://kupittovar.netlify.app/kozhani-remintsi-nato-dlya-godynnykiv.html"
+      }
+      // Додайте інші товари тут
+    ]
+  }
+  </script>
+</body>
+</html>
+
+<!-- Шаблон сторінки товару: kozhani-remintsi-nato-dlya-godynnykiv.html -->
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Шкіряні ремінці NATO для годинників — Купити онлайн | Kupittovar</title>
+  <meta name="description" content="Купити шкіряні ремінці NATO для годинників за вигідною ціною. Якість, комфорт та стиль. Швидка доставка по Україні." />
+  <meta name="keywords" content="ремінці для годинників, NATO ремінець, аксесуари для годинника, купити ремінець" />
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/index.html">Головна</a>
+      <a href="/catalog.html">Каталог</a>
+    </nav>
+  </header>
+
+  <main>
+    <article class="product-detail">
+      <h1>Шкіряні ремінці NATO для годинників</h1>
+      <img src="/images/nato-remen.jpg" alt="Шкіряний ремінець NATO">
+      <p class="price">Ціна: <span class="product-price">349</span> грн</p>
+      <p>Ці ремінці виготовлені з якісної натуральної шкіри. Надійні, зручні та стильні — підходять до більшості годинників із стандартною застібкою.</p>
+      <button class="cta">Купити</button>
+    </article>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Kupittovar — Всі права захищені.</p>
+  </footer>
+
+  <!-- Schema.org Product -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Шкіряні ремінці NATO для годинників",
+    "image": "https://kupittovar.netlify.app/images/nato-remen.jpg",
+    "description": "Шкіряні ремінці NATO з натуральної шкіри для годинників. Стиль, якість і зручність у кожному елементі.",
+    "sku": "nato-strap-001",
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "UAH",
+      "price": "349",
+      "itemCondition": "https://schema.org/NewCondition",
+      "availability": "https://schema.org/InStock",
+      "url": "https://kupittovar.netlify.app/kozhani-remintsi-nato-dlya-godynnykiv.html"
+    }
+  }
   </script>
 </body>
 </html>
