@@ -2,29 +2,68 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Корзина — Kupittovar</title>
-  <meta name="description" content="Ваша корзина товарів у інтернет-магазині Kupittovar." />
-  <link rel="stylesheet" href="/style.css" />
-  <style>
-    table { width: 100%; border-collapse: collapse; margin-top: 20px;}
-    th, td { padding: 10px; border: 1px solid #ccc; text-align: center;}
-    img { max-width: 80px; }
-    .qty-input { width: 40px; text-align: center; }
-    .empty-cart { text-align: center; font-size: 1.2rem; margin-top: 30px; }
-    button.remove-btn {
-      background: #e74c3c; color: #fff; border: none; padding: 6px 12px;
-      cursor: pointer; border-radius: 4px;
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Кошик | KupitTovar</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <h1>KupitTovar</h1>
+      <nav>
+        <a href="catalog.html">Каталог</a>
+        <a href="checkout.html">Оформити замовлення</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="cart-container container">
+    <h2>Ваш кошик</h2>
+    <div id="cart-items"></div>
+    <p id="cart-total"></p>
+    <a href="checkout.html" class="btn">Перейти до оформлення</a>
+  </section>
+
+  <script>
+    const cartItems = document.getElementById("cart-items");
+    const cartTotal = document.getElementById("cart-total");
+
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const products = JSON.parse(localStorage.getItem("products") || "[]");
+
+    let total = 0;
+
+    if (cart.length === 0) {
+      cartItems.innerHTML = "<p>Ваш кошик порожній</p>";
+    } else {
+      cart.forEach(item => {
+        const product = products.find(p => p.slug === item.slug);
+        if (product) {
+          const subtotal = product.price * item.quantity;
+          total += subtotal;
+
+          const div = document.createElement("div");
+          div.className = "cart-item";
+          div.innerHTML = `
+            <img src="${product.image}" alt="${product.name}" />
+            <div>
+              <h3>${product.name}</h3>
+              <p>${product.price} грн × ${item.quantity} = ${subtotal} грн</p>
+              <button onclick="removeFromCart('${item.slug}')">Видалити</button>
+            </div>
+          `;
+          cartItems.appendChild(div);
+        }
+      });
+
+      cartTotal.textContent = `Загальна сума: ${total} грн`;
     }
-    button.remove-btn:hover {
-      background: #c0392b;
+
+    function removeFromCart(slug) {
+      const newCart = cart.filter(item => item.slug !== slug);
+      localStorage.setItem("cart", JSON.stringify(newCart));
+      location.reload();
     }
-    button.cta {
-      background-color: #2980b9;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      font-size: 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-top: 20px;
+  </script>
+</body>
+</html>
