@@ -11,28 +11,73 @@
 
   <!-- Структуровані дані -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    "name": "Кожані ремінці NATO для годинників",
-    "image": [
-      "https://kupittovar.netlify.app/images/leather-watch-straps.webp",
-      "https://kupittovar.netlify.app/images/remintsi-nato.webp",
-      "https://kupittovar.netlify.app/images/remintsi-godynnykiv.webp",
-      "https://kupittovar.netlify.app/images/shkiryani-remintsi.webp",
-      "https://kupittovar.netlify.app/images/remintsi-natural.webp"
-    ],
-    "description": "Преміум шкіряні ремінці у стилі NATO: натуральна шкіра високої якості, широкий вибір кольорів та розмірів. Ідеальне доповнення для будь-якого годинника.",
-    "brand": { "@type": "Brand", "name": "KupitTovar" },
-    "offers": {
-      "@type": "Offer",
-      "url": "https://kupittovar.netlify.app/kozhani-remintsi-nato-dlya-godynnykiv.html",
-      "priceCurrency": "UAH",
-      "price": "850",
-      "availability": "https://schema.org/InStock"
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://kupittovar.netlify.app/#website",
+      "url": "https://kupittovar.netlify.app/",
+      "name": "KupitTovar",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://kupittovar.netlify.app/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://kupittovar.netlify.app/#organization",
+      "name": "KupitTovar",
+      "url": "https://kupittovar.netlify.app/",
+      "logo": "https://kupittovar.netlify.app/images/logo.png"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://kupittovar.netlify.app/kozhani-remintsi-nato-dlya-godynnykiv.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Головна",
+          "item": "https://kupittovar.netlify.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Кожані ремінці NATO для годинників",
+          "item": "https://kupittovar.netlify.app/kozhani-remintsi-nato-dlya-godynnykiv.html"
+        }
+      ]
+    },
+    {
+      "@type": "Product",
+      "@id": "https://kupittovar.netlify.app/kozhani-remintsi-nato-dlya-godynnykiv.html#product",
+      "name": "Кожані ремінці NATO для годинників",
+      "image": [
+        "https://kupittovar.netlify.app/images/leather-watch-straps.webp",
+        "https://kupittovar.netlify.app/images/remintsi-nato.webp",
+        "https://kupittovar.netlify.app/images/remintsi-godynnykiv.webp",
+        "https://kupittovar.netlify.app/images/shkiryani-remintsi.webp",
+        "https://kupittovar.netlify.app/images/remintsi-natural.webp"
+      ],
+      "description": "Преміум шкіряні ремінці у стилі NATO: натуральна шкіра високої якості, широкий вибір кольорів та розмірів. Ідеальне доповнення для будь-якого годинника.",
+      "brand": {
+        "@type": "Brand",
+        "name": "KupitTovar",
+        "url": "https://kupittovar.netlify.app/"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://kupittovar.netlify.app/kozhani-remintsi-nato-dlya-godynnykiv.html",
+        "priceCurrency": "UAH",
+        "price": "183",
+        "availability": "https://schema.org/InStock"
+      }
     }
-  }
-  </script>
+  ]
+}
+</script>
 
   <style>
     body {
