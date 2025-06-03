@@ -1,28 +1,46 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <title>Каталог товарів — Kupittovar</title>
-  <meta name="description" content="Широкий вибір товарів в інтернет-магазині Kupittovar." />
-  <link rel="stylesheet" href="css/style.css" />
+  <meta charset="UTF-8">
+  <meta name="description" content="Каталог товаров.">
+  <title>Каталог — Интернет-магазин</title>
 </head>
 <body>
-  <header>
-    <h1>Каталог товарів Kupittovar</h1>
-    <nav>
-      <a href="index.html">Головна</a> |
-      <a href="catalog.html">Каталог</a> |
-      <a href="contact.html">Контакти</a>
-    </nav>
-  </header>
+  <nav style="background:#222;color:#fff;padding:10px;">
+    <ul style="list-style:none;display:flex;gap:15px;margin:0;padding:0;">
+      <li><a href="index.html" style="color:#fff;text-decoration:none;">Главная</a></li>
+      <li><a href="catalog.html" style="color:#fff;text-decoration:none;">Каталог</a></li>
+      <li><a href="cart.html" style="color:#fff;text-decoration:none;">Корзина</a></li>
+      <li><a href="checkout.html" style="color:#fff;text-decoration:none;">Оформление</a></li>
+      <li><a href="admin.html" style="color:#fff;text-decoration:none;">Добавить товар</a></li>
+    </ul>
+  </nav>
 
-  <main>
-    <p>Тут буде каталог товарів.</p>
-    <!-- Ваш контент -->
-  </main>
+  <h1>Каталог товаров</h1>
+  <div id="catalog"></div>
 
-  <footer>
-    &copy; 2025 Kupittovar
-  </footer>
+  <script>
+    const products = JSON.parse(localStorage.getItem('products') || '[]');
+    const catalog = document.getElementById('catalog');
+    catalog.innerHTML = products.map(p => `
+      <div>
+        <a href="product.html?slug=\${p.slug}">
+          <img src="\${p.image}" alt="\${p.name}" width="100"><br>
+          <strong>\${p.name}</strong>
+        </a><br>
+        Цена: \${p.price}₽<br>
+        <button onclick="addToCart('\${p.slug}')">В корзину</button>
+      </div>
+    `).join('');
+
+    function addToCart(slug) {
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      const item = cart.find(i => i.slug === slug);
+      if (item) item.qty++;
+      else cart.push({slug, qty: 1});
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert('Товар добавлен в корзину');
+    }
+  </script>
 </body>
 </html>
