@@ -1,12 +1,11 @@
-{
-  "products": [
-    {
-      "id": "kozhani-remintsi-nato-dlya-godynnykiv",
-      "name": "Шкіряні ремінці NATO для годинників",
-      "image": "/images/kozhani-remintsi-nato.jpg",
-      "price": "249",
-      "currency": "UAH",
-      "url": "/kozhani-remintsi-nato-dlya-godynnykiv.html"
-    }
-  ]
-}
+[
+  {
+    "sku": "nato-strap-001",
+    "name": "Шкіряні ремінці NATO для годинників",
+    "price": 349,
+    "url": "/product.html?sku=nato-strap-001",
+    "img": "/images/nato-remen.jpg",
+    "description": "Шкіряні ремінці NATO з натуральної шкіри для годинників. Стиль, якість і зручність у кожному елементі."
+  }
+  /* Другие товары по аналогии */
+]
