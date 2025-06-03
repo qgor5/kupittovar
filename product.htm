@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Товар | KupitTovar</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <h1>KupitTovar</h1>
+      <nav>
+        <a href="catalog.html">Каталог</a>
+        <a href="cart.html">Корзина</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="product-container container" id="product"></section>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const slug = params.get("slug");
+    const products = JSON.parse(localStorage.getItem("products") || "[]");
+    const product = products.find(p => p.slug === slug);
+
+    const container = document.getElementById("product");
+
+    if (product) {
+      container.innerHTML = `
+        <div class="product-detail">
+          <img src="${product.image}" alt="${product.name}" />
+          <div>
+            <h2>${product.name}</h2>
+            <p class="price">${product.price} грн</p>
+            <button onclick="addToCart('${product.slug}')">Додати в кошик</button>
+          </div>
+        </div>
+      `;
+    } else {
+      container.innerHTML = "<p>Товар не знайдено</p>";
+    }
+
+    function addToCart(slug) {
+      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+      const existing = cart.find(item => item.slug === slug);
+      if (existing) {
+        existing.quantity++;
+      } else {
+        cart.push({ slug, quantity: 1 });
+      }
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert("Товар додано до кошика!");
+    }
+  </script>
+</body>
+</html>
