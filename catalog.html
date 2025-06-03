@@ -1,122 +1,104 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Каталог товарів — Kupittovar</title>
-<meta name="description" content="Огляд каталогу товарів інтернет-магазину Kupittovar — побутова техніка, електроніка, гаджети та багато іншого." />
-<style>
-  body {
-    font-family: 'Roboto', sans-serif;
-    margin: 20px;
-    background: #f9f9f9;
-    color: #222;
-  }
-  h1 {
-    text-align: center;
-    color: #2c3e50;
-  }
-  .products-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 20px;
-    max-width: 1200px;
-    margin: 30px auto;
-  }
-  .product-card {
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 1px 4px rgb(0 0 0 / 0.1);
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  .product-card img {
-    max-width: 100%;
-    border-radius: 6px;
-    margin-bottom: 10px;
-  }
-  .product-name {
-    font-weight: 700;
-    margin-bottom: 8px;
-    color: #3498db;
-    text-decoration: none;
-  }
-  .product-price {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 12px;
-    color: #2c3e50;
-  }
-  button.buy-btn {
-    background-color: #2980b9;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background-color 0.3s ease;
-  }
-  button.buy-btn:hover {
-    background-color: #1f6391;
-  }
-  @media (max-width: 1100px) {
-    .products-grid {
-      grid-template-columns: repeat(3, 1fr);
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Каталог товарів | Kupittovar</title>
+  <meta name="description" content="Каталог товарів інтернет-магазину Kupittovar. Обирайте з широкого асортименту побутової техніки, електроніки, гаджетів та товарів для дому." />
+  <meta name="keywords" content="каталог товарів, інтернет магазин, побутова техніка, електроніка, гаджети, товари для дому" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f4f4f4;
     }
-  }
-  @media (max-width: 700px) {
-    .products-grid {
-      grid-template-columns: repeat(2, 1fr);
+    h1 {
+      text-align: center;
+      color: #2c3e50;
     }
-  }
-  @media (max-width: 400px) {
-    .products-grid {
-      grid-template-columns: 1fr;
+    .product-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 20px 0;
+      max-width: 1200px;
+      margin: 0 auto;
     }
-  }
-</style>
+    .product-card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      padding: 15px;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+    }
+    .product-card img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+    .product-card h2 {
+      font-size: 1.2rem;
+      color: #34495e;
+      margin: 10px 0;
+    }
+    .product-card p {
+      margin: 0 0 8px;
+      color: #555;
+    }
+    .product-card .price {
+      font-weight: bold;
+      color: #e67e22;
+      margin-bottom: 10px;
+    }
+    .product-card a {
+      display: inline-block;
+      padding: 10px 15px;
+      background: #3498db;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background 0.3s ease;
+    }
+    .product-card a:hover {
+      background: #2980b9;
+    }
+  </style>
 </head>
 <body>
+  <h1>Каталог товарів</h1>
+  <div class="product-list" id="product-list">
+    <!-- Товари будуть підвантажуватись тут -->
+  </div>
+  <script>
+    fetch('products.json')
+      .then(response => response.json())
+      .then(products => {
+        const container = document.getElementById('product-list');
+        products.forEach(product => {
+          const card = document.createElement('div');
+          card.className = 'product-card';
 
-<h1>Каталог товарів Kupittovar</h1>
+          card.innerHTML = `
+            <img src="${product.image}" alt="${product.name}" loading="lazy" />
+            <h2>${product.name}</h2>
+            <p class="price">${product.price} ${product.currency}</p>
+            <p>${product.description}</p>
+            <a href="${product.url}">Дивитись товар</a>
+          `;
 
-<div class="products-grid" id="productsGrid">
-  <!-- Товари будут подгружаться сюда -->
-</div>
-
-<script>
-// Функция для добавления товара в корзину (localStorage)
-function addToCart(product) {
-  let cart = JSON.parse(localStorage.getItem('kupittovar_cart') || '[]');
-  cart.push(product);
-  localStorage.setItem('kupittovar_cart', JSON.stringify(cart));
-  alert(`Товар "${product.name}" додано до кошика!`);
-}
-
-// Загрузка товаров из JSON и отрисовка
-fetch('/products.json')
-  .then(response => response.json())
-  .then(products => {
-    const container = document.getElementById('productsGrid');
-    products.forEach(product => {
-      const card = document.createElement('div');
-      card.className = 'product-card';
-      card.innerHTML = `
-        <a href="${product.url}" class="product-name">${product.name}</a>
-        <img src="${product.image}" alt="${product.name}" loading="lazy" />
-        <div class="product-price">${product.price.toLocaleString()} ${product.currency}</div>
-        <button class="buy-btn" onclick='addToCart(${JSON.stringify(product)})'>Купити</button>
-      `;
-      container.appendChild(card);
-    });
-  })
-  .catch(() => {
-    document.getElementById('productsGrid').innerHTML = '<p>Помилка завантаження товарів.</p>';
-  });
-</script>
-
+          container.appendChild(card);
+        });
+      })
+      .catch(error => {
+        document.getElementById('product-list').innerHTML = '<p>Не вдалося завантажити каталог.</p>';
+        console.error('Помилка завантаження:', error);
+      });
+  </script>
 </body>
 </html>
