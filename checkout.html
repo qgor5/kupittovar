@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Оформлення замовлення | KupitTovar</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <h1>KupitTovar</h1>
+      <nav>
+        <a href="catalog.html">Каталог</a>
+        <a href="cart.html">Корзина</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="checkout-container container">
+    <h2>Оформлення замовлення</h2>
+    <div id="checkout-summary"></div>
+
+    <form id="order-form">
+      <label>
+        Ваше ім'я:
+        <input type="text" name="name" required />
+      </label>
+      <label>
+        Телефон:
+        <input type="tel" name="phone" required />
+      </label>
+      <label>
+        Адреса доставки:
+        <textarea name="address" required></textarea>
+      </label>
+      <button type="submit">Підтвердити замовлення</button>
+    </form>
+
+    <div id="order-success" style="display:none; margin-top: 20px;">
+      <h3>✅ Замовлення прийнято!</h3>
+      <p>Дякуємо за покупку. Очікуйте дзвінка менеджера.</p>
+    </div>
+  </section>
+
+  <script>
+    const summary = document.getElementById("checkout-summary");
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const products = JSON.parse(localStorage.getItem("products") || "[]");
+    let total = 0;
+
+    if (cart.length === 0) {
+      summary.innerHTML = "<p>Ваш кошик порожній.</p>";
+    } else {
+      const list = document.createElement("ul");
+      cart.forEach(item => {
+        const product = products.find(p => p.slug === item.slug);
+        if (product) {
+          const subtotal = product.price * item.quantity;
+          total += subtotal;
+          const li = document.createElement("li");
+          li.textContent = `${product.name} × ${item.quantity} = ${subtotal} грн`;
+          list.appendChild(li);
+        }
+      });
+      summary.appendChild(list);
+      summary.innerHTML += `<p><strong>Загальна сума: ${total} грн</strong></p>`;
+    }
+
+    document.getElementById("order-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      localStorage.removeItem("cart");
+      this.style.display = "none";
+      document.getElementById("order-success").style.display = "block";
+    });
+  </script>
+</body>
+</html>
