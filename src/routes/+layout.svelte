@@ -1,4 +1,5 @@
 <script>
+  import '../../app.css'; // Подключаем Tailwind CSS
   export let data;
 </script>
 
