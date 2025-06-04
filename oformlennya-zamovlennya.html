@@ -13,6 +13,64 @@
     background: #f9f9f9;
     color: #333;
   }
+  h2 {
+    text-align: center;
+  }
+  #product-summary {
+    background:#fff; 
+    padding:15px; 
+    border:1px solid #ccc; 
+    border-radius:8px; 
+    margin-bottom:20px; 
+    display:flex; 
+    gap:15px; 
+    align-items:center;
+  }
+  #product-summary img {
+    width: 100px; 
+    height: auto; 
+    border-radius:6px; 
+    box-shadow:0 2px 6px rgba(0,0,0,0.1);
+  }
+  #product-details {
+    flex:1;
+  }
+  #product-details h3 {
+    margin:0 0 10px 0;
+  }
+  #product-details p {
+    margin:4px 0;
+  }
+  #quantity-control {
+    display:flex; 
+    align-items:center; 
+    gap:10px;
+    margin-top:5px;
+  }
+  #quantity-control label {
+    font-weight: bold;
+  }
+  #quantity-control button {
+    padding:4px 10px;
+    cursor: pointer;
+  }
+  #quantity-control input[type=number] {
+    width:50px; 
+    text-align:center;
+    border-radius:4px;
+    border:1px solid #ccc;
+    padding: 4px;
+  }
+  #total-price {
+    margin-top:10px; 
+    font-weight:bold;
+  }
+  form {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
   label {
     display: block;
     margin-top: 15px;
@@ -28,11 +86,6 @@
     box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 4px;
-  }
-  fieldset {
-    margin-top: 20px;
-    padding: 10px;
-    border: none;
   }
   .color-option {
     font-weight: bold;
@@ -88,7 +141,7 @@
     display: block;
     margin-top: 10px;
   }
-  /* Стили для скрываемых блоков */
+  /* Скрываемые блоки */
   .hidden {
     display: none;
   }
@@ -100,6 +153,22 @@
 
 <form id="order-form" method="POST" action="https://formsubmit.co/elits485@gmail.com" novalidate>
   
+  <!-- Блок с товаром внутри формы, сверху -->
+  <div id="product-summary">
+    <img id="product-image" src="" alt="Фото товару" />
+    <div id="product-details">
+      <h3 id="product-name"></h3>
+      <p>Ціна за одиницю: <span id="unit-price">0</span> грн</p>
+      <div id="quantity-control">
+        <label for="quantity">Кількість:</label>
+        <button type="button" id="decrease">−</button>
+        <input type="number" id="quantity" name="quantity" value="1" min="1" />
+        <button type="button" id="increase">+</button>
+      </div>
+      <p id="total-price">Загальна сума: 0 грн</p>
+    </div>
+  </div>
+
   <label for="fullname">ПІБ <span class="required-star">*</span></label>
   <input type="text" id="fullname" name="fullname" required placeholder="Ваше повне ім’я" />
 
@@ -156,11 +225,18 @@
   <textarea id="comments" name="comments" rows="3" placeholder="Ваші побажання до замовлення..."></textarea>
 
   <!-- Скрытые поля для FormSubmit -->
-  <input type="hidden" name="_next" value="order-success.html" />
+  <input type="hidden" name="_next" value="https://kupittovar.netlify.app/order-success.html" />
   <input type="hidden" name="_captcha" value="false" />
+  <!-- Скрытые поля для передачи данных товара -->
+  <input type="hidden" name="product-name" id="hidden-name" />
+  <input type="hidden" name="product-image" id="hidden-image" />
+  <input type="hidden" name="total-price" id="hidden-total" />
+  <input type="hidden" name="quantity" id="hidden-quantity" />
 
   <button type="submit" class="submit-btn">Підтвердити замовлення</button>
 </form>
+
+<a href="kozhani-korzina.html" style="display:block; margin-top: 15px; color: #007bff; text-decoration:none;">← Повернутись до кошика</a>
 
 <script>
   // Аккордеон открытия выбора почты
@@ -213,37 +289,105 @@
       let valid = true;
       ukrpostFields.querySelectorAll('input[required]').forEach(i => {
         if (!i.value.trim()) {
-          alert('Будь ласка, заповніть всі обов’язкові поля для Укрпошти.');
-          i.focus();
           valid = false;
         }
       });
-      if (!valid) e.preventDefault();
-    } else if (selectedDelivery.value === 'np') {
+      if (!valid) {
+        alert('Будь ласка, заповніть всі поля для Укрпошти.');
+        e.preventDefault();
+        return;
+      }
+    }
+
+    if (selectedDelivery.value === 'np') {
       let valid = true;
       npFields.querySelectorAll('input[required]').forEach(i => {
         if (!i.value.trim()) {
-          alert('Будь ласка, заповніть всі обов’язкові поля для Нової пошти.');
-          i.focus();
           valid = false;
         }
       });
-      if (!valid) e.preventDefault();
+      if (!valid) {
+        alert('Будь ласка, заповніть всі поля для Нової пошти.');
+        e.preventDefault();
+        return;
+      }
     }
 
-    if (!form.checkValidity()) {
-      form.reportValidity();
+    // Проверка ПІБ и телефона
+    const fullname = document.getElementById('fullname');
+    if (!fullname.value.trim()) {
+      alert('Будь ласка, введіть ПІБ.');
+      fullname.focus();
+      e.preventDefault();
+      return;
+    }
+    const phone = document.getElementById('phone');
+    const phoneRegex = /^\+?\d{7,15}$/;
+    if (!phone.value.trim() || !phoneRegex.test(phone.value.trim())) {
+      alert('Будь ласка, введіть коректний телефон у форматі +380...');
+      phone.focus();
       e.preventDefault();
       return;
     }
 
-    if (!form.color.value) {
-      alert('Будь ласка, оберіть колір товару.');
-      form.color.focus();
+    // Цвет
+    const color = document.getElementById('color');
+    if (!color.value) {
+      alert('Будь ласка, оберіть колір.');
+      color.focus();
       e.preventDefault();
       return;
     }
+
+    // Перед отправкой подставим данные товара в скрытые поля
+    document.getElementById('hidden-name').value = productName;
+    document.getElementById('hidden-image').value = productImage;
+    document.getElementById('hidden-quantity').value = quantityInput.value;
+    document.getElementById('hidden-total').value = totalPrice.textContent.replace(/\D/g, '');
   });
+
+  // Инициализация данных товара и цены
+  const productName = localStorage.getItem('product-name') || 'Кожаная сумка';
+  const productImage = localStorage.getItem('product-image') || 'https://i.ibb.co/6FbK7RQ/brown1.jpg';
+  const unitPriceValue = parseInt(localStorage.getItem('product-price'), 10) || 1500;
+
+  // Заполнение начальных данных
+  document.getElementById('product-name').textContent = productName;
+  const productImageElement = document.getElementById('product-image');
+  productImageElement.src = productImage;
+  productImageElement.alt = productName;
+  const unitPrice = document.getElementById('unit-price');
+  unitPrice.textContent = unitPriceValue;
+
+  const quantityInput = document.getElementById('quantity');
+  const totalPrice = document.getElementById('total-price');
+
+  function updateTotal() {
+    let qty = parseInt(quantityInput.value, 10);
+    if (isNaN(qty) || qty < 1) qty = 1;
+    quantityInput.value = qty;
+    const total = qty * unitPriceValue;
+    totalPrice.textContent = `Загальна сума: ${total} грн`;
+  }
+
+  document.getElementById('increase').addEventListener('click', () => {
+    quantityInput.value = Number(quantityInput.value) + 1;
+    updateTotal();
+  });
+
+  document.getElementById('decrease').addEventListener('click', () => {
+    let val = Number(quantityInput.value);
+    if (val > 1) quantityInput.value = val - 1;
+    updateTotal();
+  });
+
+  quantityInput.addEventListener('input', () => {
+    let val = Number(quantityInput.value);
+    if (isNaN(val) || val < 1) quantityInput.value = 1;
+    updateTotal();
+  });
+
+  updateTotal();
 </script>
 
 </body>
