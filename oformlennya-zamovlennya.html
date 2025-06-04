@@ -13,6 +13,55 @@
     background: #f9f9f9;
     color: #333;
   }
+  h1 {
+    text-align: center;
+  }
+  .product-summary {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background: white;
+    border-radius: 8px;
+  }
+  .product-summary img {
+    width: 120px;
+    height: auto;
+    border-radius: 6px;
+    object-fit: contain;
+  }
+  .product-info {
+    flex-grow: 1;
+  }
+  .product-info h2 {
+    margin: 0 0 8px 0;
+  }
+  .price {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-top: 8px;
+  }
+  .quantity-control {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .quantity-control button {
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  .quantity-control input {
+    width: 50px;
+    text-align: center;
+    font-size: 1rem;
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
   label {
     display: block;
     margin-top: 15px;
@@ -88,7 +137,7 @@
     display: block;
     margin-top: 10px;
   }
-  /* Стили для скрываемых блоков */
+  /* Скрываемые блоки */
   .hidden {
     display: none;
   }
@@ -96,9 +145,34 @@
 </head>
 <body>
 
-<h2>Оформлення замовлення</h2>
+<h1>Оформлення замовлення</h1>
 
 <form id="order-form" method="POST" action="https://formsubmit.co/elits485@gmail.com" novalidate>
+
+  <!-- Блок с товаром -->
+  <div class="product-summary">
+    <img id="product-photo" src="" alt="Фото товару" />
+    <div class="product-info">
+      <h2 id="product-name"></h2>
+      <div>Колір: <span id="product-color" style="font-weight:bold;"></span></div>
+      <div class="price">Ціна за шт: <span id="product-price"></span> грн</div>
+      <div class="quantity-control">
+        <label for="quantity" style="margin:0; font-weight:normal;">Кількість:</label>
+        <button type="button" id="qty-minus">−</button>
+        <input type="number" id="quantity" name="quantity" value="1" min="1" max="99" required />
+        <button type="button" id="qty-plus">+</button>
+      </div>
+      <div style="margin-top: 10px; font-weight: bold;">
+        Всього: <span id="total-price"></span> грн
+      </div>
+    </div>
+  </div>
+
+  <!-- Скрытые поля для передачи в форму -->
+  <input type="hidden" name="product-name" id="form-product-name" />
+  <input type="hidden" name="product-color" id="form-product-color" />
+  <input type="hidden" name="product-photo" id="form-product-photo" />
+  <input type="hidden" name="product-price" id="form-product-price" />
 
   <label for="fullname">ПІБ <span class="required-star">*</span></label>
   <input type="text" id="fullname" name="fullname" required placeholder="Ваше повне ім’я" />
@@ -141,17 +215,6 @@
     <input type="text" id="np-branch" name="np-branch" placeholder="Наприклад: 45" />
   </div>
 
-  <label for="color" style="margin-top: 20px;">
-    Виберіть колір <span class="required-star">*</span>
-  </label>
-  <select id="color" name="color" required>
-    <option value="" disabled selected>Оберіть колір</option>
-    <option value="коричневий" style="color:brown;">Коричневий</option>
-    <option value="зелений" style="color:green;">Зелений</option>
-    <option value="червоний" style="color:red;">Червоний</option>
-    <option value="чорний" style="color:black;">Чорний</option>
-  </select>
-
   <label for="comments" style="margin-top: 15px;">Коментарі / побажання (необов’язково)</label>
   <textarea id="comments" name="comments" rows="3" placeholder="Ваші побажання до замовлення..."></textarea>
 
@@ -163,11 +226,76 @@
 </form>
 
 <script>
-  // Аккордеон открытия выбора почты
+  // Функция для получения параметров из URL
+  function getQueryParams() {
+    const params = {};
+    location.search.substr(1).split("&").forEach(function(item) {
+      const [key, value] = item.split("=");
+      if (key) params[decodeURIComponent(key)] = decodeURIComponent(value || "");
+    });
+    return params;
+  }
+
+  // Заполняем информацию о товаре из query параметров
+  const params = getQueryParams();
+
+  const productName = params['name'] || "Назва товару";
+  const productPhoto = params['photo'] || "https://via.placeholder.com/120x120?text=Фото";
+  const productPrice = parseFloat(params['price']) || 0;
+  const productColor = params['color'] || "невідомий";
+
+  document.getElementById('product-name').textContent = productName;
+  document.getElementById('product-photo').src = productPhoto;
+  document.getElementById('product-photo').alt = productName;
+  document.getElementById('product-price').textContent = productPrice.toFixed(2);
+  document.getElementById('product-color').textContent = productColor;
+
+  // Записываем в скрытые поля для отправки
+  document.getElementById('form-product-name').value = productName;
+  document.getElementById('form-product-photo').value = productPhoto;
+  document.getElementById('form-product-price').value = productPrice.toFixed(2);
+  document.getElementById('form-product-color').value = productColor;
+
+  // Обновляем итоговую сумму
+  const quantityInput = document.getElementById('quantity');
+  const totalPriceEl = document.getElementById('total-price');
+
+  function updateTotal() {
+    let qty = parseInt(quantityInput.value, 10);
+    if (isNaN(qty) || qty < 1) qty = 1;
+    if (qty > 99) qty = 99;
+    quantityInput.value = qty;
+    const total = (productPrice * qty).toFixed(2);
+    totalPriceEl.textContent = total;
+  }
+  updateTotal();
+
+  // Кнопки +/- для количества
+  document.getElementById('qty-minus').addEventListener('click', () => {
+    let val = parseInt(quantityInput.value, 10);
+    if (val > 1) {
+      quantityInput.value = val - 1;
+      updateTotal();
+    }
+  });
+  document.getElementById('qty-plus').addEventListener('click', () => {
+    let val = parseInt(quantityInput.value, 10);
+    if (val < 99) {
+      quantityInput.value = val + 1;
+      updateTotal();
+    }
+  });
+
+  quantityInput.addEventListener('input', () => {
+    updateTotal();
+  });
+
+  // Аккордеон выбора доставки
   const toggle = document.getElementById('delivery-toggle');
   const options = document.getElementById('delivery-options');
   toggle.addEventListener('click', () => {
-    options.style.display = options.style.display === 'block' ? 'none' : 'block';
+    const isVisible = options.style.display === 'block';
+    options.style.display = isVisible ? 'none' : 'block';
     toggle.classList.toggle('active');
   });
 
@@ -200,14 +328,14 @@
     });
   });
 
-  // Валидация формы с пользовательскими сообщениями
+  // Валидация формы
   const form = document.getElementById('order-form');
 
   form.addEventListener('submit', e => {
     // Сброс пользовательских сообщений
     form.querySelectorAll('input, select').forEach(el => el.setCustomValidity(''));
 
-    // Проверяем обязательные поля ПІБ и Телефон
+    // Проверяем ПІБ
     const fullname = form.fullname;
     if (!fullname.value.trim()) {
       fullname.setCustomValidity('Будь ласка, введіть ПІБ.');
@@ -217,6 +345,7 @@
       return;
     }
 
+    // Проверяем телефон
     const phone = form.phone;
     const phonePattern = /^\+?\d{7,15}$/;
     if (!phone.value.trim()) {
@@ -226,95 +355,71 @@
       e.preventDefault();
       return;
     } else if (!phonePattern.test(phone.value.trim())) {
-      phone.setCustomValidity('Телефон повинен містити від 7 до 15 цифр, може починатися з +.');
+      phone.setCustomValidity('Телефон повинен містити від 7 до 15 цифр, може починатися з +');
       phone.reportValidity();
       phone.focus();
       e.preventDefault();
       return;
     }
 
-    // Проверяем выбран ли способ доставки
-    const selectedDelivery = document.querySelector('input[name="delivery-service"]:checked');
-    if (!selectedDelivery) {
+    // Проверяем доставку
+    const deliverySelected = [...deliveryRadios].some(r => r.checked);
+    if (!deliverySelected) {
       alert('Будь ласка, виберіть службу доставки.');
       e.preventDefault();
       return;
     }
 
-    // Проверка полей Укрпошти
-    if (selectedDelivery.value === 'ukrpost') {
-      const ukrpostIndex = form['ukrpost-index'];
-      const ukrpostCity = form['ukrpost-city'];
-      const ukrpostStreet = form['ukrpost-street'];
-      if (!ukrpostIndex.value.trim()) {
-        ukrpostIndex.setCustomValidity('Введіть поштовий індекс.');
-        ukrpostIndex.reportValidity();
-        ukrpostIndex.focus();
+    // Проверяем поля доставки в зависимости от выбора
+    if (form['delivery-service'].value === 'ukrpost') {
+      if (!form['ukrpost-index'].value.trim() || !/^\d{5}$/.test(form['ukrpost-index'].value.trim())) {
+        form['ukrpost-index'].setCustomValidity('Введіть коректний поштовий індекс (5 цифр)');
+        form['ukrpost-index'].reportValidity();
+        form['ukrpost-index'].focus();
         e.preventDefault();
         return;
       }
-      if (!/^\d{5}$/.test(ukrpostIndex.value.trim())) {
-        ukrpostIndex.setCustomValidity('Поштовий індекс повинен містити 5 цифр.');
-        ukrpostIndex.reportValidity();
-        ukrpostIndex.focus();
+      if (!form['ukrpost-city'].value.trim()) {
+        form['ukrpost-city'].setCustomValidity('Введіть місто');
+        form['ukrpost-city'].reportValidity();
+        form['ukrpost-city'].focus();
         e.preventDefault();
         return;
       }
-      if (!ukrpostCity.value.trim()) {
-        ukrpostCity.setCustomValidity('Введіть місто.');
-        ukrpostCity.reportValidity();
-        ukrpostCity.focus();
+      if (!form['ukrpost-street'].value.trim()) {
+        form['ukrpost-street'].setCustomValidity('Введіть вулицю');
+        form['ukrpost-street'].reportValidity();
+        form['ukrpost-street'].focus();
         e.preventDefault();
         return;
       }
-      if (!ukrpostStreet.value.trim()) {
-        ukrpostStreet.setCustomValidity('Введіть вулицю.');
-        ukrpostStreet.reportValidity();
-        ukrpostStreet.focus();
+    } else if (form['delivery-service'].value === 'np') {
+      if (!form['np-region'].value.trim()) {
+        form['np-region'].setCustomValidity('Введіть область');
+        form['np-region'].reportValidity();
+        form['np-region'].focus();
         e.preventDefault();
         return;
       }
-    }
-
-    // Проверка полей Новой почты
-    if (selectedDelivery.value === 'np') {
-      const npRegion = form['np-region'];
-      const npCity = form['np-city'];
-      const npBranch = form['np-branch'];
-      if (!npRegion.value.trim()) {
-        npRegion.setCustomValidity('Введіть область.');
-        npRegion.reportValidity();
-        npRegion.focus();
+      if (!form['np-city'].value.trim()) {
+        form['np-city'].setCustomValidity('Введіть місто');
+        form['np-city'].reportValidity();
+        form['np-city'].focus();
         e.preventDefault();
         return;
       }
-      if (!npCity.value.trim()) {
-        npCity.setCustomValidity('Введіть місто.');
-        npCity.reportValidity();
-        npCity.focus();
-        e.preventDefault();
-        return;
-      }
-      if (!npBranch.value.trim()) {
-        npBranch.setCustomValidity('Введіть номер відділення.');
-        npBranch.reportValidity();
-        npBranch.focus();
+      if (!form['np-branch'].value.trim()) {
+        form['np-branch'].setCustomValidity('Введіть номер відділення');
+        form['np-branch'].reportValidity();
+        form['np-branch'].focus();
         e.preventDefault();
         return;
       }
     }
 
-    // Проверяем выбор цвета
-    if (!form.color.value) {
-      form.color.setCustomValidity('Будь ласка, оберіть колір товару.');
-      form.color.reportValidity();
-      form.color.focus();
-      e.preventDefault();
-      return;
-    }
-
-    // Если форма прошла все проверки, сбросим все сообщения и отправим форму
+    // Все ок, форма отправится
   });
+
 </script>
 
 </body>
