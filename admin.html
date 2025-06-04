@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Добавить товар</title>
+</head>
+<body>
+  <h1>Добавить товар</h1>
+  <form id="addProductForm">
+    <label>Название: <input name="title" required></label><br>
+    <label>Цена (₽): <input type="number" name="price" required></label><br>
+    <label>Ссылка на картинку (URL): <input name="image" required></label><br>
+    <label>Слаг (латиницей, уникально): <input name="slug" required></label><br>
+    <button type="submit">Сохранить</button>
+  </form>
+
+  <script>
+    document.getElementById('addProductForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const newProduct = {
+        id: Date.now().toString(),
+        title: form.title.value,
+        price: parseInt(form.price.value),
+        image: form.image.value,
+        slug: form.slug.value
+      };
+
+      const saved = JSON.parse(localStorage.getItem('customProducts') || '[]');
+      saved.push(newProduct);
+      localStorage.setItem('customProducts', JSON.stringify(saved));
+      alert("Товар добавлен!");
+      form.reset();
+    });
+  </script>
+</body>
+</html>
