@@ -1,18 +1,167 @@
-<!-- Додайте цей блок нижче кнопки "Видалити товар" -->
-<a id="checkout-btn" class="btn" style="background:#00aa55;" aria-label="Оформити замовлення">Оформити замовлення</a>
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Кошик – Кожані ремінці NATO для годинників</title>
+  <meta name="description" content="Ваш кошик з товарами. Перегляньте кількість, ціну та замовте ремінці NATO з натуральної шкіри." />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #fff;
+      color: #222;
+      line-height: 1.6;
+    }
+    h1 {
+      color: #0055aa;
+      margin-bottom: 1em;
+      text-align: center;
+    }
+    .cart-item {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+      align-items: center;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 20px;
+    }
+    .cart-item img {
+      width: 180px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .cart-details {
+      flex-grow: 1;
+    }
+    .cart-details h2 {
+      margin: 0 0 10px;
+      color: #0077ff;
+    }
+    .cart-details p {
+      margin: 4px 0;
+      font-size: 1.1em;
+    }
+    .cart-quantity {
+      font-weight: bold;
+      font-size: 1.2em;
+      margin-top: 10px;
+    }
+    .cart-price {
+      font-size: 1.3em;
+      color: #0077ff;
+      font-weight: bold;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background: #0077ff;
+      color: #fff;
+      border-radius: 6px;
+      font-weight: bold;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-right: 10px;
+    }
+    .btn:hover {
+      background: #005fcc;
+    }
+    .btn-delete {
+      background: #cc3300;
+    }
+    .btn-delete:hover {
+      background: #992200;
+    }
+    .empty-cart {
+      text-align: center;
+      font-size: 1.2em;
+      color: #666;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Ваш кошик</h1>
 
-<script>
-  // Додаємо функцію для переходу на оформлення замовлення
-  document.getElementById('checkout-btn').addEventListener('click', () => {
-    const qty = getQuantityFromUrl();
-    if (qty === 0) return;
+  <div id="cart-container"></div>
 
-    const url = new URL('oformlennya-zamovlennya.html', window.location.origin);
-    url.searchParams.set('qty', qty);
-    url.searchParams.set('name', product.name);
-    url.searchParams.set('price', product.price);
-    url.searchParams.set('image', product.image);
+  <div style="text-align:center; margin-top: 30px;">
+    <a href="kozhani-remintsi-nato-dlya-godynnykiv.html" class="btn" aria-label="Повернутись до товару">Повернутись до товару</a>
+    <button id="clear-cart" class="btn btn-delete" aria-label="Видалити товар з кошика">Видалити товар</button>
 
-    window.location.href = url.toString();
-  });
-</script>
+    <button id="checkout-btn" class="btn" style="background:#009944; font-size: 1.1em; padding: 14px 28px; margin-left: 10px;" aria-label="Оформити замовлення">Оформити замовлення</button>
+  </div>
+
+  <script>
+    const product = {
+      name: "Кожані ремінці NATO для годинників",
+      price: 183,
+      currency: "грн",
+      image: "https://raw.githubusercontent.com/qgor5/kupittovar/refs/heads/main/Leather-Watch-Straps.webp",
+      productPage: "kozhani-remintsi-nato-dlya-godynnykiv.html"
+    };
+
+    function getQuantityFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      let qty = parseInt(params.get('qty'));
+      if (isNaN(qty) || qty < 1) qty = 0;
+      return qty;
+    }
+
+    function renderCart() {
+      const container = document.getElementById('cart-container');
+      const qty = getQuantityFromUrl();
+
+      if (qty === 0) {
+        container.innerHTML = '<p class="empty-cart">Ваш кошик порожній.</p>';
+        document.getElementById('clear-cart').style.display = 'none';
+        document.getElementById('checkout-btn').style.display = 'none';
+        return;
+      }
+
+      const totalPrice = qty * product.price;
+
+      container.innerHTML = `
+        <div class="cart-item" role="region" aria-label="Товар у кошику">
+          <img src="${product.image}" alt="Фото товару: ${product.name}" />
+          <div class="cart-details">
+            <h2>${product.name}</h2>
+            <p class="cart-price">Ціна за одиницю: ${product.price} ${product.currency}</p>
+            <p class="cart-quantity">Кількість: ${qty}</p>
+            <p class="cart-price">Загальна вартість: <strong>${totalPrice} ${product.currency}</strong></p>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('clear-cart').style.display = 'inline-block';
+      document.getElementById('checkout-btn').style.display = 'inline-block';
+    }
+
+    document.getElementById('clear-cart').addEventListener('click', () => {
+      window.location.href = 'kozhani-korzina.html?qty=0';
+    });
+
+    document.getElementById('checkout-btn').addEventListener('click', () => {
+      const qty = getQuantityFromUrl();
+      if (qty === 0) {
+        alert('Кошик порожній! Додайте товари.');
+        return;
+      }
+      const url = new URL('oformlennya-zamovlennya.html', window.location.origin);
+      url.searchParams.set('qty', qty);
+      url.searchParams.set('name', product.name);
+      url.searchParams.set('price', product.price);
+      url.searchParams.set('image', product.image);
+
+      window.location.href = url.toString();
+    });
+
+    renderCart();
+  </script>
+</body>
+</html>
