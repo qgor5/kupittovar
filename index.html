@@ -2,42 +2,88 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kupittovar</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Інтернет-магазин</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f5f5f5;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .products {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+    .product-card {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 15px;
+      width: 220px;
+      box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
+      text-align: center;
+    }
+    .product-card img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+    .product-card h3 {
+      margin: 15px 0 10px;
+      color: #222;
+    }
+    .product-card p {
+      font-weight: bold;
+      color: #007bff;
+      font-size: 18px;
+      margin: 0 0 15px;
+    }
+    .product-card button {
+      padding: 10px 15px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      font-size: 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .product-card button:hover {
+      background-color: #0056b3;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1 data-lang="title">Інтернет-магазин</h1>
-    <div class="lang-switch">
-      <button id="lang-uk">UA</button>
-      <button id="lang-ru">RU</button>
+
+  <h1>Наші товари</h1>
+
+  <div class="products">
+    <div class="product-card">
+      <img src="images/tshirt.jpg" alt="Футболка" />
+      <h3>Футболка</h3>
+      <p>350 ₴</p>
+      <button>Купити</button>
     </div>
-  </header>
+    <div class="product-card">
+      <img src="images/shoes.jpg" alt="Кросівки" />
+      <h3>Кросівки</h3>
+      <p>1200 ₴</p>
+      <button>Купити</button>
+    </div>
+    <div class="product-card">
+      <img src="images/watch.jpg" alt="Годинник" />
+      <h3>Годинник</h3>
+      <p>950 ₴</p>
+      <button>Купити</button>
+    </div>
+  </div>
 
-  <main>
-    <section id="products" class="product-list"></section>
-  </main>
-
-  <aside class="cart">
-    <h2 data-lang="cart">Кошик</h2>
-    <ul id="cart-items"></ul>
-    <p data-lang="total">Всього: <span id="total-price">0</span> ₴</p>
-    <button id="checkout-btn" data-lang="checkout">Оформити замовлення</button>
-  </aside>
-
-  <section id="checkout-form" class="hidden">
-    <h2 data-lang="order">Оформлення замовлення</h2>
-    <form>
-      <input type="text" placeholder="Ім’я" data-lang-placeholder="name" required />
-      <input type="tel" placeholder="Телефон" data-lang-placeholder="phone" required />
-      <input type="email" placeholder="Email" data-lang-placeholder="email" required />
-      <button type="submit" data-lang="submit">Відправити</button>
-    </form>
-  </section>
-
-  <script src="products.js"></script>
-  <script src="cart.js"></script>
-  <script src="lang.js"></script>
 </body>
 </html>
