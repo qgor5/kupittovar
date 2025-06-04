@@ -5,84 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Інтернет-магазин</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      background: #f5f5f5;
-    }
-    h1 {
-      text-align: center;
-      color: #333;
-    }
-    .products {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-top: 30px;
-    }
-    .product-card {
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      padding: 15px;
-      width: 220px;
-      box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
-      text-align: center;
-    }
-    .product-card img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 4px;
-    }
-    .product-card h3 {
-      margin: 15px 0 10px;
-      color: #222;
-    }
-    .product-card p {
-      font-weight: bold;
-      color: #007bff;
-      font-size: 18px;
-      margin: 0 0 15px;
-    }
-    .product-card button {
-      padding: 10px 15px;
-      border: none;
-      background-color: #007bff;
-      color: white;
-      font-size: 14px;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    .product-card button:hover {
-      background-color: #0056b3;
-    }
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .product { display: inline-block; margin: 10px; text-align: center; }
+    .product img { width: 200px; height: auto; border-radius: 8px; }
+    .product-name { margin-top: 8px; font-weight: bold; }
   </style>
 </head>
 <body>
-
   <h1>Наші товари</h1>
 
-  <div class="products">
-    <div class="product-card">
-      <img src="images/tshirt.jpg" alt="Футболка" />
-      <h3>Футболка</h3>
-      <p>350 ₴</p>
-      <button>Купити</button>
-    </div>
-    <div class="product-card">
-      <img src="images/shoes.jpg" alt="Кросівки" />
-      <h3>Кросівки</h3>
-      <p>1200 ₴</p>
-      <button>Купити</button>
-    </div>
-    <div class="product-card">
-      <img src="images/watch.jpg" alt="Годинник" />
-      <h3>Годинник</h3>
-      <p>950 ₴</p>
-      <button>Купити</button>
-    </div>
+  <div class="product">
+    <img src="images/remintsi-dlya-hodynnyka-z-naturalnoi-yakisnoi-shkiry%20(2).webp" alt="Ремінці для годинника" />
+    <div class="product-name">Ремінці для годинника</div>
+  </div>
+
+  <div class="product">
+    <img src="images/kozhani-remintsi-u-styli-nato-riznykh-koloriv.webp" alt="Кожані ремінці у стилі NATO" />
+    <div class="product-name">Кожані ремінці у стилі NATO</div>
+  </div>
+
+  <div class="product">
+    <img src="images/yakisni-shkiryani-remintsi-dlya-hodynnyka.webp" alt="Якісні шкіряні ремінці для годинника" />
+    <div class="product-name">Якісні шкіряні ремінці для годинника</div>
   </div>
 
 </body>
