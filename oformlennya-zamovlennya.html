@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Оформлення замовлення</title>
 <style>
-  /* === Твой CSS без изменений === */
   body {
     font-family: Arial, sans-serif;
     max-width: 480px;
@@ -308,11 +307,17 @@
     }
   });
 
-  // Работа с данными товара
-  const urlParams = new URLSearchParams(window.location.search);
-  const productName = urlParams.get('name') || 'Товар';
-  const productImage = urlParams.get('image') || '';
-  const unitPrice = parseFloat(urlParams.get('price')) || 0;
+  // Функция для получения параметров из URL
+  function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+  }
+
+  // Инициализация товара из параметров
+  const productName = decodeURIComponent(getQueryParam('name') || '');
+  const productPrice = parseFloat(getQueryParam('price') || '0');
+  const productImage = decodeURIComponent(getQueryParam('image') || '');
+  let productQty = parseInt(getQueryParam('qty')) || 1;
 
   const productNameEl = document.getElementById('product-name');
   const productImageEl = document.getElementById('product-image');
@@ -320,59 +325,48 @@
   const quantityInput = document.getElementById('quantity');
   const totalPriceEl = document.getElementById('total-price');
 
+  // Скрытые поля формы
   const hiddenName = document.getElementById('hidden-name');
   const hiddenImage = document.getElementById('hidden-image');
   const hiddenTotal = document.getElementById('hidden-total');
-  const hiddenQuantity = document.getElementById('hidden-quantity');
+  const hiddenQty = document.getElementById('hidden-quantity');
 
+  function updateTotal() {
+    const qty = parseInt(quantityInput.value);
+    const total = (productPrice * qty).toFixed(2);
+    totalPriceEl.textContent = `Загальна сума: ${total} грн`;
+
+    // Обновляем скрытые поля
+    hiddenName.value = productName;
+    hiddenImage.value = productImage;
+    hiddenTotal.value = total;
+    hiddenQty.value = qty;
+  }
+
+  // Заполнение данных товара
   productNameEl.textContent = productName;
   productImageEl.src = productImage;
   productImageEl.alt = productName;
-  unitPriceEl.textContent = unitPrice.toFixed(2);
+  unitPriceEl.textContent = productPrice.toFixed(2);
+  quantityInput.value = productQty > 0 ? productQty : 1;
+  updateTotal();
 
-  // Функция обновления итоговой цены и скрытых полей
-  function updateTotal() {
-    let qty = parseInt(quantityInput.value, 10);
-    if (isNaN(qty) || qty < 1) {
-      qty = 1;
-      quantityInput.value = qty;
-    }
-    const total = qty * unitPrice;
-    totalPriceEl.textContent = `Загальна сума: ${total.toFixed(2)} грн`;
-
-    // Обновляем скрытые поля формы
-    hiddenName.value = productName;
-    hiddenImage.value = productImage;
-    hiddenTotal.value = total.toFixed(2);
-    hiddenQuantity.value = qty;
-  }
-
-  // Кнопки увеличения и уменьшения количества
+  // Обработка кнопок +/−
   document.getElementById('increase').addEventListener('click', () => {
-    quantityInput.value = parseInt(quantityInput.value, 10) + 1;
+    quantityInput.value = parseInt(quantityInput.value) + 1;
     updateTotal();
   });
-
   document.getElementById('decrease').addEventListener('click', () => {
-    let val = parseInt(quantityInput.value, 10);
-    if (val > 1) {
-      quantityInput.value = val - 1;
+    const current = parseInt(quantityInput.value);
+    if (current > 1) {
+      quantityInput.value = current - 1;
       updateTotal();
     }
   });
-
   quantityInput.addEventListener('input', () => {
-    if (quantityInput.value === '' || parseInt(quantityInput.value, 10) < 1) {
-      quantityInput.value = 1;
-    }
-    updateTotal();
-  });
-
-  // Инициализация при загрузке
-  updateTotal();
-
-  // Гарантируем, что перед отправкой формы скрытые поля актуальны
-  form.addEventListener('submit', () => {
+    let val = parseInt(quantityInput.value);
+    if (isNaN(val) || val < 1) val = 1;
+    quantityInput.value = val;
     updateTotal();
   });
 </script>
