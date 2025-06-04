@@ -1,211 +1,57 @@
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Оформлення замовлення</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    max-width: 480px;
-    margin: 20px auto;
-    padding: 15px;
-    background: #f9f9f9;
-    border-radius: 8px;
-  }
-  label {
-    display: block;
-    margin-top: 15px;
-    font-weight: 600;
-  }
-  input, select, textarea {
-    width: 100%;
-    padding: 8px;
-    margin-top: 6px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
-  }
-  button {
-    margin-top: 25px;
-    background-color: #0077cc;
-    border: none;
-    color: white;
-    padding: 12px;
-    font-size: 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  button:hover {
-    background-color: #005fa3;
-  }
-  fieldset {
-    margin-top: 15px;
-    border: none;
-    padding: 0;
-  }
-  legend {
-    font-weight: 700;
-    margin-bottom: 8px;
-  }
-  .color-option {
-    font-weight: 700;
-  }
-  .color-brown { color: #7b4f24; }
-  .color-green { color: #1e7e34; }
-  .color-red { color: #c82333; }
-  .color-black { color: #000000; }
-  .required-star {
-    color: red;
-    margin-left: 2px;
-  }
-  .success-message {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-    border-radius: 4px;
-  }
-</style>
-</head>
-<body>
-
-<h2>Оформлення замовлення</h2>
-
-<form id="order-form" action="https://formsubmit.co/elits485@gmail.com" method="POST" novalidate>
-
-  <label for="fullname">ПІБ<span class="required-star">*</span></label>
+<form id="order-form" method="POST" action="https://formsubmit.co/elits485@gmail.com">
+  
+  <label for="fullname">ПІБ *</label>
   <input type="text" id="fullname" name="fullname" required placeholder="Ваше повне ім’я" />
-
-  <label for="phone">Телефон<span class="required-star">*</span></label>
+  
+  <label for="phone">Телефон *</label>
   <input type="tel" id="phone" name="phone" required placeholder="+380..." pattern="^\+?\d{7,15}$" />
-
+  
   <fieldset>
-    <legend>Виберіть службу доставки<span class="required-star">*</span></legend>
-    <label>
-      <input type="radio" name="delivery-service" value="ukrpost" required />
-      Укрпошта
-    </label>
-    <label style="margin-left:20px;">
-      <input type="radio" name="delivery-service" value="np" />
-      Нова пошта
-    </label>
+    <legend>Виберіть службу доставки *</legend>
+    <label><input type="radio" name="delivery_service" value="ukrpost" required /> Укрпошта</label>
+    <label style="margin-left:20px;"><input type="radio" name="delivery_service" value="np" /> Нова пошта</label>
   </fieldset>
-
+  
   <div id="ukrpost-fields" style="display:none; margin-top: 10px;">
-    <label for="ukrpost-index">Поштовий індекс<span class="required-star">*</span></label>
-    <input type="text" id="ukrpost-index" name="ukrpost-index" pattern="^\d{5}$" placeholder="Наприклад: 01001" />
-    <label for="ukrpost-city">Місто<span class="required-star">*</span></label>
-    <input type="text" id="ukrpost-city" name="ukrpost-city" placeholder="Наприклад: Київ" />
-    <label for="ukrpost-street">Вулиця<span class="required-star">*</span></label>
-    <input type="text" id="ukrpost-street" name="ukrpost-street" placeholder="Наприклад: Хрещатик, 1" />
+    <label for="ukrpost_index">Поштовий індекс *</label>
+    <input type="text" id="ukrpost_index" name="ukrpost_index" pattern="^\d{5}$" placeholder="Наприклад: 01001" />
+    
+    <label for="ukrpost_city">Місто *</label>
+    <input type="text" id="ukrpost_city" name="ukrpost_city" placeholder="Наприклад: Київ" />
+    
+    <label for="ukrpost_street">Вулиця *</label>
+    <input type="text" id="ukrpost_street" name="ukrpost_street" placeholder="Наприклад: Хрещатик, 1" />
   </div>
-
+  
   <div id="np-fields" style="display:none; margin-top: 10px;">
-    <label for="np-region">Область<span class="required-star">*</span></label>
-    <input type="text" id="np-region" name="np-region" placeholder="Наприклад: Київська" />
-    <label for="np-city">Місто<span class="required-star">*</span></label>
-    <input type="text" id="np-city" name="np-city" placeholder="Наприклад: Київ" />
-    <label for="np-branch">Номер відділення<span class="required-star">*</span></label>
-    <input type="text" id="np-branch" name="np-branch" placeholder="Наприклад: 45" />
+    <label for="np_region">Область *</label>
+    <input type="text" id="np_region" name="np_region" placeholder="Наприклад: Київська" />
+    
+    <label for="np_city">Місто *</label>
+    <input type="text" id="np_city" name="np_city" placeholder="Наприклад: Київ" />
+    
+    <label for="np_branch">Номер відділення *</label>
+    <input type="text" id="np_branch" name="np_branch" placeholder="Наприклад: 45" />
   </div>
-
-  <label for="color" style="margin-top: 20px; font-weight: 700;">Виберіть колір<span class="required-star">*</span></label>
+  
+  <label for="color" style="margin-top: 20px; font-weight: bold; color:#d00;">
+    Обов’язковий вибір кольору *
+  </label>
   <select id="color" name="color" required>
     <option value="" disabled selected>Оберіть колір</option>
-    <option value="коричневий" class="color-brown" style="color:#7b4f24;">Коричневий</option>
-    <option value="зелений" class="color-green" style="color:#1e7e34;">Зелений</option>
-    <option value="червоний" class="color-red" style="color:#c82333;">Червоний</option>
-    <option value="чорний" class="color-black" style="color:#000000;">Чорний</option>
+    <option value="коричневий" style="color:brown;">Коричневий</option>
+    <option value="зелений" style="color:green;">Зелений</option>
+    <option value="червоний" style="color:red;">Червоний</option>
+    <option value="чорний" style="color:black;">Чорний</option>
   </select>
-
+  
   <label for="comments" style="margin-top: 15px;">Коментарі / побажання (необов’язково)</label>
   <textarea id="comments" name="comments" rows="3" placeholder="Ваші побажання до замовлення..."></textarea>
-
-  <!-- formsubmit success redirect -->
-  <input type="hidden" name="_next" value="https://kupittovar.netlify.app/order-success.html" />
-  <!-- disable captcha -->
-  <input type="hidden" name="_captcha" value="false" />
-  <!-- subject email -->
+  
+  <!-- Скрытые поля для управления formsubmit -->
   <input type="hidden" name="_subject" value="Нове замовлення з сайту" />
-
-  <button type="submit">Підтвердити замовлення</button>
+  <input type="hidden" name="_next" value="https://kupittovar.netlify.app/thankyou.html" />
+  <input type="hidden" name="_autoresponse" value="Дякуємо за ваше замовлення! Ми зв'яжемося з вами найближчим часом." />
+  
+  <button type="submit" style="margin-top:20px;">Підтвердити замовлення</button>
 </form>
-
-<script>
-  const deliveryRadios = document.querySelectorAll('input[name="delivery-service"]');
-  const ukrpostFields = document.getElementById('ukrpost-fields');
-  const npFields = document.getElementById('np-fields');
-
-  deliveryRadios.forEach(radio => {
-    radio.addEventListener('change', () => {
-      if (radio.value === 'ukrpost') {
-        ukrpostFields.style.display = 'block';
-        npFields.style.display = 'none';
-        ukrpostFields.querySelectorAll('input').forEach(inp => inp.required = true);
-        npFields.querySelectorAll('input').forEach(inp => {
-          inp.required = false;
-          inp.value = '';
-        });
-      } else if (radio.value === 'np') {
-        npFields.style.display = 'block';
-        ukrpostFields.style.display = 'none';
-        npFields.querySelectorAll('input').forEach(inp => inp.required = true);
-        ukrpostFields.querySelectorAll('input').forEach(inp => {
-          inp.required = false;
-          inp.value = '';
-        });
-      }
-    });
-  });
-
-  // При загрузке, если выбран delivery, показываем поля
-  const checkedRadio = document.querySelector('input[name="delivery-service"]:checked');
-  if (checkedRadio) {
-    checkedRadio.dispatchEvent(new Event('change'));
-  }
-
-  // Валидация формы перед отправкой
-  const form = document.getElementById('order-form');
-  form.addEventListener('submit', e => {
-    const selectedDelivery = document.querySelector('input[name="delivery-service"]:checked');
-    if (!selectedDelivery) {
-      alert('Будь ласка, виберіть службу доставки.');
-      e.preventDefault();
-      return;
-    }
-
-    if (selectedDelivery.value === 'ukrpost') {
-      for (const input of ukrpostFields.querySelectorAll('input[required]')) {
-        if (!input.value.trim()) {
-          alert('Будь ласка, заповніть всі обов’язкові поля для Укрпошти.');
-          input.focus();
-          e.preventDefault();
-          return;
-        }
-      }
-    }
-
-    if (selectedDelivery.value === 'np') {
-      for (const input of npFields.querySelectorAll('input[required]')) {
-        if (!input.value.trim()) {
-          alert('Будь ласка, заповніть всі обов’язкові поля для Нової пошти.');
-          input.focus();
-          e.preventDefault();
-          return;
-        }
-      }
-    }
-
-    if (!form.color.value) {
-      alert('Будь ласка, оберіть колір товару.');
-      form.color.focus();
-      e.preventDefault();
-      return;
-    }
-  });
-</script>
-
-</body>
-</html>
