@@ -1,40 +1,129 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Замовлення прийнято</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    max-width: 480px;
-    margin: 40px auto;
-    padding: 20px;
-    background: #e2f0d9;
-    text-align: center;
-    border-radius: 8px;
-  }
-  h1 {
-    color: #2e7d32;
-  }
-  button {
-    margin-top: 25px;
-    background-color: #2e7d32;
-    border: none;
-    color: white;
-    padding: 12px 20px;
-    font-size: 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  button:hover {
-    background-color: #1b5e20;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Оформлення замовлення – Шкіряні ремінці NATO</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff;
+      color: #222;
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 20px;
+      line-height: 1.6;
+    }
+
+    h1 {
+      color: #0055aa;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    .btn-submit {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 24px;
+      background-color: #0077ff;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-submit:hover {
+      background-color: #005fcc;
+    }
+
+    .summary {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 25px;
+    }
+
+    .summary p {
+      margin: 8px 0;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.9em;
+      color: #888;
+      margin-top: 40px;
+      border-top: 1px solid #ddd;
+      padding-top: 20px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Дякуємо! Ваше замовлення прийнято.</h1>
-  <p>Очікуйте на дзвінок або лист від менеджера.</p>
-  <button onclick="window.history.back()">Повернутись назад</button>
+
+  <h1>Оформлення замовлення</h1>
+
+  <div class="summary">
+    <p>Кількість ремінців: <strong id="quantity">-</strong></p>
+    <p>Сума до сплати: <strong id="total">-</strong></p>
+  </div>
+
+  <form>
+    <label for="name">Ваше ім’я:</label>
+    <input type="text" id="name" name="name" placeholder="Іван" required />
+
+    <label for="phone">Номер телефону:</label>
+    <input type="tel" id="phone" name="phone" placeholder="+380..." required />
+
+    <label for="region">Область:</label>
+    <input type="text" id="region" name="region" placeholder="Київська область" required />
+
+    <label for="city">Місто або село:</label>
+    <input type="text" id="city" name="city" placeholder="Київ / Бровари / Кропивне" required />
+
+    <label for="nova-poshta">Відділення Нової Пошти:</label>
+    <input type="text" id="nova-poshta" name="nova-poshta" placeholder="№ 12 або адресне відділення" required />
+
+    <label for="comment">Коментар до замовлення:</label>
+    <textarea id="comment" name="comment" rows="4" placeholder="Наприклад, бажаний колір або зручний час дзвінка"></textarea>
+
+    <button type="submit" class="btn-submit">Підтвердити замовлення</button>
+  </form>
+
+  <footer>
+    &copy; 2025 KupitTovar – Дякуємо за ваше замовлення!
+  </footer>
+
+  <script>
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const quantity = getQueryParam('quantity') || '—';
+      const total = getQueryParam('total') || '—';
+
+      document.getElementById('quantity').textContent = quantity + ' шт';
+      document.getElementById('total').textContent = total + ' грн';
+    });
+  </script>
+
 </body>
 </html>
