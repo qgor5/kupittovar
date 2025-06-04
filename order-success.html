@@ -3,206 +3,45 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Оформлення замовлення</title>
+<title>Замовлення прийнято</title>
 <style>
   body {
     font-family: Arial, sans-serif;
     max-width: 480px;
-    margin: 30px auto;
-    padding: 10px;
-    background: #f9f9f9;
-    color: #222;
+    margin: 40px auto;
+    padding: 20px;
+    background: #e6ffe6;
+    color: #2d662d;
+    text-align: center;
+    border: 2px solid #2d662d;
+    border-radius: 10px;
   }
-  label {
-    display: block;
-    margin-top: 15px;
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  p {
+    font-size: 1.2rem;
+  }
+  a {
+    margin-top: 30px;
+    display: inline-block;
+    text-decoration: none;
+    color: #007bff;
     font-weight: bold;
   }
-  input, select, textarea {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 8px;
-    margin-top: 5px;
-    font-size: 1em;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+  a:hover {
+    text-decoration: underline;
   }
-  fieldset {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-top: 15px;
-  }
-  legend {
-    font-weight: bold;
-  }
-  .required-star {
-    color: red;
-  }
-  button {
-    margin-top: 25px;
-    padding: 12px;
-    width: 100%;
-    background: #007bff;
-    border: none;
-    color: white;
-    font-size: 1.1em;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  button:hover {
-    background: #0056b3;
-  }
-  .hidden {
-    display: none;
-  }
-  option[color] {
-    font-weight: bold;
-  }
-  option[value="коричневий"] { color: brown; }
-  option[value="зелений"] { color: green; }
-  option[value="червоний"] { color: red; }
-  option[value="чорний"] { color: black; }
 </style>
 </head>
 <body>
 
-<h1>Оформлення замовлення</h1>
+<h1>Дякуємо за замовлення!</h1>
+<p>Ваше замовлення прийнято та обробляється.</p>
+<p>Очікуйте доставку протягом 3-5 робочих днів.</p>
 
-<form id="order-form" method="POST" action="https://formsubmit.co/elits485@gmail.com" novalidate>
-
-  <label for="fullname">ПІБ <span class="required-star">*</span></label>
-  <input type="text" id="fullname" name="fullname" required placeholder="Ваше повне ім’я" />
-
-  <label for="phone">Телефон <span class="required-star">*</span></label>
-  <input type="tel" id="phone" name="phone" required placeholder="+380..." pattern="^\+?\d{7,15}$" />
-
-  <fieldset>
-    <legend>Виберіть службу доставки <span class="required-star">*</span></legend>
-    <label><input type="radio" name="delivery_service" value="ukrpost" required /> Укрпошта</label>
-    <label><input type="radio" name="delivery_service" value="np" /> Нова пошта</label>
-  </fieldset>
-
-  <div id="ukrpost-fields" class="hidden">
-    <label for="ukrpost_index">Поштовий індекс <span class="required-star">*</span></label>
-    <input type="text" id="ukrpost_index" name="ukrpost_index" pattern="^\d{5}$" placeholder="Наприклад: 01001" />
-
-    <label for="ukrpost_city">Місто <span class="required-star">*</span></label>
-    <input type="text" id="ukrpost_city" name="ukrpost_city" placeholder="Наприклад: Київ" />
-
-    <label for="ukrpost_street">Вулиця <span class="required-star">*</span></label>
-    <input type="text" id="ukrpost_street" name="ukrpost_street" placeholder="Наприклад: Хрещатик, 1" />
-  </div>
-
-  <div id="np-fields" class="hidden">
-    <label for="np_region">Область <span class="required-star">*</span></label>
-    <input type="text" id="np_region" name="np_region" placeholder="Наприклад: Київська" />
-
-    <label for="np_city">Місто <span class="required-star">*</span></label>
-    <input type="text" id="np_city" name="np_city" placeholder="Наприклад: Київ" />
-
-    <label for="np_branch">Номер відділення <span class="required-star">*</span></label>
-    <input type="text" id="np_branch" name="np_branch" placeholder="Наприклад: 45" />
-  </div>
-
-  <label for="color" style="margin-top: 20px; font-weight: bold; color:#d00;">
-    Обов’язковий вибір кольору <span class="required-star">*</span>
-  </label>
-  <select id="color" name="color" required>
-    <option value="" disabled selected>Оберіть колір</option>
-    <option value="коричневий" style="color:brown;">Коричневий</option>
-    <option value="зелений" style="color:green;">Зелений</option>
-    <option value="червоний" style="color:red;">Червоний</option>
-    <option value="чорний" style="color:black;">Чорний</option>
-  </select>
-
-  <label for="comments" style="margin-top: 15px;">Коментарі / побажання (необов’язково)</label>
-  <textarea id="comments" name="comments" rows="3" placeholder="Ваші побажання до замовлення..."></textarea>
-
-  <!-- FormSubmit управляющие поля -->
-  <input type="hidden" name="_subject" value="Нове замовлення з сайту" />
-  <input type="hidden" name="_next" value="https://kupittovar.netlify.app/thankyou.html" />
-  <input type="hidden" name="_autoresponse" value="Дякуємо за ваше замовлення! Ми зв'яжемося з вами найближчим часом." />
-
-  <button type="submit">Підтвердити замовлення</button>
-</form>
-
-<script>
-  const deliveryRadios = document.querySelectorAll('input[name="delivery_service"]');
-  const ukrpostFields = document.getElementById('ukrpost-fields');
-  const npFields = document.getElementById('np-fields');
-
-  function toggleDeliveryFields() {
-    const selected = document.querySelector('input[name="delivery_service"]:checked');
-    if (!selected) {
-      ukrpostFields.classList.add('hidden');
-      npFields.classList.add('hidden');
-      setRequired(ukrpostFields, false);
-      setRequired(npFields, false);
-      return;
-    }
-    if (selected.value === 'ukrpost') {
-      ukrpostFields.classList.remove('hidden');
-      npFields.classList.add('hidden');
-      setRequired(ukrpostFields, true);
-      setRequired(npFields, false);
-    } else if (selected.value === 'np') {
-      npFields.classList.remove('hidden');
-      ukrpostFields.classList.add('hidden');
-      setRequired(npFields, true);
-      setRequired(ukrpostFields, false);
-    }
-  }
-
-  function setRequired(container, required) {
-    const inputs = container.querySelectorAll('input');
-    inputs.forEach(input => {
-      input.required = required;
-      if (!required) input.value = '';
-    });
-  }
-
-  deliveryRadios.forEach(radio => {
-    radio.addEventListener('change', toggleDeliveryFields);
-  });
-
-  // Инициализация при загрузке страницы
-  window.addEventListener('DOMContentLoaded', () => {
-    toggleDeliveryFields();
-  });
-
-  // Валидация формы
-  const form = document.getElementById('order-form');
-  form.addEventListener('submit', (e) => {
-    // Проверяем выбор доставки
-    const selected = document.querySelector('input[name="delivery_service"]:checked');
-    if (!selected) {
-      alert('Будь ласка, виберіть службу доставки.');
-      e.preventDefault();
-      return;
-    }
-    // Проверка обязательных полей доставки
-    let requiredFields = [];
-    if (selected.value === 'ukrpost') {
-      requiredFields = Array.from(ukrpostFields.querySelectorAll('input[required]'));
-    } else if (selected.value === 'np') {
-      requiredFields = Array.from(npFields.querySelectorAll('input[required]'));
-    }
-    for (const field of requiredFields) {
-      if (!field.value.trim()) {
-        alert(`Будь ласка, заповніть поле "${field.previousElementSibling.textContent.replace('*','').trim()}"`);
-        field.focus();
-        e.preventDefault();
-        return;
-      }
-    }
-    // Проверка остальных обязательных полей
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      e.preventDefault();
-      return;
-    }
-  });
-</script>
+<a href="https://kupittovar.netlify.app/">Повернутися на головну</a>
 
 </body>
 </html>
