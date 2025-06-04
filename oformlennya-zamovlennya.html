@@ -96,13 +96,7 @@
   </div>
 
   <label for="color" style="margin-top: 20px; font-weight: bold;">
-    Обов’язковий вибір 
-    <span style="color:brown;">коричневий</span>, 
-    <span style="color:green;">зелений</span>, 
-    <span style="color:red;">червоний</span> 
-    або 
-    <span style="color:black;">чорний</span> 
-    <span aria-hidden="true" style="color:red;">*</span>
+    Вибір кольору <span aria-hidden="true" style="color:red;">*</span>
   </label>
 
   <select id="color" name="color" required>
@@ -147,13 +141,11 @@
     });
   });
 
-  // При загрузке проверяем, если уже выбран способ доставки
   const checkedRadio = document.querySelector('input[name="delivery-service"]:checked');
   if (checkedRadio) {
     checkedRadio.dispatchEvent(new Event('change'));
   }
 
-  // Валидация формы при отправке
   const form = document.getElementById('order-form');
   form.addEventListener('submit', e => {
     const selectedDelivery = document.querySelector('input[name="delivery-service"]:checked');
@@ -196,7 +188,6 @@
       e.preventDefault();
       return;
     }
-    // Всё ок
   });
 </script>
 
