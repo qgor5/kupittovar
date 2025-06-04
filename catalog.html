@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Каталог товарів — Kupittovar</title>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 20px;
+      background: #f9f9f9;
+      color: #222;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 30px;
+    }
+    #products-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .product-card {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+      padding: 10px;
+      text-align: center;
+      transition: box-shadow 0.3s ease;
+    }
+    .product-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .product-card img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    .product-name {
+      font-weight: 600;
+      color: #3498db;
+      margin-bottom: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+    }
+    .product-name:hover {
+      text-decoration: underline;
+    }
+    .product-price {
+      color: #e74c3c;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Каталог товарів Kupittovar</h1>
+  <div id="products-grid">Завантаження товарів...</div>
+
+  <script>
+    async function loadProducts() {
+      try {
+        const res = await fetch('products.json');
+        if (!res.ok) throw new Error('Не вдалося завантажити products.json');
+        const products = await res.json();
+
+        const grid = document.getElementById('products-grid');
+        grid.innerHTML = '';
+
+        products.slice(0, 35).forEach(product => {
+          const card = document.createElement('div');
+          card.className = 'product-card';
+
+          card.innerHTML = `
+            <a href="${product.url}" target="_blank" aria-label="Перейти до товару ${product.name}">
+              <img src="${product.image}" alt="${product.name}" />
+            </a>
+            <a href="${product.url}" target="_blank" class="product-name">${product.name}</a>
+            <div class="product-price">${product.price}</div>
+          `;
+
+          grid.appendChild(card);
+        });
+      } catch (error) {
+        document.getElementById('products-grid').innerHTML = `<p style="color:red;">${error.message}</p>`;
+        console.error(error);
+      }
+    }
+
+    loadProducts();
+  </script>
+
+</body>
+</html>
