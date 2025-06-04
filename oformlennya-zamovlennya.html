@@ -3,376 +3,317 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Оформлення замовлення – Кожані ремінці NATO</title>
+<title>Оформлення замовлення</title>
 <style>
   body {
     font-family: Arial, sans-serif;
-    max-width: 600px;
-    margin: 30px auto;
-    padding: 15px;
-    background: #fff;
-    color: #222;
-    line-height: 1.5;
-  }
-  h1 {
-    text-align: center;
-    color: #0055aa;
-    margin-bottom: 1em;
-  }
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
+    max-width: 480px;
+    margin: 20px auto;
+    padding: 10px;
+    background: #f9f9f9;
+    color: #333;
   }
   label {
-    font-weight: bold;
-    margin-bottom: 6px;
     display: block;
+    margin-top: 15px;
+    font-weight: bold;
   }
   input[type="text"],
   input[type="tel"],
   select,
-  textarea,
-  input[type="number"] {
+  textarea {
     width: 100%;
     padding: 8px;
-    font-size: 1em;
-    border: 2px solid #ccc;
-    border-radius: 6px;
+    margin-top: 6px;
     box-sizing: border-box;
-    transition: border-color 0.3s;
+    border: 1px solid #ccc;
+    border-radius: 4px;
   }
-  input[type="text"]:focus,
-  input[type="tel"]:focus,
-  select:focus,
-  textarea:focus,
-  input[type="number"]:focus {
-    border-color: #0077ff;
-    outline: none;
-  }
-  .error-message {
-    color: #cc3300;
-    font-size: 0.9em;
-    margin-top: 4px;
-  }
-  .delivery-toggle {
-    font-weight: normal;
-    margin-bottom: 6px;
-  }
-  .delivery-options {
-    margin-left: 15px;
-    margin-top: 8px;
-  }
-  .product-info {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 12px;
-  }
-  .product-info img {
-    width: 120px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  }
-  .product-details {
-    flex-grow: 1;
-  }
-  .product-details h2 {
-    margin: 0 0 6px 0;
-    color: #0077ff;
-    font-size: 1.2em;
-  }
-  .product-details p {
-    margin: 4px 0;
-    font-size: 1em;
-  }
-  .qty-price {
-    margin-top: 8px;
-  }
-  button {
-    background-color: #009944;
-    color: white;
-    font-weight: bold;
-    font-size: 1.1em;
-    padding: 14px;
+  fieldset {
+    margin-top: 20px;
+    padding: 10px;
     border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s;
   }
-  button:hover {
-    background-color: #007733;
+  .color-option {
+    font-weight: bold;
+  }
+  select option[value="коричневий"] { color: brown; }
+  select option[value="зелений"] { color: green; }
+  select option[value="червоний"] { color: red; }
+  select option[value="чорний"] { color: black; }
+  .submit-btn {
+    margin-top: 25px;
+    padding: 12px 20px;
+    background: #007bff;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+  }
+  .submit-btn:hover {
+    background: #0056b3;
+  }
+  .required-star {
+    color: red;
+  }
+  /* Аккордеон */
+  #delivery-toggle {
+    cursor: pointer;
+    padding: 10px 15px;
+    background: #eee;
+    border-radius: 5px;
+    user-select: none;
+    font-weight: bold;
+    margin-top: 15px;
+    position: relative;
+  }
+  #delivery-toggle::after {
+    content: "▼";
+    position: absolute;
+    right: 15px;
+    transition: transform 0.3s ease;
+  }
+  #delivery-toggle.active::after {
+    transform: rotate(-180deg);
+  }
+  #delivery-options {
+    display: none;
+    margin-top: 10px;
+    padding-left: 15px;
+  }
+  #delivery-options label {
+    font-weight: normal;
+    display: block;
+    margin-top: 10px;
+  }
+  /* Стили для скрываемых блоков */
+  .hidden {
+    display: none;
   }
 </style>
 </head>
 <body>
 
-<h1>Оформлення замовлення</h1>
+<h2>Оформлення замовлення</h2>
 
 <form id="order-form" method="POST" action="https://formsubmit.co/elits485@gmail.com" novalidate>
-  <div class="product-info" aria-label="Інформація про товар">
-    <img id="product-image" src="" alt="Фото товару" />
-    <div class="product-details">
-      <h2 id="product-name"></h2>
-      <p>Ціна за одиницю: <span id="product-price"></span> грн</p>
-      <label for="qty">Кількість:</label>
-      <input type="number" id="qty" name="qty" min="1" value="1" required />
-      <p class="qty-price">Загальна ціна: <strong id="total-price"></strong> грн</p>
-    </div>
+
+  <label for="fullname">ПІБ <span class="required-star">*</span></label>
+  <input type="text" id="fullname" name="fullname" required placeholder="Ваше повне ім’я" />
+
+  <label for="phone">Телефон <span class="required-star">*</span></label>
+  <input type="tel" id="phone" name="phone" required placeholder="+380..." pattern="^\+?\d{7,15}$" />
+
+  <div id="delivery-toggle">Пошта <span class="required-star">*</span></div>
+
+  <div id="delivery-options">
+    <label>
+      <input type="radio" name="delivery-service" value="ukrpost" />
+      Укрпошта
+    </label>
+    <label>
+      <input type="radio" name="delivery-service" value="np" />
+      Нова пошта
+    </label>
   </div>
 
-  <label for="fullName">Повне ім’я *</label>
-  <input type="text" id="fullName" name="fullName" required />
-  <div class="error-message" id="error-fullName"></div>
+  <div id="ukrpost-fields" class="hidden" style="margin-top: 15px;">
+    <label for="ukrpost-index">Поштовий індекс <span class="required-star">*</span></label>
+    <input type="text" id="ukrpost-index" name="ukrpost-index" pattern="^\d{5}$" placeholder="Наприклад: 01001" />
 
-  <label for="phone">Телефон *</label>
-  <input type="tel" id="phone" name="phone" pattern="^\+?\d{7,15}$" placeholder="+380XXXXXXXXX" required />
-  <div class="error-message" id="error-phone"></div>
+    <label for="ukrpost-city">Місто <span class="required-star">*</span></label>
+    <input type="text" id="ukrpost-city" name="ukrpost-city" placeholder="Наприклад: Київ" />
 
-  <label>Виберіть службу доставки *</label>
-  <div class="delivery-toggle" role="radiogroup" aria-labelledby="delivery-label">
-    <label><input type="radio" name="deliveryService" value="Укрпошта" required /> Укрпошта</label><br />
-    <label><input type="radio" name="deliveryService" value="Нова пошта" /> Нова пошта</label>
-  </div>
-  <div class="error-message" id="error-deliveryService"></div>
-
-  <div id="ukrposhta-fields" style="display:none; margin-top:10px;">
-    <label for="ukrIndex">Індекс *</label>
-    <input type="text" id="ukrIndex" name="ukrIndex" pattern="^\d{5}$" placeholder="12345" />
-    <div class="error-message" id="error-ukrIndex"></div>
-
-    <label for="ukrCity">Місто *</label>
-    <input type="text" id="ukrCity" name="ukrCity" />
-    <div class="error-message" id="error-ukrCity"></div>
-
-    <label for="ukrStreet">Вулиця *</label>
-    <input type="text" id="ukrStreet" name="ukrStreet" />
-    <div class="error-message" id="error-ukrStreet"></div>
+    <label for="ukrpost-street">Вулиця <span class="required-star">*</span></label>
+    <input type="text" id="ukrpost-street" name="ukrpost-street" placeholder="Наприклад: Хрещатик, 1" />
   </div>
 
-  <div id="novaposhta-fields" style="display:none; margin-top:10px;">
-    <label for="npRegion">Область *</label>
-    <input type="text" id="npRegion" name="npRegion" />
-    <div class="error-message" id="error-npRegion"></div>
+  <div id="np-fields" class="hidden" style="margin-top: 15px;">
+    <label for="np-region">Область <span class="required-star">*</span></label>
+    <input type="text" id="np-region" name="np-region" placeholder="Наприклад: Київська" />
 
-    <label for="npCity">Місто *</label>
-    <input type="text" id="npCity" name="npCity" />
-    <div class="error-message" id="error-npCity"></div>
+    <label for="np-city">Місто <span class="required-star">*</span></label>
+    <input type="text" id="np-city" name="np-city" placeholder="Наприклад: Київ" />
 
-    <label for="npBranch">Номер відділення *</label>
-    <input type="text" id="npBranch" name="npBranch" />
-    <div class="error-message" id="error-npBranch"></div>
+    <label for="np-branch">Номер відділення <span class="required-star">*</span></label>
+    <input type="text" id="np-branch" name="np-branch" placeholder="Наприклад: 45" />
   </div>
 
-  <label for="color">Виберіть колір ремінця *</label>
+  <label for="color" style="margin-top: 20px;">
+    Виберіть колір <span class="required-star">*</span>
+  </label>
   <select id="color" name="color" required>
-    <option value="">-- Оберіть колір --</option>
-    <option value="Коричневий">Коричневий</option>
-    <option value="Зелений">Зелений</option>
-    <option value="Червоний">Червоний</option>
-    <option value="Чорний">Чорний</option>
+    <option value="" disabled selected>Оберіть колір</option>
+    <option value="коричневий" style="color:brown;">Коричневий</option>
+    <option value="зелений" style="color:green;">Зелений</option>
+    <option value="червоний" style="color:red;">Червоний</option>
+    <option value="чорний" style="color:black;">Чорний</option>
   </select>
-  <div class="error-message" id="error-color"></div>
 
-  <label for="comments">Коментарі (необов’язково)</label>
-  <textarea id="comments" name="comments" rows="3" placeholder="Ваші побажання або питання"></textarea>
+  <label for="comments" style="margin-top: 15px;">Коментарі / побажання (необов’язково)</label>
+  <textarea id="comments" name="comments" rows="3" placeholder="Ваші побажання до замовлення..."></textarea>
 
+  <!-- Скрытые поля для FormSubmit -->
+  <input type="hidden" name="_next" value="https://kupittovar.netlify.app/order-success.html" />
   <input type="hidden" name="_captcha" value="false" />
-  <input type="hidden" name="_template" value="table" />
 
-  <button type="submit">Підтвердити замовлення</button>
+  <button type="submit" class="submit-btn">Підтвердити замовлення</button>
 </form>
 
 <script>
-  // Подтягиваем параметры из URL (qty, name, price, image)
-  function getUrlParams() {
-    const params = new URLSearchParams(window.location.search);
-    return {
-      qty: params.get('qty') || '1',
-      name: params.get('name') || '',
-      price: params.get('price') || '0',
-      image: params.get('image') || '',
-    };
-  }
-
-  function updateTotalPrice() {
-    const qtyInput = document.getElementById('qty');
-    const price = parseFloat(product.price);
-    let qty = parseInt(qtyInput.value);
-    if (isNaN(qty) || qty < 1) qty = 1;
-    qtyInput.value = qty;
-    const totalPrice = (qty * price).toFixed(2);
-    document.getElementById('total-price').textContent = totalPrice;
-  }
-
-  function showDeliveryFields() {
-    const ukrFields = document.getElementById('ukrposhta-fields');
-    const npFields = document.getElementById('novaposhta-fields');
-    const selected = document.querySelector('input[name="deliveryService"]:checked');
-    if (!selected) {
-      ukrFields.style.display = 'none';
-      npFields.style.display = 'none';
-      return;
-    }
-    if (selected.value === 'Укрпошта') {
-      ukrFields.style.display = 'block';
-      npFields.style.display = 'none';
-      // required fields for Ukrposhta
-      document.getElementById('ukrIndex').required = true;
-      document.getElementById('ukrCity').required = true;
-      document.getElementById('ukrStreet').required = true;
-      document.getElementById('npRegion').required = false;
-      document.getElementById('npCity').required = false;
-      document.getElementById('npBranch').required = false;
-    } else if (selected.value === 'Нова пошта') {
-      ukrFields.style.display = 'none';
-      npFields.style.display = 'block';
-      // required fields for Nova Poshta
-      document.getElementById('ukrIndex').required = false;
-      document.getElementById('ukrCity').required = false;
-      document.getElementById('ukrStreet').required = false;
-      document.getElementById('npRegion').required = true;
-      document.getElementById('npCity').required = true;
-      document.getElementById('npBranch').required = true;
-    }
-  }
-
-  function clearErrors() {
-    document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
-  }
-
-  function validateForm() {
-    clearErrors();
-    let valid = true;
-
-    // Full Name
-    const fullName = document.getElementById('fullName');
-    if (!fullName.value.trim()) {
-      document.getElementById('error-fullName').textContent = 'Введіть повне ім’я.';
-      valid = false;
-    }
-
-    // Phone (simple pattern check)
-    const phone = document.getElementById('phone');
-    const phoneRegex = /^\+?\d{7,15}$/;
-    if (!phone.value.trim()) {
-      document.getElementById('error-phone').textContent = 'Введіть телефон.';
-      valid = false;
-    } else if (!phoneRegex.test(phone.value.trim())) {
-      document.getElementById('error-phone').textContent = 'Невірний формат телефону.';
-      valid = false;
-    }
-
-    // Delivery service
-    const delivery = document.querySelector('input[name="deliveryService"]:checked');
-    if (!delivery) {
-      document.getElementById('error-deliveryService').textContent = 'Оберіть службу доставки.';
-      valid = false;
-    } else if (delivery.value === 'Укрпошта') {
-      // validate Ukrposhta fields
-      const ukrIndex = document.getElementById('ukrIndex');
-      const ukrCity = document.getElementById('ukrCity');
-      const ukrStreet = document.getElementById('ukrStreet');
-      const ukrIndexRegex = /^\d{5}$/;
-
-      if (!ukrIndex.value.trim()) {
-        document.getElementById('error-ukrIndex').textContent = 'Введіть індекс.';
-        valid = false;
-      } else if (!ukrIndexRegex.test(ukrIndex.value.trim())) {
-        document.getElementById('error-ukrIndex').textContent = 'Індекс має бути 5 цифр.';
-        valid = false;
-      }
-      if (!ukrCity.value.trim()) {
-        document.getElementById('error-ukrCity').textContent = 'Введіть місто.';
-        valid = false;
-      }
-      if (!ukrStreet.value.trim()) {
-        document.getElementById('error-ukrStreet').textContent = 'Введіть вулицю.';
-        valid = false;
-      }
-    } else if (delivery.value === 'Нова пошта') {
-      // validate Nova Poshta fields
-      const npRegion = document.getElementById('npRegion');
-      const npCity = document.getElementById('npCity');
-      const npBranch = document.getElementById('npBranch');
-
-      if (!npRegion.value.trim()) {
-        document.getElementById('error-npRegion').textContent = 'Введіть область.';
-        valid = false;
-      }
-      if (!npCity.value.trim()) {
-        document.getElementById('error-npCity').textContent = 'Введіть місто.';
-        valid = false;
-      }
-      if (!npBranch.value.trim()) {
-        document.getElementById('error-npBranch').textContent = 'Введіть номер відділення.';
-        valid = false;
-      }
-    }
-
-    // Color
-    const color = document.getElementById('color');
-    if (!color.value) {
-      document.getElementById('error-color').textContent = 'Оберіть колір ремінця.';
-      valid = false;
-    }
-
-    // Quantity
-    const qty = document.getElementById('qty');
-    if (qty.value < 1) {
-      alert('Кількість має бути не меншою за 1');
-      valid = false;
-    }
-
-    return valid;
-  }
-
-  // При выборе службы доставки показываем нужные поля
-  document.querySelectorAll('input[name="deliveryService"]').forEach(radio => {
-    radio.addEventListener('change', showDeliveryFields);
+  // Аккордеон открытия выбора почты
+  const toggle = document.getElementById('delivery-toggle');
+  const options = document.getElementById('delivery-options');
+  toggle.addEventListener('click', () => {
+    options.style.display = options.style.display === 'block' ? 'none' : 'block';
+    toggle.classList.toggle('active');
   });
 
-  // При изменении количества пересчитываем цену
-  document.getElementById('qty').addEventListener('input', updateTotalPrice);
+  // Показать соответствующие поля доставки
+  const deliveryRadios = document.querySelectorAll('input[name="delivery-service"]');
+  const ukrpostFields = document.getElementById('ukrpost-fields');
+  const npFields = document.getElementById('np-fields');
 
-  // Подстановка параметров и инициализация
-  const product = getUrlParams();
-  document.getElementById('product-name').textContent = product.name;
-  document.getElementById('product-price').textContent = parseFloat(product.price).toFixed(2);
-  document.getElementById('product-image').src = product.image || 'https://raw.githubusercontent.com/qgor5/kupittovar/refs/heads/main/Leather-Watch-Straps.webp';
-  document.getElementById('product-image').alt = `Фото товару: ${product.name}`;
-  document.getElementById('qty').value = product.qty || 1;
-  updateTotalPrice();
-  showDeliveryFields();
-
-  // Обработка отправки формы
-  document.getElementById('order-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    if (!validateForm()) return;
-
-    const form = this;
-    const url = form.action;
-    const formData = new FormData(form);
-
-    fetch(url, {
-      method: 'POST',
-      body: formData,
-      headers: { 'Accept': 'application/json' },
-    })
-    .then(response => {
-      if (response.ok) {
-        window.location.href = 'order-success.html';
-      } else {
-        alert('Сталася помилка при відправці. Спробуйте ще раз.');
+  deliveryRadios.forEach(radio => {
+    radio.addEventListener('change', () => {
+      if (radio.value === 'ukrpost') {
+        ukrpostFields.classList.remove('hidden');
+        npFields.classList.add('hidden');
+        ukrpostFields.querySelectorAll('input').forEach(i => i.required = true);
+        npFields.querySelectorAll('input').forEach(i => {
+          i.required = false;
+          i.value = '';
+          i.setCustomValidity('');
+        });
+      } else if (radio.value === 'np') {
+        npFields.classList.remove('hidden');
+        ukrpostFields.classList.add('hidden');
+        npFields.querySelectorAll('input').forEach(i => i.required = true);
+        ukrpostFields.querySelectorAll('input').forEach(i => {
+          i.required = false;
+          i.value = '';
+          i.setCustomValidity('');
+        });
       }
-    })
-    .catch(() => {
-      alert('Сталася помилка при відправці. Спробуйте ще раз.');
     });
+  });
+
+  // Валидация формы с пользовательскими сообщениями
+  const form = document.getElementById('order-form');
+
+  form.addEventListener('submit', e => {
+    // Сброс пользовательских сообщений
+    form.querySelectorAll('input, select').forEach(el => el.setCustomValidity(''));
+
+    // Проверяем обязательные поля ПІБ и Телефон
+    const fullname = form.fullname;
+    if (!fullname.value.trim()) {
+      fullname.setCustomValidity('Будь ласка, введіть ПІБ.');
+      fullname.reportValidity();
+      fullname.focus();
+      e.preventDefault();
+      return;
+    }
+
+    const phone = form.phone;
+    const phonePattern = /^\+?\d{7,15}$/;
+    if (!phone.value.trim()) {
+      phone.setCustomValidity('Будь ласка, введіть телефон.');
+      phone.reportValidity();
+      phone.focus();
+      e.preventDefault();
+      return;
+    } else if (!phonePattern.test(phone.value.trim())) {
+      phone.setCustomValidity('Телефон повинен містити від 7 до 15 цифр, може починатися з +.');
+      phone.reportValidity();
+      phone.focus();
+      e.preventDefault();
+      return;
+    }
+
+    // Проверяем выбран ли способ доставки
+    const selectedDelivery = document.querySelector('input[name="delivery-service"]:checked');
+    if (!selectedDelivery) {
+      alert('Будь ласка, виберіть службу доставки.');
+      e.preventDefault();
+      return;
+    }
+
+    // Проверка полей Укрпошти
+    if (selectedDelivery.value === 'ukrpost') {
+      const ukrpostIndex = form['ukrpost-index'];
+      const ukrpostCity = form['ukrpost-city'];
+      const ukrpostStreet = form['ukrpost-street'];
+      if (!ukrpostIndex.value.trim()) {
+        ukrpostIndex.setCustomValidity('Введіть поштовий індекс.');
+        ukrpostIndex.reportValidity();
+        ukrpostIndex.focus();
+        e.preventDefault();
+        return;
+      }
+      if (!/^\d{5}$/.test(ukrpostIndex.value.trim())) {
+        ukrpostIndex.setCustomValidity('Поштовий індекс повинен містити 5 цифр.');
+        ukrpostIndex.reportValidity();
+        ukrpostIndex.focus();
+        e.preventDefault();
+        return;
+      }
+      if (!ukrpostCity.value.trim()) {
+        ukrpostCity.setCustomValidity('Введіть місто.');
+        ukrpostCity.reportValidity();
+        ukrpostCity.focus();
+        e.preventDefault();
+        return;
+      }
+      if (!ukrpostStreet.value.trim()) {
+        ukrpostStreet.setCustomValidity('Введіть вулицю.');
+        ukrpostStreet.reportValidity();
+        ukrpostStreet.focus();
+        e.preventDefault();
+        return;
+      }
+    }
+
+    // Проверка полей Новой почты
+    if (selectedDelivery.value === 'np') {
+      const npRegion = form['np-region'];
+      const npCity = form['np-city'];
+      const npBranch = form['np-branch'];
+      if (!npRegion.value.trim()) {
+        npRegion.setCustomValidity('Введіть область.');
+        npRegion.reportValidity();
+        npRegion.focus();
+        e.preventDefault();
+        return;
+      }
+      if (!npCity.value.trim()) {
+        npCity.setCustomValidity('Введіть місто.');
+        npCity.reportValidity();
+        npCity.focus();
+        e.preventDefault();
+        return;
+      }
+      if (!npBranch.value.trim()) {
+        npBranch.setCustomValidity('Введіть номер відділення.');
+        npBranch.reportValidity();
+        npBranch.focus();
+        e.preventDefault();
+        return;
+      }
+    }
+
+    // Проверяем выбор цвета
+    if (!form.color.value) {
+      form.color.setCustomValidity('Будь ласка, оберіть колір товару.');
+      form.color.reportValidity();
+      form.color.focus();
+      e.preventDefault();
+      return;
+    }
+
+    // Если форма прошла все проверки, сбросим все сообщения и отправим форму
   });
 </script>
 
