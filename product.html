@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Товар</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a href="catalog.html">← Каталог</a> | <a href="cart.html">Корзина</a>
+  <div id="product"></div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const slug = urlParams.get('slug');
+
+    Promise.all([
+      fetch('products.json').then(res => res.json()),
+      JSON.parse(localStorage.getItem('customProducts') || '[]')
+    ]).then(([products, customProducts]) => {
+      const allProducts = [...products, ...customProducts];
+      const product = allProducts.find(p => p.slug === slug);
+
+      if (!product) {
+        document.getElementById('product').innerText = 'Товар не найден';
+        return;
+      }
+
+      document.getElementById('product').innerHTML = `
+        <h1>\${product.title}</h1>
+        <img src="\${product.image}" width="200">
+        <p>\${product.price} ₽</p>
+        <button onclick="addToCart('\${product.id}')">В корзину</button>
+      `;
+    });
+
+    function addToCart(id) {
+      const cart = JSON.parse(localStorage.getItem('cart') || '{}');
+      cart[id] = (cart[id] || 0) + 1;
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert('Добавлено в корзину');
+    }
+  </script>
+</body>
+</html>
