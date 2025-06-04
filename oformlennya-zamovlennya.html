@@ -32,11 +32,7 @@
   fieldset {
     margin-top: 20px;
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  legend {
-    font-weight: bold;
+    border: none;
   }
   .color-option {
     font-weight: bold;
@@ -62,6 +58,40 @@
   .required-star {
     color: red;
   }
+  /* Аккордеон */
+  #delivery-toggle {
+    cursor: pointer;
+    padding: 10px 15px;
+    background: #eee;
+    border-radius: 5px;
+    user-select: none;
+    font-weight: bold;
+    margin-top: 15px;
+    position: relative;
+  }
+  #delivery-toggle::after {
+    content: "▼";
+    position: absolute;
+    right: 15px;
+    transition: transform 0.3s ease;
+  }
+  #delivery-toggle.active::after {
+    transform: rotate(-180deg);
+  }
+  #delivery-options {
+    display: none;
+    margin-top: 10px;
+    padding-left: 15px;
+  }
+  #delivery-options label {
+    font-weight: normal;
+    display: block;
+    margin-top: 10px;
+  }
+  /* Стили для скрываемых блоков */
+  .hidden {
+    display: none;
+  }
 </style>
 </head>
 <body>
@@ -76,19 +106,20 @@
   <label for="phone">Телефон <span class="required-star">*</span></label>
   <input type="tel" id="phone" name="phone" required placeholder="+380..." pattern="^\+?\d{7,15}$" />
 
-  <fieldset>
-    <legend>Виберіть службу доставки <span class="required-star">*</span></legend>
+  <div id="delivery-toggle">Пошта <span class="required-star">*</span></div>
+  
+  <div id="delivery-options">
     <label>
-      <input type="radio" name="delivery-service" value="ukrpost" required />
+      <input type="radio" name="delivery-service" value="ukrpost" />
       Укрпошта
     </label>
-    <label style="margin-left: 20px;">
+    <label>
       <input type="radio" name="delivery-service" value="np" />
       Нова пошта
     </label>
-  </fieldset>
+  </div>
 
-  <div id="ukrpost-fields" style="display:none; margin-top: 15px;">
+  <div id="ukrpost-fields" class="hidden" style="margin-top: 15px;">
     <label for="ukrpost-index">Поштовий індекс <span class="required-star">*</span></label>
     <input type="text" id="ukrpost-index" name="ukrpost-index" pattern="^\d{5}$" placeholder="Наприклад: 01001" />
 
@@ -99,7 +130,7 @@
     <input type="text" id="ukrpost-street" name="ukrpost-street" placeholder="Наприклад: Хрещатик, 1" />
   </div>
 
-  <div id="np-fields" style="display:none; margin-top: 15px;">
+  <div id="np-fields" class="hidden" style="margin-top: 15px;">
     <label for="np-region">Область <span class="required-star">*</span></label>
     <input type="text" id="np-region" name="np-region" placeholder="Наприклад: Київська" />
 
@@ -132,6 +163,16 @@
 </form>
 
 <script>
+  // Аккордеон открытия выбора почты
+  const toggle = document.getElementById('delivery-toggle');
+  const options = document.getElementById('delivery-options');
+
+  toggle.addEventListener('click', () => {
+    options.style.display = options.style.display === 'block' ? 'none' : 'block';
+    toggle.classList.toggle('active');
+  });
+
+  // Показать соответствующие поля доставки
   const deliveryRadios = document.querySelectorAll('input[name="delivery-service"]');
   const ukrpostFields = document.getElementById('ukrpost-fields');
   const npFields = document.getElementById('np-fields');
@@ -139,35 +180,27 @@
   deliveryRadios.forEach(radio => {
     radio.addEventListener('change', () => {
       if (radio.value === 'ukrpost') {
-        ukrpostFields.style.display = 'block';
-        npFields.style.display = 'none';
-
-        ukrpostFields.querySelectorAll('input').forEach(inp => inp.required = true);
-        npFields.querySelectorAll('input').forEach(inp => {
-          inp.required = false;
-          inp.value = '';
+        ukrpostFields.classList.remove('hidden');
+        npFields.classList.add('hidden');
+        ukrpostFields.querySelectorAll('input').forEach(i => i.required = true);
+        npFields.querySelectorAll('input').forEach(i => {
+          i.required = false;
+          i.value = '';
         });
       } else if (radio.value === 'np') {
-        npFields.style.display = 'block';
-        ukrpostFields.style.display = 'none';
-
-        npFields.querySelectorAll('input').forEach(inp => inp.required = true);
-        ukrpostFields.querySelectorAll('input').forEach(inp => {
-          inp.required = false;
-          inp.value = '';
+        npFields.classList.remove('hidden');
+        ukrpostFields.classList.add('hidden');
+        npFields.querySelectorAll('input').forEach(i => i.required = true);
+        ukrpostFields.querySelectorAll('input').forEach(i => {
+          i.required = false;
+          i.value = '';
         });
       }
     });
   });
 
-  // При загрузке, если выбран какой-то delivery, показываем нужные поля
-  const checkedRadio = document.querySelector('input[name="delivery-service"]:checked');
-  if (checkedRadio) {
-    checkedRadio.dispatchEvent(new Event('change'));
-  }
-
+  // Валидация формы
   const form = document.getElementById('order-form');
-
   form.addEventListener('submit', e => {
     const selectedDelivery = document.querySelector('input[name="delivery-service"]:checked');
     if (!selectedDelivery) {
@@ -176,28 +209,26 @@
       return;
     }
 
-    let deliveryValid = true;
     if (selectedDelivery.value === 'ukrpost') {
-      ukrpostFields.querySelectorAll('input[required]').forEach(input => {
-        if (!input.value.trim()) {
-          deliveryValid = false;
-          input.focus();
+      let valid = true;
+      ukrpostFields.querySelectorAll('input[required]').forEach(i => {
+        if (!i.value.trim()) {
           alert('Будь ласка, заповніть всі обов’язкові поля для Укрпошти.');
-          e.preventDefault();
-          return false;
+          i.focus();
+          valid = false;
         }
       });
-    }
-    if (selectedDelivery.value === 'np') {
-      npFields.querySelectorAll('input[required]').forEach(input => {
-        if (!input.value.trim()) {
-          deliveryValid = false;
-          input.focus();
+      if (!valid) e.preventDefault();
+    } else if (selectedDelivery.value === 'np') {
+      let valid = true;
+      npFields.querySelectorAll('input[required]').forEach(i => {
+        if (!i.value.trim()) {
           alert('Будь ласка, заповніть всі обов’язкові поля для Нової пошти.');
-          e.preventDefault();
-          return false;
+          i.focus();
+          valid = false;
         }
       });
+      if (!valid) e.preventDefault();
     }
 
     if (!form.checkValidity()) {
