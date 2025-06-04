@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /_redirects
+Disallow: /_headers
+Disallow: /404.html
+Disallow: /*.js$
+Disallow: /*.css$
+Allow: /
+
+Sitemap: https://kupittovar.netlify.app/sitemap.xml
