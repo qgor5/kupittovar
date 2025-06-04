@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="uk">
 <head>
 <meta charset="UTF-8" />
@@ -313,62 +313,84 @@
     return urlParams.get(param);
   }
 
-  // Инициализация товара из параметров
-  const productName = decodeURIComponent(getQueryParam('name') || '');
-  const productPrice = parseFloat(getQueryParam('price') || '0');
-  const productImage = decodeURIComponent(getQueryParam('image') || '');
-  let productQty = parseInt(getQueryParam('qty')) || 1;
-
-  const productNameEl = document.getElementById('product-name');
-  const productImageEl = document.getElementById('product-image');
+  // Заполнение блока товара данными из URL
+  const productImage = document.getElementById('product-image');
+  const productName = document.getElementById('product-name');
   const unitPriceEl = document.getElementById('unit-price');
   const quantityInput = document.getElementById('quantity');
   const totalPriceEl = document.getElementById('total-price');
-
-  // Скрытые поля формы
   const hiddenName = document.getElementById('hidden-name');
   const hiddenImage = document.getElementById('hidden-image');
   const hiddenTotal = document.getElementById('hidden-total');
-  const hiddenQty = document.getElementById('hidden-quantity');
+  const hiddenQuantity = document.getElementById('hidden-quantity');
+
+  let unitPrice = 0;
 
   function updateTotal() {
-    const qty = parseInt(quantityInput.value);
-    const total = (productPrice * qty).toFixed(2);
-    totalPriceEl.textContent = `Загальна сума: ${total} грн`;
-
-    // Обновляем скрытые поля
-    hiddenName.value = productName;
-    hiddenImage.value = productImage;
+    let qty = parseInt(quantityInput.value);
+    if (isNaN(qty) || qty < 1) qty = 1;
+    quantityInput.value = qty;
+    const total = unitPrice * qty;
+    totalPriceEl.textContent = `Загальна сума: ${total.toLocaleString('uk-UA')} грн`;
     hiddenTotal.value = total;
-    hiddenQty.value = qty;
+    hiddenQuantity.value = qty;
   }
 
-  // Заполнение данных товара
-  productNameEl.textContent = productName;
-  productImageEl.src = productImage;
-  productImageEl.alt = productName;
-  unitPriceEl.textContent = productPrice.toFixed(2);
-  quantityInput.value = productQty > 0 ? productQty : 1;
-  updateTotal();
-
-  // Обработка кнопок +/−
+  // Обработчики кнопок + и -
   document.getElementById('increase').addEventListener('click', () => {
-    quantityInput.value = parseInt(quantityInput.value) + 1;
+    let val = parseInt(quantityInput.value) || 1;
+    quantityInput.value = val + 1;
     updateTotal();
   });
+
   document.getElementById('decrease').addEventListener('click', () => {
-    const current = parseInt(quantityInput.value);
-    if (current > 1) {
-      quantityInput.value = current - 1;
+    let val = parseInt(quantityInput.value) || 1;
+    if (val > 1) {
+      quantityInput.value = val - 1;
       updateTotal();
     }
   });
+
   quantityInput.addEventListener('input', () => {
     let val = parseInt(quantityInput.value);
-    if (isNaN(val) || val < 1) val = 1;
-    quantityInput.value = val;
+    if (isNaN(val) || val < 1) {
+      quantityInput.value = 1;
+    }
     updateTotal();
   });
+
+  // Инициализация данных из URL
+  function initProductData() {
+    const img = getQueryParam('img');
+    const name = getQueryParam('name');
+    const price = getQueryParam('price');
+
+    if (img) {
+      productImage.src = decodeURIComponent(img);
+      hiddenImage.value = decodeURIComponent(img);
+    } else {
+      productImage.alt = "Фото відсутнє";
+    }
+
+    if (name) {
+      productName.textContent = decodeURIComponent(name);
+      hiddenName.value = decodeURIComponent(name);
+    } else {
+      productName.textContent = "Назва відсутня";
+    }
+
+    if (price && !isNaN(price)) {
+      unitPrice = parseFloat(price);
+      unitPriceEl.textContent = unitPrice.toLocaleString('uk-UA');
+    } else {
+      unitPrice = 0;
+      unitPriceEl.textContent = "0";
+    }
+
+    updateTotal();
+  }
+
+  window.addEventListener('DOMContentLoaded', initProductData);
 </script>
 
 </body>
