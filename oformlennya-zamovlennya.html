@@ -1,141 +1,129 @@
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Оформлення замовлення</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      padding: 20px;
-      max-width: 800px;
-      margin: auto;
-    }
-    h1 {
-      text-align: center;
-    }
-    form {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-    }
-    label {
-      display: block;
-      margin-top: 15px;
-    }
-    input[type="text"],
-    input[type="tel"],
-    textarea {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-    }
-    button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background: #28a745;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    a.back-link {
-      display: inline-block;
-      margin-top: 20px;
-      text-decoration: none;
-      color: #007bff;
-    }
-  </style>
-</head>
-<body>
-  <h1>Оформлення замовлення</h1>
+<!-- Форма замовлення -->
+<form id="order-form" method="POST" action="https://formsubmit.co/elits485@gmail.com" novalidate>
 
-  <div id="product-summary" style="background:#fff; padding:15px; border:1px solid #ccc; border-radius:8px; margin-bottom:20px; display:flex; gap:15px; align-items:center;">
-    <img id="product-image" src="" alt="Фото товару" style="width:100px; height:auto; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.1);" />
-    <div style="flex:1;">
-      <h3 id="product-name" style="margin:0 0 10px 0;"></h3>
-      <p style="margin:4px 0;">Ціна за одиницю: <span id="unit-price">0</span> грн</p>
-      <div style="display:flex; align-items:center; gap:10px;">
-        <label for="quantity">Кількість:</label>
-        <button type="button" id="decrease" style="padding:4px 10px;">−</button>
-        <input type="number" id="quantity" name="quantity" value="1" min="1" style="width:50px; text-align:center;" />
-        <button type="button" id="increase" style="padding:4px 10px;">+</button>
-      </div>
-      <p style="margin-top:10px; font-weight:bold;">Загальна сума: <span id="total-price">0</span> грн</p>
-    </div>
+  <label for="fullname">ПІБ <span class="required-star">*</span></label>
+  <input type="text" id="fullname" name="fullname" required placeholder="Ваше повне ім’я" />
+
+  <label for="phone">Телефон <span class="required-star">*</span></label>
+  <input type="tel" id="phone" name="phone" required placeholder="+380..." pattern="^\+?\d{7,15}$" />
+
+  <div id="delivery-toggle">Пошта <span class="required-star">*</span></div>
+
+  <div id="delivery-options">
+    <label><input type="radio" name="delivery-service" value="ukrpost" /> Укрпошта</label>
+    <label><input type="radio" name="delivery-service" value="np" /> Нова пошта</label>
   </div>
 
-  <form action="order-confirmed.html" method="POST">
-    <label for="fullname">ПІБ:</label>
-    <input type="text" id="fullname" name="fullname" required>
+  <div id="ukrpost-fields" class="hidden" style="margin-top: 15px;">
+    <label for="ukrpost-index">Поштовий індекс <span class="required-star">*</span></label>
+    <input type="text" id="ukrpost-index" name="ukrpost-index" pattern="^\d{5}$" placeholder="Наприклад: 01001" />
+    <label for="ukrpost-city">Місто <span class="required-star">*</span></label>
+    <input type="text" id="ukrpost-city" name="ukrpost-city" placeholder="Наприклад: Київ" />
+    <label for="ukrpost-street">Вулиця <span class="required-star">*</span></label>
+    <input type="text" id="ukrpost-street" name="ukrpost-street" placeholder="Наприклад: Хрещатик, 1" />
+  </div>
 
-    <label for="phone">Телефон:</label>
-    <input type="tel" id="phone" name="phone" required>
+  <div id="np-fields" class="hidden" style="margin-top: 15px;">
+    <label for="np-region">Область <span class="required-star">*</span></label>
+    <input type="text" id="np-region" name="np-region" placeholder="Наприклад: Київська" />
+    <label for="np-city">Місто <span class="required-star">*</span></label>
+    <input type="text" id="np-city" name="np-city" placeholder="Наприклад: Київ" />
+    <label for="np-branch">Номер відділення <span class="required-star">*</span></label>
+    <input type="text" id="np-branch" name="np-branch" placeholder="Наприклад: 45" />
+  </div>
 
-    <label for="address">Адреса доставки:</label>
-    <textarea id="address" name="address" rows="3" required></textarea>
+  <label for="color" style="margin-top: 20px;">
+    Виберіть колір <span class="required-star">*</span>
+  </label>
+  <select id="color" name="color" required>
+    <option value="" disabled selected>Оберіть колір</option>
+    <option value="коричневий" style="color:brown;">Коричневий</option>
+    <option value="зелений" style="color:green;">Зелений</option>
+    <option value="червоний" style="color:red;">Червоний</option>
+    <option value="чорний" style="color:black;">Чорний</option>
+  </select>
 
-    <input type="hidden" name="product-name" id="hidden-name" />
-    <input type="hidden" name="product-image" id="hidden-image" />
-    <input type="hidden" name="total-price" id="hidden-total" />
+  <label for="comments" style="margin-top: 15px;">Коментарі / побажання (необов’язково)</label>
+  <textarea id="comments" name="comments" rows="3" placeholder="Ваші побажання до замовлення..."></textarea>
 
-    <button type="submit">Підтвердити замовлення</button>
-  </form>
+  <!-- Сховані поля -->
+  <input type="hidden" name="_next" value="https://kupittovar.netlify.app/order-success.html" />
+  <input type="hidden" name="_captcha" value="false" />
 
-  <a class="back-link" href="kozhani-korzina.html">← Повернутись до кошика</a>
+  <button type="submit" class="submit-btn">Підтвердити замовлення</button>
+</form>
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const name = params.get('name') || "Товар";
-    const price = parseFloat(params.get('price')) || 0;
-    const image = params.get('image') || "";
-    let qty = parseInt(params.get('qty')) || 1;
+<!-- JavaScript для логіки -->
+<script>
+  const toggle = document.getElementById('delivery-toggle');
+  const options = document.getElementById('delivery-options');
+  toggle.addEventListener('click', () => {
+    options.style.display = options.style.display === 'block' ? 'none' : 'block';
+    toggle.classList.toggle('active');
+  });
 
-    const nameEl = document.getElementById("product-name");
-    const priceEl = document.getElementById("unit-price");
-    const imageEl = document.getElementById("product-image");
-    const qtyInput = document.getElementById("quantity");
-    const totalEl = document.getElementById("total-price");
+  const deliveryRadios = document.querySelectorAll('input[name="delivery-service"]');
+  const ukrpostFields = document.getElementById('ukrpost-fields');
+  const npFields = document.getElementById('np-fields');
 
-    const hiddenName = document.getElementById("hidden-name");
-    const hiddenImage = document.getElementById("hidden-image");
-    const hiddenTotal = document.getElementById("hidden-total");
-
-    function updateTotal() {
-      const quantity = parseInt(qtyInput.value);
-      const total = quantity * price;
-      totalEl.textContent = total;
-      hiddenTotal.value = total;
-    }
-
-    nameEl.textContent = name;
-    priceEl.textContent = price;
-    imageEl.src = image;
-    qtyInput.value = qty;
-    updateTotal();
-
-    hiddenName.value = name;
-    hiddenImage.value = image;
-
-    document.getElementById("increase").addEventListener("click", () => {
-      qtyInput.value = parseInt(qtyInput.value) + 1;
-      updateTotal();
-    });
-
-    document.getElementById("decrease").addEventListener("click", () => {
-      if (qtyInput.value > 1) {
-        qtyInput.value = parseInt(qtyInput.value) - 1;
-        updateTotal();
+  deliveryRadios.forEach(radio => {
+    radio.addEventListener('change', () => {
+      if (radio.value === 'ukrpost') {
+        ukrpostFields.classList.remove('hidden');
+        npFields.classList.add('hidden');
+        ukrpostFields.querySelectorAll('input').forEach(i => i.required = true);
+        npFields.querySelectorAll('input').forEach(i => { i.required = false; i.value = ''; });
+      } else if (radio.value === 'np') {
+        npFields.classList.remove('hidden');
+        ukrpostFields.classList.add('hidden');
+        npFields.querySelectorAll('input').forEach(i => i.required = true);
+        ukrpostFields.querySelectorAll('input').forEach(i => { i.required = false; i.value = ''; });
       }
     });
+  });
 
-    qtyInput.addEventListener("change", () => {
-      if (qtyInput.value < 1) qtyInput.value = 1;
-      updateTotal();
-    });
-  </script>
-</body>
-</html>
+  const form = document.getElementById('order-form');
+  form.addEventListener('submit', e => {
+    const selectedDelivery = document.querySelector('input[name="delivery-service"]:checked');
+    if (!selectedDelivery) {
+      alert('Будь ласка, виберіть службу доставки.');
+      e.preventDefault();
+      return;
+    }
+
+    if (selectedDelivery.value === 'ukrpost') {
+      let valid = true;
+      ukrpostFields.querySelectorAll('input[required]').forEach(i => {
+        if (!i.value.trim()) {
+          alert('Будь ласка, заповніть всі обов’язкові поля для Укрпошти.');
+          i.focus();
+          valid = false;
+        }
+      });
+      if (!valid) e.preventDefault();
+    } else if (selectedDelivery.value === 'np') {
+      let valid = true;
+      npFields.querySelectorAll('input[required]').forEach(i => {
+        if (!i.value.trim()) {
+          alert('Будь ласка, заповніть всі обов’язкові поля для Нової пошти.');
+          i.focus();
+          valid = false;
+        }
+      });
+      if (!valid) e.preventDefault();
+    }
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      e.preventDefault();
+      return;
+    }
+
+    if (!form.color.value) {
+      alert('Будь ласка, оберіть колір товару.');
+      form.color.focus();
+      e.preventDefault();
+      return;
+    }
+  });
+</script>
