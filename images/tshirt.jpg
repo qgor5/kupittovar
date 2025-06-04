@@ -1,0 +1,24 @@
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ремінці для годинника (1)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+    img {
+      max-width: 300px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Ремінці для годинника з натуральної якісної шкіри</h1>
+  <img src="images/remintsi-dlya-hodynnyka-z-naturalnoi-yakisnoi-shkiry (2).webp" alt="Ремінці для годинника" />
+  <p>Ціна / Цена: 350 ₴</p>
+  <button>Купити / Купить</button>
+</body>
+</html>
