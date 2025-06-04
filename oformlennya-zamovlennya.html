@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="uk">
 <head>
 <meta charset="UTF-8" />
@@ -12,63 +12,6 @@
     padding: 10px;
     background: #f9f9f9;
     color: #333;
-  }
-  h2 {
-    text-align: center;
-  }
-  #product-summary {
-    background:#fff; 
-    padding:15px; 
-    border:1px solid #ccc; 
-    border-radius:8px; 
-    margin-bottom:20px; 
-    display:flex; 
-    gap:15px; 
-    align-items:center;
-  }
-  #product-summary img {
-    width: 100px; 
-    height: auto; 
-    border-radius:6px; 
-    box-shadow:0 2px 6px rgba(0,0,0,0.1);
-  }
-  #product-details {
-    flex:1;
-  }
-  #product-details h3 {
-    margin:0 0 10px 0;
-  }
-  #product-details p {
-    margin:4px 0;
-  }
-  #quantity-control {
-    display:flex; 
-    align-items:center; 
-    gap:10px;
-    margin-top:5px;
-  }
-  #quantity-control label {
-    font-weight: bold;
-  }
-  #quantity-control button {
-    padding:4px 10px;
-    cursor: pointer;
-  }
-  #quantity-control input[type=number] {
-    width:50px; 
-    text-align:center;
-    border-radius:4px;
-    border:1px solid #ccc;
-    padding: 4px;
-  }
-  #total-price {
-    margin-top:10px; 
-    font-weight:bold;
-  }
-  form {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
   }
   label {
     display: block;
@@ -85,6 +28,11 @@
     box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 4px;
+  }
+  fieldset {
+    margin-top: 20px;
+    padding: 10px;
+    border: none;
   }
   .color-option {
     font-weight: bold;
@@ -140,7 +88,7 @@
     display: block;
     margin-top: 10px;
   }
-  /* Скрываемые блоки */
+  /* Стили для скрываемых блоков */
   .hidden {
     display: none;
   }
@@ -149,22 +97,6 @@
 <body>
 
 <h2>Оформлення замовлення</h2>
-
-<!-- Блок с товаром -->
-<div id="product-summary">
-  <img id="product-image" src="" alt="Фото товару" />
-  <div id="product-details">
-    <h3 id="product-name"></h3>
-    <p>Ціна за одиницю: <span id="unit-price">0</span> грн</p>
-    <div id="quantity-control">
-      <label for="quantity">Кількість:</label>
-      <button type="button" id="decrease">−</button>
-      <input type="number" id="quantity" name="quantity" value="1" min="1" />
-      <button type="button" id="increase">+</button>
-    </div>
-    <p id="total-price">Загальна сума: 0 грн</p>
-  </div>
-</div>
 
 <form id="order-form" method="POST" action="https://formsubmit.co/elits485@gmail.com" novalidate>
   
@@ -224,18 +156,11 @@
   <textarea id="comments" name="comments" rows="3" placeholder="Ваші побажання до замовлення..."></textarea>
 
   <!-- Скрытые поля для FormSubmit -->
-  <input type="hidden" name="_next" value="https://kupittovar.netlify.app/order-success.html" />
+  <input type="hidden" name="_next" value="order-success.html" />
   <input type="hidden" name="_captcha" value="false" />
-  <!-- Скрытые поля для передачи данных товара -->
-  <input type="hidden" name="product-name" id="hidden-name" />
-  <input type="hidden" name="product-image" id="hidden-image" />
-  <input type="hidden" name="total-price" id="hidden-total" />
-  <input type="hidden" name="quantity" id="hidden-quantity" />
 
   <button type="submit" class="submit-btn">Підтвердити замовлення</button>
 </form>
-
-<a href="kozhani-korzina.html" style="display:block; margin-top: 15px; color: #007bff; text-decoration:none;">← Повернутись до кошика</a>
 
 <script>
   // Аккордеон открытия выбора почты
@@ -305,69 +230,19 @@
       });
       if (!valid) e.preventDefault();
     }
-  });
 
-  // Функция для получения параметров из URL
-  function getQueryParam(param) {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(param);
-  }
-
-  // Инициализация товара из параметров
-  const productName = decodeURIComponent(getQueryParam('name') || '');
-  const productPrice = parseFloat(getQueryParam('price') || '0');
-  const productImage = decodeURIComponent(getQueryParam('image') || '');
-  let productQty = parseInt(getQueryParam('qty')) || 1;
-
-  const productNameEl = document.getElementById('product-name');
-  const productImageEl = document.getElementById('product-image');
-  const unitPriceEl = document.getElementById('unit-price');
-  const quantityInput = document.getElementById('quantity');
-  const totalPriceEl = document.getElementById('total-price');
-
-  // Скрытые поля формы
-  const hiddenName = document.getElementById('hidden-name');
-  const hiddenImage = document.getElementById('hidden-image');
-  const hiddenTotal = document.getElementById('hidden-total');
-  const hiddenQty = document.getElementById('hidden-quantity');
-
-  function updateTotal() {
-    const qty = parseInt(quantityInput.value);
-    const total = (productPrice * qty).toFixed(2);
-    totalPriceEl.textContent = `Загальна сума: ${total} грн`;
-
-    // Обновляем скрытые поля
-    hiddenName.value = productName;
-    hiddenImage.value = productImage;
-    hiddenTotal.value = total;
-    hiddenQty.value = qty;
-  }
-
-  // Заполнение данных товара
-  productNameEl.textContent = productName;
-  productImageEl.src = productImage;
-  productImageEl.alt = productName;
-  unitPriceEl.textContent = productPrice.toFixed(2);
-  quantityInput.value = productQty > 0 ? productQty : 1;
-  updateTotal();
-
-  // Обработка кнопок +/−
-  document.getElementById('increase').addEventListener('click', () => {
-    quantityInput.value = parseInt(quantityInput.value) + 1;
-    updateTotal();
-  });
-  document.getElementById('decrease').addEventListener('click', () => {
-    const current = parseInt(quantityInput.value);
-    if (current > 1) {
-      quantityInput.value = current - 1;
-      updateTotal();
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      e.preventDefault();
+      return;
     }
-  });
-  quantityInput.addEventListener('input', () => {
-    let val = parseInt(quantityInput.value);
-    if (isNaN(val) || val < 1) val = 1;
-    quantityInput.value = val;
-    updateTotal();
+
+    if (!form.color.value) {
+      alert('Будь ласка, оберіть колір товару.');
+      form.color.focus();
+      e.preventDefault();
+      return;
+    }
   });
 </script>
 
