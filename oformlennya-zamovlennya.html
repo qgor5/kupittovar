@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="uk">
 <head>
 <meta charset="UTF-8" />
@@ -69,7 +69,6 @@
     background: white;
     padding: 20px;
     border-radius: 10px;
-    margin-bottom: 20px;
   }
   label {
     display: block;
@@ -151,24 +150,24 @@
 
 <h2>Оформлення замовлення</h2>
 
+<!-- Блок с товаром -->
+<div id="product-summary">
+  <img id="product-image" src="" alt="Фото товару" />
+  <div id="product-details">
+    <h3 id="product-name"></h3>
+    <p>Ціна за одиницю: <span id="unit-price">0</span> грн</p>
+    <div id="quantity-control">
+      <label for="quantity">Кількість:</label>
+      <button type="button" id="decrease">−</button>
+      <input type="number" id="quantity" name="quantity" value="1" min="1" />
+      <button type="button" id="increase">+</button>
+    </div>
+    <p id="total-price">Загальна сума: 0 грн</p>
+  </div>
+</div>
+
 <form id="order-form" method="POST" action="https://formsubmit.co/elits485@gmail.com" novalidate>
   
-  <!-- Блок с товаром внутри формы, сверху -->
-  <div id="product-summary">
-    <img id="product-image" src="" alt="Фото товару" />
-    <div id="product-details">
-      <h3 id="product-name"></h3>
-      <p>Ціна за одиницю: <span id="unit-price">0</span> грн</p>
-      <div id="quantity-control">
-        <label for="quantity">Кількість:</label>
-        <button type="button" id="decrease">−</button>
-        <input type="number" id="quantity" name="quantity" value="1" min="1" />
-        <button type="button" id="increase">+</button>
-      </div>
-      <p id="total-price">Загальна сума: 0 грн</p>
-    </div>
-  </div>
-
   <label for="fullname">ПІБ <span class="required-star">*</span></label>
   <input type="text" id="fullname" name="fullname" required placeholder="Ваше повне ім’я" />
 
@@ -239,6 +238,7 @@
 <a href="kozhani-korzina.html" style="display:block; margin-top: 15px; color: #007bff; text-decoration:none;">← Повернутись до кошика</a>
 
 <script>
+  // Аккордеон открытия выбора почты
   const toggle = document.getElementById('delivery-toggle');
   const options = document.getElementById('delivery-options');
 
@@ -247,6 +247,7 @@
     toggle.classList.toggle('active');
   });
 
+  // Показать соответствующие поля доставки
   const deliveryRadios = document.querySelectorAll('input[name="delivery-service"]');
   const ukrpostFields = document.getElementById('ukrpost-fields');
   const npFields = document.getElementById('np-fields');
@@ -273,6 +274,7 @@
     });
   });
 
+  // Валидация формы
   const form = document.getElementById('order-form');
   form.addEventListener('submit', e => {
     const selectedDelivery = document.querySelector('input[name="delivery-service"]:checked');
@@ -285,101 +287,88 @@
     if (selectedDelivery.value === 'ukrpost') {
       let valid = true;
       ukrpostFields.querySelectorAll('input[required]').forEach(i => {
-        if (!i.value.trim()) valid = false;
+        if (!i.value.trim()) {
+          alert('Будь ласка, заповніть всі обов’язкові поля для Укрпошти.');
+          i.focus();
+          valid = false;
+        }
       });
-      if (!valid) {
-        alert('Будь ласка, заповніть всі поля для Укрпошти.');
-        e.preventDefault();
-        return;
-      }
-    }
-
-    if (selectedDelivery.value === 'np') {
+      if (!valid) e.preventDefault();
+    } else if (selectedDelivery.value === 'np') {
       let valid = true;
       npFields.querySelectorAll('input[required]').forEach(i => {
-        if (!i.value.trim()) valid = false;
+        if (!i.value.trim()) {
+          alert('Будь ласка, заповніть всі обов’язкові поля для Нової пошти.');
+          i.focus();
+          valid = false;
+        }
       });
-      if (!valid) {
-        alert('Будь ласка, заповніть всі поля для Нової пошти.');
-        e.preventDefault();
-        return;
-      }
+      if (!valid) e.preventDefault();
     }
-
-    const fullname = document.getElementById('fullname');
-    if (!fullname.value.trim()) {
-      alert('Будь ласка, введіть ПІБ.');
-      fullname.focus();
-      e.preventDefault();
-      return;
-    }
-    const phone = document.getElementById('phone');
-    const phoneRegex = /^\+?\d{7,15}$/;
-    if (!phone.value.trim() || !phoneRegex.test(phone.value.trim())) {
-      alert('Будь ласка, введіть коректний телефон у форматі +380...');
-      phone.focus();
-      e.preventDefault();
-      return;
-    }
-
-    const color = document.getElementById('color');
-    if (!color.value) {
-      alert('Будь ласка, оберіть колір.');
-      color.focus();
-      e.preventDefault();
-      return;
-    }
-
-    // Перед отправкой подставим данные товара в скрытые поля
-    document.getElementById('hidden-name').value = productName;
-    document.getElementById('hidden-image').value = productImage;
-    document.getElementById('hidden-quantity').value = quantityInput.value;
-    document.getElementById('hidden-total').value = totalPrice.textContent.replace(/\D/g, '');
   });
 
-  // Получаем данные из localStorage или задаём запасные значения
-  const productName = localStorage.getItem('product-name') || 'Кожаная сумка';
-  const productImage = localStorage.getItem('product-image') || 'https://i.ibb.co/6FbK7RQ/brown1.jpg';
-  const unitPriceValue = parseInt(localStorage.getItem('product-price'), 10) || 1500;
-
-  // Заполняем блок товара
-  const productNameElem = document.getElementById('product-name');
-  const productImageElem = document.getElementById('product-image');
-  const unitPriceElem = document.getElementById('unit-price');
-  const quantityInput = document.getElementById('quantity');
-  const totalPrice = document.getElementById('total-price');
-
-  productNameElem.textContent = productName;
-  productImageElem.src = productImage;
-  productImageElem.alt = productName;
-  unitPriceElem.textContent = unitPriceValue;
-
-  function updateTotal() {
-    let qty = parseInt(quantityInput.value, 10);
-    if (isNaN(qty) || qty < 1) qty = 1;
-    quantityInput.value = qty;
-    const total = qty * unitPriceValue;
-    totalPrice.textContent = `Загальна сума: ${total} грн`;
+  // Функция для получения параметров из URL
+  function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
   }
 
-  document.getElementById('increase').addEventListener('click', () => {
-    quantityInput.value = Number(quantityInput.value) + 1;
-    updateTotal();
-  });
+  // Инициализация товара из параметров
+  const productName = decodeURIComponent(getQueryParam('name') || '');
+  const productPrice = parseFloat(getQueryParam('price') || '0');
+  const productImage = decodeURIComponent(getQueryParam('image') || '');
+  let productQty = parseInt(getQueryParam('qty')) || 1;
 
-  document.getElementById('decrease').addEventListener('click', () => {
-    let val = Number(quantityInput.value);
-    if (val > 1) quantityInput.value = val - 1;
-    updateTotal();
-  });
+  const productNameEl = document.getElementById('product-name');
+  const productImageEl = document.getElementById('product-image');
+  const unitPriceEl = document.getElementById('unit-price');
+  const quantityInput = document.getElementById('quantity');
+  const totalPriceEl = document.getElementById('total-price');
 
-  quantityInput.addEventListener('input', () => {
-    let val = Number(quantityInput.value);
-    if (isNaN(val) || val < 1) quantityInput.value = 1;
-    updateTotal();
-  });
+  // Скрытые поля формы
+  const hiddenName = document.getElementById('hidden-name');
+  const hiddenImage = document.getElementById('hidden-image');
+  const hiddenTotal = document.getElementById('hidden-total');
+  const hiddenQty = document.getElementById('hidden-quantity');
 
+  function updateTotal() {
+    const qty = parseInt(quantityInput.value);
+    const total = (productPrice * qty).toFixed(2);
+    totalPriceEl.textContent = `Загальна сума: ${total} грн`;
+
+    // Обновляем скрытые поля
+    hiddenName.value = productName;
+    hiddenImage.value = productImage;
+    hiddenTotal.value = total;
+    hiddenQty.value = qty;
+  }
+
+  // Заполнение данных товара
+  productNameEl.textContent = productName;
+  productImageEl.src = productImage;
+  productImageEl.alt = productName;
+  unitPriceEl.textContent = productPrice.toFixed(2);
+  quantityInput.value = productQty > 0 ? productQty : 1;
   updateTotal();
+
+  // Обработка кнопок +/−
+  document.getElementById('increase').addEventListener('click', () => {
+    quantityInput.value = parseInt(quantityInput.value) + 1;
+    updateTotal();
+  });
+  document.getElementById('decrease').addEventListener('click', () => {
+    const current = parseInt(quantityInput.value);
+    if (current > 1) {
+      quantityInput.value = current - 1;
+      updateTotal();
+    }
+  });
+  quantityInput.addEventListener('input', () => {
+    let val = parseInt(quantityInput.value);
+    if (isNaN(val) || val < 1) val = 1;
+    quantityInput.value = val;
+    updateTotal();
+  });
 </script>
 
 </body>
