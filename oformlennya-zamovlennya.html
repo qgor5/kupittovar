@@ -1,250 +1,116 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Оформлення замовлення</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    max-width: 480px;
-    margin: 20px auto;
-    padding: 10px;
-    background: #f9f9f9;
-    color: #333;
-  }
-  label {
-    display: block;
-    margin-top: 15px;
-    font-weight: bold;
-  }
-  input[type="text"],
-  input[type="tel"],
-  select,
-  textarea {
-    width: 100%;
-    padding: 8px;
-    margin-top: 6px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  fieldset {
-    margin-top: 20px;
-    padding: 10px;
-    border: none;
-  }
-  .color-option {
-    font-weight: bold;
-  }
-  select option[value="коричневий"] { color: brown; }
-  select option[value="зелений"] { color: green; }
-  select option[value="червоний"] { color: red; }
-  select option[value="чорний"] { color: black; }
-  .submit-btn {
-    margin-top: 25px;
-    padding: 12px 20px;
-    background: #007bff;
-    border: none;
-    color: white;
-    font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
-  }
-  .submit-btn:hover {
-    background: #0056b3;
-  }
-  .required-star {
-    color: red;
-  }
-  /* Аккордеон */
-  #delivery-toggle {
-    cursor: pointer;
-    padding: 10px 15px;
-    background: #eee;
-    border-radius: 5px;
-    user-select: none;
-    font-weight: bold;
-    margin-top: 15px;
-    position: relative;
-  }
-  #delivery-toggle::after {
-    content: "▼";
-    position: absolute;
-    right: 15px;
-    transition: transform 0.3s ease;
-  }
-  #delivery-toggle.active::after {
-    transform: rotate(-180deg);
-  }
-  #delivery-options {
-    display: none;
-    margin-top: 10px;
-    padding-left: 15px;
-  }
-  #delivery-options label {
-    font-weight: normal;
-    display: block;
-    margin-top: 10px;
-  }
-  /* Стили для скрываемых блоков */
-  .hidden {
-    display: none;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Оформлення замовлення</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+    }
+    .product-summary {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 30px;
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 10px;
+    }
+    .product-summary img {
+      max-width: 150px;
+      border-radius: 8px;
+    }
+    .product-details {
+      flex: 1;
+    }
+    .product-details h2 {
+      margin: 0 0 10px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input[type="text"],
+    input[type="tel"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .btn-primary {
+      background-color: #28a745;
+      color: white;
+      margin-right: 10px;
+    }
+    .btn-secondary {
+      background-color: #6c757d;
+      color: white;
+    }
+  </style>
 </head>
 <body>
+  <div class="container">
+    <h1>Оформлення замовлення</h1>
 
-<h2>Оформлення замовлення</h2>
+    <div class="product-summary">
+      <img id="productImage" src="" alt="Товар" />
+      <div class="product-details">
+        <h2 id="productName"></h2>
+        <p><strong>Ціна:</strong> <span id="productPrice"></span> грн</p>
+        <p><strong>Кількість:</strong> <span id="productQty"></span></p>
+      </div>
+    </div>
 
-<form id="order-form" method="POST" action="https://formsubmit.co/elits485@gmail.com" novalidate>
-  
-  <label for="fullname">ПІБ <span class="required-star">*</span></label>
-  <input type="text" id="fullname" name="fullname" required placeholder="Ваше повне ім’я" />
+    <form>
+      <div class="form-group">
+        <label for="name">ПІБ</label>
+        <input type="text" id="name" name="name" required />
+      </div>
 
-  <label for="phone">Телефон <span class="required-star">*</span></label>
-  <input type="tel" id="phone" name="phone" required placeholder="+380..." pattern="^\+?\d{7,15}$" />
+      <div class="form-group">
+        <label for="phone">Телефон</label>
+        <input type="tel" id="phone" name="phone" required />
+      </div>
 
-  <div id="delivery-toggle">Пошта <span class="required-star">*</span></div>
-  
-  <div id="delivery-options">
-    <label>
-      <input type="radio" name="delivery-service" value="ukrpost" />
-      Укрпошта
-    </label>
-    <label>
-      <input type="radio" name="delivery-service" value="np" />
-      Нова пошта
-    </label>
+      <div class="form-group">
+        <label for="address">Адреса доставки</label>
+        <textarea id="address" name="address" rows="3" required></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Підтвердити замовлення</button>
+      <a href="kozhani-korzina.html" class="btn btn-secondary">Повернутись до кошика</a>
+    </form>
   </div>
 
-  <div id="ukrpost-fields" class="hidden" style="margin-top: 15px;">
-    <label for="ukrpost-index">Поштовий індекс <span class="required-star">*</span></label>
-    <input type="text" id="ukrpost-index" name="ukrpost-index" pattern="^\d{5}$" placeholder="Наприклад: 01001" />
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const name = decodeURIComponent(params.get('name') || '');
+    const price = decodeURIComponent(params.get('price') || '');
+    const qty = decodeURIComponent(params.get('qty') || '');
+    const image = decodeURIComponent(params.get('image') || '');
 
-    <label for="ukrpost-city">Місто <span class="required-star">*</span></label>
-    <input type="text" id="ukrpost-city" name="ukrpost-city" placeholder="Наприклад: Київ" />
-
-    <label for="ukrpost-street">Вулиця <span class="required-star">*</span></label>
-    <input type="text" id="ukrpost-street" name="ukrpost-street" placeholder="Наприклад: Хрещатик, 1" />
-  </div>
-
-  <div id="np-fields" class="hidden" style="margin-top: 15px;">
-    <label for="np-region">Область <span class="required-star">*</span></label>
-    <input type="text" id="np-region" name="np-region" placeholder="Наприклад: Київська" />
-
-    <label for="np-city">Місто <span class="required-star">*</span></label>
-    <input type="text" id="np-city" name="np-city" placeholder="Наприклад: Київ" />
-
-    <label for="np-branch">Номер відділення <span class="required-star">*</span></label>
-    <input type="text" id="np-branch" name="np-branch" placeholder="Наприклад: 45" />
-  </div>
-
-  <label for="color" style="margin-top: 20px;">
-    Виберіть колір <span class="required-star">*</span>
-  </label>
-  <select id="color" name="color" required>
-    <option value="" disabled selected>Оберіть колір</option>
-    <option value="коричневий" style="color:brown;">Коричневий</option>
-    <option value="зелений" style="color:green;">Зелений</option>
-    <option value="червоний" style="color:red;">Червоний</option>
-    <option value="чорний" style="color:black;">Чорний</option>
-  </select>
-
-  <label for="comments" style="margin-top: 15px;">Коментарі / побажання (необов’язково)</label>
-  <textarea id="comments" name="comments" rows="3" placeholder="Ваші побажання до замовлення..."></textarea>
-
-  <!-- Скрытые поля для FormSubmit -->
-  <input type="hidden" name="_next" value="https://kupittovar.netlify.app/order-success.html" />
-  <input type="hidden" name="_captcha" value="false" />
-
-  <button type="submit" class="submit-btn">Підтвердити замовлення</button>
-</form>
-
-<script>
-  // Аккордеон открытия выбора почты
-  const toggle = document.getElementById('delivery-toggle');
-  const options = document.getElementById('delivery-options');
-
-  toggle.addEventListener('click', () => {
-    options.style.display = options.style.display === 'block' ? 'none' : 'block';
-    toggle.classList.toggle('active');
-  });
-
-  // Показать соответствующие поля доставки
-  const deliveryRadios = document.querySelectorAll('input[name="delivery-service"]');
-  const ukrpostFields = document.getElementById('ukrpost-fields');
-  const npFields = document.getElementById('np-fields');
-
-  deliveryRadios.forEach(radio => {
-    radio.addEventListener('change', () => {
-      if (radio.value === 'ukrpost') {
-        ukrpostFields.classList.remove('hidden');
-        npFields.classList.add('hidden');
-        ukrpostFields.querySelectorAll('input').forEach(i => i.required = true);
-        npFields.querySelectorAll('input').forEach(i => {
-          i.required = false;
-          i.value = '';
-        });
-      } else if (radio.value === 'np') {
-        npFields.classList.remove('hidden');
-        ukrpostFields.classList.add('hidden');
-        npFields.querySelectorAll('input').forEach(i => i.required = true);
-        ukrpostFields.querySelectorAll('input').forEach(i => {
-          i.required = false;
-          i.value = '';
-        });
-      }
-    });
-  });
-
-  // Валидация формы
-  const form = document.getElementById('order-form');
-  form.addEventListener('submit', e => {
-    const selectedDelivery = document.querySelector('input[name="delivery-service"]:checked');
-    if (!selectedDelivery) {
-      alert('Будь ласка, виберіть службу доставки.');
-      e.preventDefault();
-      return;
-    }
-
-    if (selectedDelivery.value === 'ukrpost') {
-      let valid = true;
-      ukrpostFields.querySelectorAll('input[required]').forEach(i => {
-        if (!i.value.trim()) {
-          alert('Будь ласка, заповніть всі обов’язкові поля для Укрпошти.');
-          i.focus();
-          valid = false;
-        }
-      });
-      if (!valid) e.preventDefault();
-    } else if (selectedDelivery.value === 'np') {
-      let valid = true;
-      npFields.querySelectorAll('input[required]').forEach(i => {
-        if (!i.value.trim()) {
-          alert('Будь ласка, заповніть всі обов’язкові поля для Нової пошти.');
-          i.focus();
-          valid = false;
-        }
-      });
-      if (!valid) e.preventDefault();
-    }
-
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      e.preventDefault();
-      return;
-    }
-
-    if (!form.color.value) {
-      alert('Будь ласка, оберіть колір товару.');
-      form.color.focus();
-      e.preventDefault();
-      return;
-    }
-  });
-</script>
-
+    document.getElementById('productName').textContent = name;
+    document.getElementById('productPrice').textContent = price;
+    document.getElementById('productQty').textContent = qty;
+    document.getElementById('productImage').src = image;
+  </script>
 </body>
 </html>
