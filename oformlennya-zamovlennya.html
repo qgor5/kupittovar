@@ -1,4 +1,55 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Оформлення замовлення</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    max-width: 480px;
+    margin: 20px auto;
+    padding: 0 15px;
+  }
+  label {
+    display: block;
+    margin-top: 15px;
+    font-weight: 600;
+  }
+  input, select, textarea, button {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 5px;
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  fieldset {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 15px;
+  }
+  legend {
+    font-weight: 700;
+  }
+  .submit-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 25px;
+    font-weight: 700;
+  }
+  .submit-btn:hover {
+    background-color: #0056b3;
+  }
+</style>
+</head>
+<body>
+
 <form id="order-form" novalidate>
+
   <label for="fullname">ПІБ <span aria-hidden="true" style="color:red;">*</span></label>
   <input type="text" id="fullname" name="fullname" required placeholder="Ваше повне ім’я" />
 
@@ -7,10 +58,12 @@
 
   <fieldset>
     <legend>Виберіть службу доставки <span aria-hidden="true" style="color:red;">*</span></legend>
+
     <label>
       <input type="radio" name="delivery-service" value="ukrpost" required />
       Укрпошта
     </label>
+
     <label style="margin-left:20px;">
       <input type="radio" name="delivery-service" value="np" />
       Нова пошта
@@ -42,21 +95,29 @@
     <input type="text" id="np-branch" name="np-branch" placeholder="Наприклад: 45" />
   </div>
 
-  <label for="color" style="margin-top: 20px; font-weight: bold; color:#d00;">
-    Обов’язковий вибір кольору <span aria-hidden="true" style="color:red;">*</span>
+  <label for="color" style="margin-top: 20px; font-weight: bold;">
+    Обов’язковий вибір 
+    <span style="color:brown;">коричневий</span>, 
+    <span style="color:green;">зелений</span>, 
+    <span style="color:red;">червоний</span> 
+    або 
+    <span style="color:black;">чорний</span> 
+    <span aria-hidden="true" style="color:red;">*</span>
   </label>
+
   <select id="color" name="color" required>
     <option value="" disabled selected>Оберіть колір</option>
-    <option value="коричневий">Коричневий</option>
-    <option value="зелений">Зелений</option>
-    <option value="червоний">Червоний</option>
-    <option value="чорний">Чорний</option>
+    <option value="коричневий" style="color: brown;">Коричневий</option>
+    <option value="зелений" style="color: green;">Зелений</option>
+    <option value="червоний" style="color: red;">Червоний</option>
+    <option value="чорний" style="color: black;">Чорний</option>
   </select>
 
   <label for="comments" style="margin-top: 15px;">Коментарі / побажання (необов’язково)</label>
   <textarea id="comments" name="comments" rows="3" placeholder="Ваші побажання до замовлення..."></textarea>
 
   <button type="submit" class="submit-btn" style="margin-top:20px;">Підтвердити замовлення</button>
+
 </form>
 
 <script>
@@ -69,9 +130,7 @@
       if (radio.value === 'ukrpost') {
         ukrpostFields.style.display = 'block';
         npFields.style.display = 'none';
-        // Сделаем поля Укрпочты обязательными
         ukrpostFields.querySelectorAll('input').forEach(inp => inp.required = true);
-        // И поля НП — не обязательными
         npFields.querySelectorAll('input').forEach(inp => {
           inp.required = false;
           inp.value = '';
@@ -88,17 +147,15 @@
     });
   });
 
-  // При загрузке, если выбран какой-то delivery, показываем нужные поля
+  // При загрузке проверяем, если уже выбран способ доставки
   const checkedRadio = document.querySelector('input[name="delivery-service"]:checked');
   if (checkedRadio) {
     checkedRadio.dispatchEvent(new Event('change'));
   }
 
-  // Валидация формы при отправке, учитывая обязательность полей доставки
+  // Валидация формы при отправке
   const form = document.getElementById('order-form');
-
   form.addEventListener('submit', e => {
-    // Если доставка не выбрана — ошибка
     const selectedDelivery = document.querySelector('input[name="delivery-service"]:checked');
     if (!selectedDelivery) {
       alert('Будь ласка, виберіть службу доставки.');
@@ -106,46 +163,42 @@
       return;
     }
 
-    // Проверяем обязательные поля доставки вручную
-    let deliveryValid = true;
     if (selectedDelivery.value === 'ukrpost') {
-      ukrpostFields.querySelectorAll('input[required]').forEach(input => {
+      for (const input of ukrpostFields.querySelectorAll('input[required]')) {
         if (!input.value.trim()) {
-          deliveryValid = false;
-          input.focus();
           alert('Будь ласка, заповніть всі обов’язкові поля для Укрпошти.');
+          input.focus();
           e.preventDefault();
-          return false;
+          return;
         }
-      });
+      }
     }
     if (selectedDelivery.value === 'np') {
-      npFields.querySelectorAll('input[required]').forEach(input => {
+      for (const input of npFields.querySelectorAll('input[required]')) {
         if (!input.value.trim()) {
-          deliveryValid = false;
-          input.focus();
           alert('Будь ласка, заповніть всі обов’язкові поля для Нової пошти.');
+          input.focus();
           e.preventDefault();
-          return false;
+          return;
         }
-      });
+      }
     }
 
-    // Далее обычная проверка формы
     if (!form.checkValidity()) {
       form.reportValidity();
       e.preventDefault();
       return;
     }
 
-    // Проверка цвета, если не выбран
     if (!form.color.value) {
       alert('Будь ласка, оберіть колір товару.');
       form.color.focus();
       e.preventDefault();
       return;
     }
-
-    // Всё ок, можно отправлять (можно показать loader и прочее)
+    // Всё ок
   });
 </script>
+
+</body>
+</html>
