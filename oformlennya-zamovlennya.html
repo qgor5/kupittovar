@@ -239,7 +239,6 @@
 <a href="kozhani-korzina.html" style="display:block; margin-top: 15px; color: #007bff; text-decoration:none;">← Повернутись до кошика</a>
 
 <script>
-  // Аккордеон открытия выбора почты
   const toggle = document.getElementById('delivery-toggle');
   const options = document.getElementById('delivery-options');
 
@@ -248,7 +247,6 @@
     toggle.classList.toggle('active');
   });
 
-  // Показать соответствующие поля доставки
   const deliveryRadios = document.querySelectorAll('input[name="delivery-service"]');
   const ukrpostFields = document.getElementById('ukrpost-fields');
   const npFields = document.getElementById('np-fields');
@@ -275,7 +273,6 @@
     });
   });
 
-  // Валидация формы
   const form = document.getElementById('order-form');
   form.addEventListener('submit', e => {
     const selectedDelivery = document.querySelector('input[name="delivery-service"]:checked');
@@ -288,9 +285,7 @@
     if (selectedDelivery.value === 'ukrpost') {
       let valid = true;
       ukrpostFields.querySelectorAll('input[required]').forEach(i => {
-        if (!i.value.trim()) {
-          valid = false;
-        }
+        if (!i.value.trim()) valid = false;
       });
       if (!valid) {
         alert('Будь ласка, заповніть всі поля для Укрпошти.');
@@ -302,9 +297,7 @@
     if (selectedDelivery.value === 'np') {
       let valid = true;
       npFields.querySelectorAll('input[required]').forEach(i => {
-        if (!i.value.trim()) {
-          valid = false;
-        }
+        if (!i.value.trim()) valid = false;
       });
       if (!valid) {
         alert('Будь ласка, заповніть всі поля для Нової пошти.');
@@ -313,7 +306,6 @@
       }
     }
 
-    // Проверка ПІБ и телефона
     const fullname = document.getElementById('fullname');
     if (!fullname.value.trim()) {
       alert('Будь ласка, введіть ПІБ.');
@@ -330,7 +322,6 @@
       return;
     }
 
-    // Цвет
     const color = document.getElementById('color');
     if (!color.value) {
       alert('Будь ласка, оберіть колір.');
@@ -346,21 +337,22 @@
     document.getElementById('hidden-total').value = totalPrice.textContent.replace(/\D/g, '');
   });
 
-  // Инициализация данных товара и цены
+  // Получаем данные из localStorage или задаём запасные значения
   const productName = localStorage.getItem('product-name') || 'Кожаная сумка';
   const productImage = localStorage.getItem('product-image') || 'https://i.ibb.co/6FbK7RQ/brown1.jpg';
   const unitPriceValue = parseInt(localStorage.getItem('product-price'), 10) || 1500;
 
-  // Заполнение начальных данных
-  document.getElementById('product-name').textContent = productName;
-  const productImageElement = document.getElementById('product-image');
-  productImageElement.src = productImage;
-  productImageElement.alt = productName;
-  const unitPrice = document.getElementById('unit-price');
-  unitPrice.textContent = unitPriceValue;
-
+  // Заполняем блок товара
+  const productNameElem = document.getElementById('product-name');
+  const productImageElem = document.getElementById('product-image');
+  const unitPriceElem = document.getElementById('unit-price');
   const quantityInput = document.getElementById('quantity');
   const totalPrice = document.getElementById('total-price');
+
+  productNameElem.textContent = productName;
+  productImageElem.src = productImage;
+  productImageElem.alt = productName;
+  unitPriceElem.textContent = unitPriceValue;
 
   function updateTotal() {
     let qty = parseInt(quantityInput.value, 10);
