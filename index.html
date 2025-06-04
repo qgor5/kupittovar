@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kupittovar</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1 data-lang="title">Інтернет-магазин</h1>
+    <div class="lang-switch">
+      <button id="lang-uk">UA</button>
+      <button id="lang-ru">RU</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="products" class="product-list"></section>
+  </main>
+
+  <aside class="cart">
+    <h2 data-lang="cart">Кошик</h2>
+    <ul id="cart-items"></ul>
+    <p data-lang="total">Всього: <span id="total-price">0</span> ₴</p>
+    <button id="checkout-btn" data-lang="checkout">Оформити замовлення</button>
+  </aside>
+
+  <section id="checkout-form" class="hidden">
+    <h2 data-lang="order">Оформлення замовлення</h2>
+    <form>
+      <input type="text" placeholder="Ім’я" data-lang-placeholder="name" required />
+      <input type="tel" placeholder="Телефон" data-lang-placeholder="phone" required />
+      <input type="email" placeholder="Email" data-lang-placeholder="email" required />
+      <button type="submit" data-lang="submit">Відправити</button>
+    </form>
+  </section>
+
+  <script src="products.js"></script>
+  <script src="cart.js"></script>
+  <script src="lang.js"></script>
+</body>
+</html>
