@@ -51,50 +51,6 @@
   button:hover {
     background: #0056b3;
   }
-  .product-info {
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    background: #fafafa;
-  }
-  .product-info img {
-    max-width: 100px;
-    display: block;
-    margin-bottom: 10px;
-    border-radius: 6px;
-  }
-  .qty-controls {
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-  }
-  .qty-controls button {
-    width: 30px;
-    height: 30px;
-    font-weight: bold;
-    font-size: 18px;
-    padding: 0;
-    margin: 0 10px 0 0;
-    line-height: 1;
-    background: #eee;
-    color: #333;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  .qty-controls input[type=number] {
-    width: 60px;
-    text-align: center;
-    font-size: 16px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-  .total-price {
-    font-weight: bold;
-    margin-top: 10px;
-    font-size: 18px;
-  }
 </style>
 </head>
 <body>
@@ -102,26 +58,13 @@
 <div class="order-container">
   <h1>Оформление заказа</h1>
 
-  <div class="product-info">
-    <img id="product_img" src="" alt="Фото товара" />
-    <div><strong id="product_name_display">Название товара</strong></div>
-
-    <div class="qty-controls">
-      <label for="product_qty">Количество: </label>
-      <button type="button" id="qty_minus">−</button>
-      <input type="number" id="product_qty" name="product_qty" value="1" min="1" />
-      <button type="button" id="qty_plus">+</button>
-    </div>
-
-    <div class="total-price">Итого: <span id="total_price">0</span> грн</div>
-  </div>
-
-  <form id="order-form" method="POST" action="https://formspree.io/f/mgvyvdeb" novalidate>
-    <!-- Скрытые поля с данными, которые будут отправлены -->
-    <input type="hidden" name="product_name" id="product_name" value="" />
-    <input type="hidden" name="product_price" id="product_price" value="" />
-    <input type="hidden" name="product_qty_hidden" id="product_qty_hidden" value="" />
+  <form id="order-form" method="POST" action="https://formsubmit.co/elits485@gmail.com" novalidate>
     
+    <!-- Информация о товаре (скрытые поля или можно выводить как read-only) -->
+    <input type="hidden" name="product_name" id="product_name" value="Название товара" />
+    <input type="hidden" name="product_qty" id="product_qty" value="1" />
+    <input type="hidden" name="product_price" id="product_price" value="1000" />
+
     <!-- Контактная информация -->
     <label for="fullname">ФИО:</label>
     <input type="text" id="fullname" name="fullname" required placeholder="Введите ваше имя" />
@@ -132,82 +75,13 @@
     <label for="address">Адрес доставки:</label>
     <textarea id="address" name="address" required placeholder="Введите адрес доставки" rows="3"></textarea>
 
-    <!-- Для перенаправления после успешной отправки -->
+    <!-- Скрытые поля для formsubmit.co -->
     <input type="hidden" name="_next" value="https://kupittovar.netlify.app/order-success.html" />
     <input type="hidden" name="_captcha" value="false" />
 
     <button type="submit">Подтвердить заказ</button>
   </form>
 </div>
-
-<script>
-  // Функция получения параметров из URL
-  function getQueryParam(param) {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(param);
-  }
-
-  // Инициализация данных товара из URL-параметров
-  const productName = getQueryParam('name') || 'Название товара';
-  const productPrice = parseFloat(getQueryParam('price')) || 1000;
-  const productImg = getQueryParam('img') || '';
-  let productQty = parseInt(getQueryParam('qty')) || 1;
-
-  const productNameDisplay = document.getElementById('product_name_display');
-  const productImgEl = document.getElementById('product_img');
-  const productQtyInput = document.getElementById('product_qty');
-  const productPriceHidden = document.getElementById('product_price');
-  const productNameHidden = document.getElementById('product_name');
-  const productQtyHidden = document.getElementById('product_qty_hidden');
-  const totalPriceEl = document.getElementById('total_price');
-
-  // Заполнение начальных значений
-  productNameDisplay.textContent = productName;
-  productNameHidden.value = productName;
-  productPriceHidden.value = productPrice.toFixed(2);
-  productQtyInput.value = productQty;
-  productQtyHidden.value = productQty;
-
-  if(productImg) {
-    productImgEl.src = decodeURIComponent(productImg);
-    productImgEl.alt = productName;
-  } else {
-    productImgEl.style.display = 'none';
-  }
-
-  // Обновление итоговой цены
-  function updateTotalPrice() {
-    const qty = parseInt(productQtyInput.value) || 1;
-    totalPriceEl.textContent = (qty * productPrice).toFixed(2);
-    productQtyHidden.value = qty;
-  }
-
-  updateTotalPrice();
-
-  // Обработчики кнопок + и −
-  document.getElementById('qty_plus').addEventListener('click', () => {
-    productQtyInput.value = parseInt(productQtyInput.value) + 1;
-    updateTotalPrice();
-  });
-  document.getElementById('qty_minus').addEventListener('click', () => {
-    let currentQty = parseInt(productQtyInput.value);
-    if(currentQty > 1) {
-      productQtyInput.value = currentQty - 1;
-      updateTotalPrice();
-    }
-  });
-
-  // Обновление цены при ручном вводе количества
-  productQtyInput.addEventListener('input', () => {
-    if(productQtyInput.value < 1) productQtyInput.value = 1;
-    updateTotalPrice();
-  });
-
-  // При отправке формы дополнительно обновляем скрытое поле с количеством (на всякий случай)
-  document.getElementById('order-form').addEventListener('submit', () => {
-    productQtyHidden.value = productQtyInput.value;
-  });
-</script>
 
 </body>
 </html>
