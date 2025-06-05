@@ -174,7 +174,7 @@
     nextBtn.addEventListener('click', () => showSlide(currentIndex + 1));
     showSlide(0);
 
-    // При клике "Замовити" передаем количество в корзину через URL параметр
+    // Передача кількості товару в корзину
     document.getElementById('buyBtn').addEventListener('click', function (e) {
       e.preventDefault();
       const qty = document.getElementById('quantity').value || 1;
@@ -210,42 +210,7 @@
       "price": "183",
       "priceValidUntil": "2026-12-31",
       "availability": "http://schema.org/InStock",
-      "itemCondition": "http://schema.org/NewCondition",
-      "shippingDetails": {
-        "@type": "OfferShippingDetails",
-        "shippingRate": {
-          "@type": "MonetaryAmount",
-          "value": "50",
-          "currency": "UAH"
-        },
-        "shippingDestination": {
-          "@type": "DefinedRegion",
-          "addressCountry": "UA"
-        },
-        "deliveryTime": {
-          "@type": "ShippingDeliveryTime",
-          "handlingTime": {
-            "@type": "QuantitativeValue",
-            "minValue": 1,
-            "maxValue": 2,
-            "unitCode": "d"
-          },
-          "transitTime": {
-            "@type": "QuantitativeValue",
-            "minValue": 2,
-            "maxValue": 4,
-            "unitCode": "d"
-          }
-        }
-      },
-      "hasMerchantReturnPolicy": {
-        "@type": "MerchantReturnPolicy",
-        "returnPolicyCategory": "http://schema.org/ReturnPolicyCategory",
-        "returnFees": "FreeReturn",
-        "returnMethod": "http://schema.org/ReturnMethodMail",
-        "returnPolicySeasonalOverride": false,
-        "inStoreReturnFees": "NoReturnFees"
-      }
+      "itemCondition": "http://schema.org/NewCondition"
     }
   }
   </script>
