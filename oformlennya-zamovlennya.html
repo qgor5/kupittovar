@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Оформлення замовлення</title>
 <style>
-  /* Стили оставил как есть */
   body {
     font-family: Arial, sans-serif;
     max-width: 480px;
@@ -153,7 +152,7 @@
 
 <h2>Оформлення замовлення</h2>
 
-<!-- Блок с товаром -->
+<!-- Блок з товаром -->
 <div id="product-summary">
   <img id="product-image" src="" alt="Фото товару" />
   <div id="product-details">
@@ -219,118 +218,132 @@
   </select>
 
   <label for="comments" style="margin-top: 15px;">Коментарі / побажання (необов’язково)</label>
-  <textarea id="comments" name="comments" rows="3" placeholder="Ваші побажання до замовлення..."></textarea>
+  <textarea id="comments" name="comments" rows="3" placeholder="Ваші побажання..."></textarea>
 
   <!-- Скрытые поля с данными товара -->
-  <input type="hidden" name="product-name" id="hidden-name" />
-  <input type="hidden" name="product-image" id="hidden-image" />
-  <input type="hidden" name="total-price" id="hidden-total" />
-  <!-- quantity уже из поля -->
+  <input type="hidden" name="product_name" id="hidden-name" />
+  <input type="hidden" name="product_image" id="hidden-image" />
+  <input type="hidden" name="product_price" id="hidden-unit-price" />
+  <input type="hidden" name="product_quantity" id="hidden-quantity" />
+  <input type="hidden" name="total_price" id="hidden-total" />
+
+  <!-- Для Formspree -->
+  <input type="hidden" name="_next" value="https://kupittovar.netlify.app/order-success.html" />
+  <input type="hidden" name="_captcha" value="false" />
 
   <button type="submit" class="submit-btn">Підтвердити замовлення</button>
 </form>
 
 <script>
-  function getParam(name) {
-    const url = new URL(window.location.href);
-    return url.searchParams.get(name);
+  // Функция для получения параметров URL
+  function getQueryParam(param) {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(param);
   }
 
-  const productName = getParam('productName') || "Кожані ремінці NATO для годинників";
-  const productImage = getParam('productImage') || "https://example.com/default-image.jpg";
-  const unitPrice = parseFloat(getParam('price')) || 600;
+  // Заполнение полей товара из URL
+  const productName = getQueryParam('productName') || "Невідомий товар";
+  const productImage = getQueryParam('productImage') || "";
+  const unitPrice = parseFloat(getQueryParam('price')) || 0;
 
-  document.getElementById('product-name').textContent = productName;
-  const productImageElem = document.getElementById('product-image');
-  productImageElem.src = productImage;
-  productImageElem.alt = `Фото товару: ${productName}`;
-  document.getElementById('unit-price').textContent = unitPrice.toFixed(2);
-
+  const productNameEl = document.getElementById('product-name');
+  const productImageEl = document.getElementById('product-image');
+  const unitPriceEl = document.getElementById('unit-price');
   const quantityInput = document.getElementById('quantity');
-  const decreaseBtn = document.getElementById('decrease');
-  const increaseBtn = document.getElementById('increase');
-  const totalPriceElem = document.getElementById('total-price');
+  const totalPriceEl = document.getElementById('total-price');
+
   const hiddenName = document.getElementById('hidden-name');
   const hiddenImage = document.getElementById('hidden-image');
+  const hiddenUnitPrice = document.getElementById('hidden-unit-price');
+  const hiddenQuantity = document.getElementById('hidden-quantity');
   const hiddenTotal = document.getElementById('hidden-total');
-  const orderForm = document.getElementById('order-form');
 
-  function updateTotal() {
+  productNameEl.textContent = productName;
+  if(productImage) {
+    productImageEl.src = productImage;
+    productImageEl.alt = productName;
+  } else {
+    productImageEl.style.display = 'none';
+  }
+  unitPriceEl.textContent = unitPrice.toFixed(2);
+
+  // Обновление общей суммы и скрытых полей
+  function updateTotalPrice() {
     let qty = parseInt(quantityInput.value);
-    if (isNaN(qty) || qty < 1) qty = 1;
-    quantityInput.value = qty; // чтобы не оставалось пустым
+    if (isNaN(qty) || qty < 1) {
+      qty = 1;
+      quantityInput.value = qty;
+    }
     const total = qty * unitPrice;
-    totalPriceElem.textContent = `Загальна сума: ${total.toFixed(2)} грн`;
-    hiddenTotal.value = total.toFixed(2);
+    totalPriceEl.textContent = `Загальна сума: ${total.toFixed(2)} грн`;
+
     hiddenName.value = productName;
     hiddenImage.value = productImage;
-
-    decreaseBtn.disabled = qty <= 1;
+    hiddenUnitPrice.value = unitPrice.toFixed(2);
+    hiddenQuantity.value = qty;
+    hiddenTotal.value = total.toFixed(2);
   }
 
-  decreaseBtn.addEventListener('click', () => {
-    let current = parseInt(quantityInput.value) || 1;
-    if (current > 1) {
-      quantityInput.value = current - 1;
-      updateTotal();
+  quantityInput.addEventListener('input', updateTotalPrice);
+
+  document.getElementById('increase').addEventListener('click', () => {
+    quantityInput.value = parseInt(quantityInput.value) + 1;
+    updateTotalPrice();
+  });
+
+  document.getElementById('decrease').addEventListener('click', () => {
+    let val = parseInt(quantityInput.value);
+    if (val > 1) {
+      quantityInput.value = val - 1;
+      updateTotalPrice();
     }
   });
 
-  increaseBtn.addEventListener('click', () => {
-    let current = parseInt(quantityInput.value) || 1;
-    quantityInput.value = current + 1;
-    updateTotal();
-  });
+  updateTotalPrice();
 
-  quantityInput.addEventListener('input', () => {
-    let val = parseInt(quantityInput.value);
-    if (!val || val < 1) quantityInput.value = 1;
-    updateTotal();
-  });
-
-  updateTotal();
-
+  // Логика раскрытия/сокрытия блока доставки
   const deliveryToggle = document.getElementById('delivery-toggle');
   const deliveryOptions = document.getElementById('delivery-options');
+  const ukrpostFields = document.getElementById('ukrpost-fields');
+  const npFields = document.getElementById('np-fields');
+  const deliveryRadios = document.querySelectorAll('input[name="delivery-service"]');
 
   deliveryToggle.addEventListener('click', () => {
-    const expanded = deliveryToggle.classList.toggle('active');
-    deliveryOptions.style.display = expanded ? 'block' : 'none';
-    deliveryToggle.setAttribute('aria-expanded', expanded);
-    deliveryOptions.setAttribute('aria-hidden', !expanded);
+    const isExpanded = deliveryToggle.classList.toggle('active');
+    deliveryOptions.style.display = isExpanded ? 'block' : 'none';
+    deliveryToggle.setAttribute('aria-expanded', isExpanded);
+    deliveryOptions.setAttribute('aria-hidden', !isExpanded);
   });
 
-  deliveryToggle.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
+  deliveryToggle.addEventListener('keydown', e => {
+    if(e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       deliveryToggle.click();
     }
   });
 
-  const ukrpostFields = document.getElementById('ukrpost-fields');
-  const npFields = document.getElementById('np-fields');
-
-  deliveryOptions.addEventListener('change', (e) => {
-    if (e.target.name === 'delivery-service') {
-      if (e.target.value === 'ukrpost') {
+  // Отслеживаем выбор службы доставки
+  deliveryRadios.forEach(radio => {
+    radio.addEventListener('change', () => {
+      if(radio.value === 'ukrpost' && radio.checked) {
         ukrpostFields.classList.remove('hidden');
         npFields.classList.add('hidden');
-        // required for Ukrpost inputs
+        // required для полей укрпошти
         setRequired(ukrpostFields, true);
         setRequired(npFields, false);
-      } else if (e.target.value === 'np') {
+      } else if(radio.value === 'np' && radio.checked) {
         npFields.classList.remove('hidden');
         ukrpostFields.classList.add('hidden');
         setRequired(npFields, true);
         setRequired(ukrpostFields, false);
       }
-    }
+    });
   });
 
   function setRequired(container, isRequired) {
     const inputs = container.querySelectorAll('input');
     inputs.forEach(input => {
-      if (isRequired) {
+      if(isRequired) {
         input.setAttribute('required', 'required');
       } else {
         input.removeAttribute('required');
@@ -338,33 +351,48 @@
     });
   }
 
-  // Валидация формы перед отправкой
-  orderForm.addEventListener('submit', (e) => {
-    // Проверяем, что выбран способ доставки
-    const deliverySelected = [...orderForm.elements['delivery-service']].some(r => r.checked);
-    if (!deliverySelected) {
-      alert('Будь ласка, оберіть службу доставки.');
+  // Простая валидация формы перед отправкой
+  document.getElementById('order-form').addEventListener('submit', function(e) {
+    // Проверяем, выбрана ли доставка
+    const deliverySelected = Array.from(deliveryRadios).some(r => r.checked);
+    if(!deliverySelected) {
+      alert('Будь ласка, виберіть службу доставки.');
       e.preventDefault();
       return;
     }
 
-    // Дополнительная проверка для почтовых полей:
-    if (orderForm.elements['delivery-service'].value === 'ukrpost') {
-      if (!orderForm.elements['ukrpost-index'].value.trim() ||
-          !orderForm.elements['ukrpost-city'].value.trim() ||
-          !orderForm.elements['ukrpost-street'].value.trim()) {
+    // Проверяем, что обязательные поля доставки заполнены
+    let deliveryValid = true;
+    if(document.querySelector('input[name="delivery-service"]:checked').value === 'ukrpost') {
+      const reqFields = ukrpostFields.querySelectorAll('input[required]');
+      reqFields.forEach(f => {
+        if(!f.value.trim()) deliveryValid = false;
+      });
+      if(!deliveryValid) {
         alert('Будь ласка, заповніть всі поля для Укрпошти.');
         e.preventDefault();
         return;
       }
-    } else if (orderForm.elements['delivery-service'].value === 'np') {
-      if (!orderForm.elements['np-region'].value.trim() ||
-          !orderForm.elements['np-city'].value.trim() ||
-          !orderForm.elements['np-branch'].value.trim()) {
+    } else if(document.querySelector('input[name="delivery-service"]:checked').value === 'np') {
+      const reqFields = npFields.querySelectorAll('input[required]');
+      reqFields.forEach(f => {
+        if(!f.value.trim()) deliveryValid = false;
+      });
+      if(!deliveryValid) {
         alert('Будь ласка, заповніть всі поля для Нової пошти.');
         e.preventDefault();
         return;
       }
+    }
+
+    // Дополнительная валидация телефона
+    const phoneInput = document.getElementById('phone');
+    const phonePattern = /^\+?\d{7,15}$/;
+    if(!phonePattern.test(phoneInput.value.trim())) {
+      alert('Будь ласка, введіть коректний номер телефону.');
+      e.preventDefault();
+      phoneInput.focus();
+      return;
     }
   });
 </script>
