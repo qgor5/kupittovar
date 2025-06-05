@@ -1,1 +1,68 @@
-ккк
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Замовлення успішно оформлено</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f4f8fb;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+  }
+  .container {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    max-width: 400px;
+    width: 100%;
+  }
+  h1 {
+    color: #28a745;
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+  }
+  p {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+  }
+  a.button {
+    display: inline-block;
+    background: #007bff;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  a.button:hover {
+    background: #0056b3;
+  }
+  .checkmark {
+    font-size: 4rem;
+    color: #28a745;
+    margin-bottom: 15px;
+  }
+</style>
+</head>
+<body>
+
+<div class="container" role="main" aria-labelledby="title-success" tabindex="0">
+  <div class="checkmark" aria-hidden="true">✔️</div>
+  <h1 id="title-success">Дякуємо за ваше замовлення!</h1>
+  <p>Ваше замовлення успішно отримано і найближчим часом ми з вами зв’яжемося для підтвердження.</p>
+  <a href="https://kupittovar.netlify.app" class="button" role="button">Повернутися до магазину</a>
+</div>
+
+</body>
+</html>
