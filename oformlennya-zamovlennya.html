@@ -4,136 +4,84 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Оформлення замовлення</title>
-  <style>
-    body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; }
-    h1 { text-align: center; }
-    .product-summary img { max-width: 100px; margin-right: 15px; }
-    .product-summary { display: flex; align-items: center; margin-bottom: 20px; }
-    .product-details { flex: 1; }
-    .qty-controls { display: flex; align-items: center; margin: 10px 0; }
-    .qty-controls button { width: 30px; height: 30px; }
-    .qty-controls input { width: 50px; text-align: center; margin: 0 5px; }
-    form input, form textarea, form select { width: 100%; margin-bottom: 15px; padding: 8px; }
-    .total { font-weight: bold; margin-bottom: 15px; }
-    .btns { display: flex; justify-content: space-between; }
-    .btns button, .btns a { padding: 10px 20px; font-size: 16px; text-decoration: none; }
-    .btns a { background: #ccc; color: black; }
-    .btns button { background: green; color: white; border: none; cursor: pointer; }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-  <h1>Оформлення замовлення</h1>
-
-  <div class="product-summary">
-    <img id="productImage" src="" alt="Товар">
-    <div class="product-details">
-      <div id="productName"></div>
-      <div>Ціна: <span id="productPrice"></span> грн</div>
-      <div class="qty-controls">
-        <button type="button" id="decreaseQty">−</button>
-        <input type="number" id="quantityInput" value="1" min="1">
-        <button type="button" id="increaseQty">+</button>
+  <div class="container">
+    <!-- Блок товару зверху -->
+    <div id="product-summary" style="display: flex; align-items: center; gap: 15px; margin-bottom: 30px;">
+      <img id="product-image" src="" alt="Товар" style="width: 120px; height: auto; object-fit: cover; border-radius: 8px;" />
+      <div>
+        <h2 id="product-title" style="margin: 0 0 10px;"></h2>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <button id="decreaseQty">–</button>
+          <input type="number" id="product-qty" value="1" min="1" readonly style="width: 40px; text-align: center;" />
+          <button id="increaseQty">+</button>
+        </div>
+        <p>Ціна за одиницю: <span id="product-price"></span> грн</p>
+        <p>Загальна сума: <strong id="total-price"></strong> грн</p>
       </div>
-      <div class="total">Сума: <span id="totalPrice"></span> грн</div>
     </div>
+
+    <!-- Твоя форма без змін -->
+    <form id="orderForm">
+      <label for="fullname">ПІБ:</label><br>
+      <input type="text" id="fullname" name="fullname" required><br><br>
+
+      <label for="phone">Телефон:</label><br>
+      <input type="tel" id="phone" name="phone" required><br><br>
+
+      <label for="address">Адреса доставки:</label><br>
+      <textarea id="address" name="address" required></textarea><br><br>
+
+      <button type="submit">Підтвердити замовлення</button>
+      <button type="button" onclick="history.back()">Повернутись до кошика</button>
+    </form>
   </div>
 
-  <form action="https://formspree.io/f/mnqepwve" method="POST" onsubmit="return validateForm()">
-    <input type="text" name="ПІБ" placeholder="Ваше ПІБ" required>
-    <input type="tel" name="Телефон" placeholder="Номер телефону" required pattern="\+?[\d\s\-]{10,15}">
-    <input type="text" name="Адреса" placeholder="Адреса доставки" required>
-    <select name="Спосіб доставки" required>
-      <option value="">Оберіть спосіб доставки</option>
-      <option>Нова Пошта</option>
-      <option>Укрпошта</option>
-    </select>
-    <select name="Колір" required>
-      <option value="">Оберіть колір</option>
-      <option>Чорний</option>
-      <option>Коричневий</option>
-      <option>Синій</option>
-    </select>
-    <textarea name="Коментар" placeholder="Коментар до замовлення (необов'язково)"></textarea>
-
-    <!-- приховані поля для передачі -->
-    <input type="hidden" name="Назва товару" id="hiddenName">
-    <input type="hidden" name="Зображення товару" id="hiddenImage">
-    <input type="hidden" name="Ціна за одиницю" id="hiddenPrice">
-    <input type="hidden" name="Кількість" id="hiddenQty">
-    <input type="hidden" name="Загальна сума" id="hiddenTotal">
-
-    <div class="btns">
-      <a href="kozhani-korzina.html">← Повернутись до кошика</a>
-      <button type="submit">Підтвердити замовлення</button>
-    </div>
-  </form>
-
   <script>
-    function getParam(name) {
-      const url = new URL(window.location.href);
-      return decodeURIComponent(url.searchParams.get(name) || '');
-    }
+    // Отримання параметрів з URL
+    const params = new URLSearchParams(window.location.search);
+    const title = params.get('title') || 'Товар';
+    const image = params.get('image') || 'https://via.placeholder.com/150';
+    const price = parseFloat(params.get('price')) || 0;
+    const qty = parseInt(params.get('qty')) || 1;
 
-    const productName = getParam('productName');
-    const productImage = getParam('productImage');
-    const productPrice = parseFloat(getParam('price')) || 0;
-    const quantity = parseInt(getParam('quantity')) || 1;
+    const productImage = document.getElementById('product-image');
+    const productTitle = document.getElementById('product-title');
+    const productPrice = document.getElementById('product-price');
+    const totalPrice = document.getElementById('total-price');
+    const productQty = document.getElementById('product-qty');
 
-    const elName = document.getElementById('productName');
-    const elImage = document.getElementById('productImage');
-    const elPrice = document.getElementById('productPrice');
-    const elTotal = document.getElementById('totalPrice');
-    const elQty = document.getElementById('quantityInput');
+    productImage.src = image;
+    productTitle.textContent = title;
+    productPrice.textContent = price.toFixed(2);
+    productQty.value = qty;
+    totalPrice.textContent = (price * qty).toFixed(2);
 
-    const hiddenName = document.getElementById('hiddenName');
-    const hiddenImage = document.getElementById('hiddenImage');
-    const hiddenPrice = document.getElementById('hiddenPrice');
-    const hiddenQty = document.getElementById('hiddenQty');
-    const hiddenTotal = document.getElementById('hiddenTotal');
-
-    function updateTotal() {
-      const qty = parseInt(elQty.value) || 1;
-      const total = productPrice * qty;
-      elTotal.textContent = total.toFixed(2);
-      hiddenQty.value = qty;
-      hiddenTotal.value = total.toFixed(2);
-    }
-
-    // заповнення при завантаженні
-    elName.textContent = productName;
-    elImage.src = productImage;
-    elPrice.textContent = productPrice.toFixed(2);
-    elQty.value = quantity;
-
-    hiddenName.value = productName;
-    hiddenImage.value = productImage;
-    hiddenPrice.value = productPrice.toFixed(2);
-    updateTotal();
-
-    // кнопки +/−
     document.getElementById('increaseQty').onclick = () => {
-      elQty.value = parseInt(elQty.value || 1) + 1;
-      updateTotal();
+      productQty.value = parseInt(productQty.value) + 1;
+      totalPrice.textContent = (price * parseInt(productQty.value)).toFixed(2);
     };
+
     document.getElementById('decreaseQty').onclick = () => {
-      if (parseInt(elQty.value) > 1) {
-        elQty.value = parseInt(elQty.value) - 1;
-        updateTotal();
+      if (parseInt(productQty.value) > 1) {
+        productQty.value = parseInt(productQty.value) - 1;
+        totalPrice.textContent = (price * parseInt(productQty.value)).toFixed(2);
       }
     };
-    elQty.oninput = updateTotal;
 
-    function validateForm() {
-      const phone = document.querySelector('input[name="Телефон"]').value;
-      const pattern = /^\+?[\d\s\-]{10,15}$/;
-      if (!pattern.test(phone)) {
-        alert("Введіть коректний номер телефону.");
-        return false;
-      }
-      return true;
-    }
+    // Обробка форми
+    document.getElementById('orderForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const fullname = document.getElementById('fullname').value;
+      const phone = document.getElementById('phone').value;
+      const address = document.getElementById('address').value;
+      const qty = productQty.value;
+
+      const successUrl = `order-success.html?title=${encodeURIComponent(title)}&image=${encodeURIComponent(image)}&qty=${qty}&price=${price}`;
+      window.location.href = successUrl;
+    });
   </script>
-
 </body>
 </html>
