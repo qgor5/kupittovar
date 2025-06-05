@@ -166,7 +166,7 @@
   </div>
 </div>
 
-<form id="order-form" action="https://formspree.io/f/xblylqvd" method="POST" novalidate>
+<form id="order-form" method="POST" action="https://formspree.io/f/xblylqvd" novalidate>
   
   <label for="fullname">ПІБ <span class="required-star">*</span></label>
   <input type="text" id="fullname" name="fullname" required placeholder="Ваше повне ім’я" />
@@ -223,11 +223,15 @@
   <label for="comments" style="margin-top: 15px;">Коментарі / побажання (необов’язково)</label>
   <textarea id="comments" name="comments" rows="3" placeholder="Ваші побажання до замовлення..."></textarea>
 
-  <!-- Скрытые поля с данными товара -->
+  <!-- Скрытые поля для переноса данных товара -->
   <input type="hidden" name="product-name" id="hidden-name" />
   <input type="hidden" name="product-image" id="hidden-image" />
   <input type="hidden" name="total-price" id="hidden-total" />
   <input type="hidden" name="quantity" id="hidden-quantity" />
+
+  <!-- Formspree settings -->
+  <input type="hidden" name="_next" value="https://kupittovar.netlify.app/order-success.html" />
+  <input type="hidden" name="_captcha" value="false" />
 
   <button type="submit" class="submit-btn">Підтвердити замовлення</button>
 </form>
@@ -235,19 +239,16 @@
 <a href="kozhani-korzina.html" style="display:block; margin-top: 15px; color: #007bff; text-decoration:none;">← Повернутись до кошика</a>
 
 <script>
+  // Аккордеон открытия выбора почты
   const toggle = document.getElementById('delivery-toggle');
   const options = document.getElementById('delivery-options');
 
   toggle.addEventListener('click', () => {
-    if (options.style.display === 'block') {
-      options.style.display = 'none';
-      toggle.classList.remove('active');
-    } else {
-      options.style.display = 'block';
-      toggle.classList.add('active');
-    }
+    options.style.display = options.style.display === 'block' ? 'none' : 'block';
+    toggle.classList.toggle('active');
   });
 
+  // Показать соответствующие поля доставки
   const deliveryRadios = document.querySelectorAll('input[name="delivery-service"]');
   const ukrpostFields = document.getElementById('ukrpost-fields');
   const npFields = document.getElementById('np-fields');
@@ -257,26 +258,47 @@
       if (radio.value === 'ukrpost') {
         ukrpostFields.classList.remove('hidden');
         npFields.classList.add('hidden');
-        ukrpostFields.querySelectorAll('input').forEach(i => i.required = true);
-        npFields.querySelectorAll('input').forEach(i => i.required = false);
+        // Требуем поля укрпочты
+        setRequiredFields(ukrpostFields, true);
+        setRequiredFields(npFields, false);
       } else if (radio.value === 'np') {
         npFields.classList.remove('hidden');
         ukrpostFields.classList.add('hidden');
-        npFields.querySelectorAll('input').forEach(i => i.required = true);
-        ukrpostFields.querySelectorAll('input').forEach(i => i.required = false);
+        setRequiredFields(npFields, true);
+        setRequiredFields(ukrpostFields, false);
       }
     });
   });
 
-  function getQueryParam(param) {
-    const params = new URLSearchParams(window.location.search);
-    return params.get(param);
+  function setRequiredFields(container, required) {
+    const inputs = container.querySelectorAll('input');
+    inputs.forEach(input => {
+      if(required) {
+        input.setAttribute('required', 'required');
+      } else {
+        input.removeAttribute('required');
+      }
+    });
   }
 
+  // Получаем данные товара из URL
+  function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+  }
+
+  // Заполняем данные товара
+  const productName = decodeURIComponent(getQueryParam('name') || 'Товар');
+  const productImage = decodeURIComponent(getQueryParam('image') || 'https://via.placeholder.com/100');
+  const unitPrice = parseFloat(getQueryParam('price')) || 0;
+
+  // Элементы на странице
   const productNameEl = document.getElementById('product-name');
   const productImageEl = document.getElementById('product-image');
   const unitPriceEl = document.getElementById('unit-price');
   const quantityInput = document.getElementById('quantity');
+  const decreaseBtn = document.getElementById('decrease');
+  const increaseBtn = document.getElementById('increase');
   const totalPriceEl = document.getElementById('total-price');
 
   const hiddenName = document.getElementById('hidden-name');
@@ -284,42 +306,22 @@
   const hiddenTotal = document.getElementById('hidden-total');
   const hiddenQuantity = document.getElementById('hidden-quantity');
 
-  let unitPrice = 0;
-
-  function loadProductData() {
-    const name = getQueryParam('name') || 'Товар';
-    const image = getQueryParam('image') || 'https://via.placeholder.com/100';
-    const priceStr = getQueryParam('price') || '0';
-    unitPrice = parseFloat(priceStr) || 0;
-
-    productNameEl.textContent = name;
-    productImageEl.src = image;
-    productImageEl.alt = name;
-    unitPriceEl.textContent = unitPrice.toFixed(2);
-
-    updateTotal();
-  }
-
   function updateTotal() {
     let qty = parseInt(quantityInput.value);
-    if (isNaN(qty) || qty < 1) {
-      qty = 1;
-      quantityInput.value = qty;
-    }
-    const total = unitPrice * qty;
+    if (qty < 1 || isNaN(qty)) qty = 1;
+    quantityInput.value = qty;
+
+    const total = qty * unitPrice;
     totalPriceEl.textContent = `Загальна сума: ${total.toFixed(2)} грн`;
 
-    hiddenName.value = productNameEl.textContent;
-    hiddenImage.value = productImageEl.src;
+    // Обновляем скрытые поля для отправки
+    hiddenName.value = productName;
+    hiddenImage.value = productImage;
     hiddenTotal.value = total.toFixed(2);
     hiddenQuantity.value = qty;
   }
 
-  document.getElementById('increase').addEventListener('click', () => {
-    quantityInput.value = parseInt(quantityInput.value) + 1;
-    updateTotal();
-  });
-  document.getElementById('decrease').addEventListener('click', () => {
+  decreaseBtn.addEventListener('click', () => {
     let current = parseInt(quantityInput.value);
     if (current > 1) {
       quantityInput.value = current - 1;
@@ -327,18 +329,33 @@
     }
   });
 
-  quantityInput.addEventListener('input', updateTotal);
-
-  // Простая валидация телефона
-  document.getElementById('phone').addEventListener('input', function () {
-    const val = this.value;
-    if (!/^\+?\d*$/.test(val)) {
-      this.value = val.replace(/[^\d+]/g, '');
-    }
+  increaseBtn.addEventListener('click', () => {
+    let current = parseInt(quantityInput.value);
+    quantityInput.value = current + 1;
+    updateTotal();
   });
 
-  window.addEventListener('load', () => {
-    loadProductData();
+  quantityInput.addEventListener('input', () => {
+    updateTotal();
+  });
+
+  // Инициализация данных товара и цены
+  productNameEl.textContent = productName;
+  productImageEl.src = productImage;
+  unitPriceEl.textContent = unitPrice.toFixed(2);
+  updateTotal();
+
+  // Валидация телефона и формы
+  document.getElementById('order-form').addEventListener('submit', function(event) {
+    const phoneInput = document.getElementById('phone');
+    const phonePattern = /^\+?\d{7,15}$/;
+
+    if (!phonePattern.test(phoneInput.value)) {
+      alert('Введіть коректний номер телефону у форматі +380...');
+      phoneInput.focus();
+      event.preventDefault();
+      return false;
+    }
   });
 </script>
 
