@@ -1,182 +1,364 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Кожані ремінці NATO для годинників – Купити шкіряні ремінці преміум-класу</title>
-  <meta name="description" content="Купуйте якісні шкіряні ремінці для годинників у стилі NATO. Натуральна шкіра, різні кольори та розміри. Доставка по Україні. Надійність і стиль в кожному виробі." />
-  <meta name="keywords" content="шкіряні ремінці для годинників, ремінці NATO, купити ремінець годинника, ремінці з натуральної шкіри, ремінці преміум класу" />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://kupittovar.netlify.app/kozhani-remintsi-nato-dlya-godynnykiv.html" />
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0 auto;
-      padding: 20px;
-      max-width: 900px;
-      background: #fff;
-      color: #222;
-      line-height: 1.6;
-    }
-    h1, h2 { color: #0055aa; margin-top: 1.2em; margin-bottom: 0.5em; }
-    a { color: #0055aa; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .btn-buy {
-      display: inline-block;
-      padding: 12px 24px;
-      background: #0077ff;
-      color: #fff;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.3s;
-      text-decoration: none;
-    }
-    .btn-buy:hover { background: #005fcc; }
-    ul { padding-left: 20px; }
-    header { text-align: center; margin-bottom: 30px; }
-    footer {
-      text-align: center; margin-top: 40px; padding: 10px 0;
-      border-top: 1px solid #ddd; font-size: 0.9em; color: #666;
-    }
-    .carousel-container {
-      position: relative;
-      max-width: 600px; height: 400px;
-      margin: 20px auto;
-      overflow: hidden;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    .carousel-slide {
-      display: flex;
-      transition: transform 0.5s ease-in-out;
-      width: 100%;
-    }
-    .carousel-slide img {
-      width: 100%; height: 400px; object-fit: cover;
-      border-radius: 10px; flex-shrink: 0;
-    }
-    .carousel-arrow {
-      position: absolute; top: 50%; transform: translateY(-50%);
-      font-size: 32px; color: #0077ff;
-      background: rgba(255,255,255,0.8);
-      border: none; cursor: pointer; z-index: 10;
-      padding: 5px 12px; border-radius: 50%; user-select: none;
-    }
-    .carousel-arrow:hover { background: #ddd; }
-    .carousel-arrow.prev { left: 10px; }
-    .carousel-arrow.next { right: 10px; }
-    .reviews { margin-top: 30px; background: #f9f9f9; padding: 15px; border-radius: 8px; }
-    .reviews h3 { margin-bottom: 15px; color: #004a99; }
-    .review-item { margin-bottom: 12px; border-bottom: 1px solid #ddd; padding-bottom: 10px; }
-    .review-author{ font-weight: bold; color: #333; }
-    .review-text { margin-top: 4px; color: #555; }
-    .review-item:last-child { border-bottom: none; }
-    .product-action {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      gap: 15px;
-      margin-top: 25px;
-    }
-    .price {
-      font-size: 1.5em;
-      font-weight: bold;
-      color: #0077ff;
-    }
-    .quantity-label { font-weight: bold; }
-    .quantity-input {
-      width: 80px;
-      padding: 8px;
-      font-size: 1em;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      text-align: center;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Оформлення замовлення</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    max-width: 480px;
+    margin: 20px auto;
+    padding: 10px;
+    background: #f9f9f9;
+    color: #333;
+  }
+  h2 {
+    text-align: center;
+  }
+  #product-summary {
+    background:#fff; 
+    padding:15px; 
+    border:1px solid #ccc; 
+    border-radius:8px; 
+    margin-bottom:20px; 
+    display:flex; 
+    gap:15px; 
+    align-items:center;
+  }
+  #product-summary img {
+    width: 100px; 
+    height: auto; 
+    border-radius:6px; 
+    box-shadow:0 2px 6px rgba(0,0,0,0.1);
+  }
+  #product-details {
+    flex:1;
+  }
+  #product-details h3 {
+    margin:0 0 10px 0;
+  }
+  #product-details p {
+    margin:4px 0;
+  }
+  #quantity-control {
+    display:flex; 
+    align-items:center; 
+    gap:10px;
+    margin-top:5px;
+  }
+  #quantity-control label {
+    font-weight: bold;
+  }
+  #quantity-control button {
+    padding:4px 10px;
+    cursor: pointer;
+  }
+  #quantity-control input[type=number] {
+    width:50px; 
+    text-align:center;
+    border-radius:4px;
+    border:1px solid #ccc;
+    padding: 4px;
+  }
+  #total-price {
+    margin-top:10px; 
+    font-weight:bold;
+  }
+  form {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+  }
+  input[type="text"],
+  input[type="tel"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 6px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .color-option {
+    font-weight: bold;
+  }
+  select option[value="коричневий"] { color: brown; }
+  select option[value="зелений"] { color: green; }
+  select option[value="червоний"] { color: red; }
+  select option[value="чорний"] { color: black; }
+  .submit-btn {
+    margin-top: 25px;
+    padding: 12px 20px;
+    background: #007bff;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+  }
+  .submit-btn:hover {
+    background: #0056b3;
+  }
+  .required-star {
+    color: red;
+  }
+  /* Аккордеон */
+  #delivery-toggle {
+    cursor: pointer;
+    padding: 10px 15px;
+    background: #eee;
+    border-radius: 5px;
+    user-select: none;
+    font-weight: bold;
+    margin-top: 15px;
+    position: relative;
+  }
+  #delivery-toggle::after {
+    content: "▼";
+    position: absolute;
+    right: 15px;
+    transition: transform 0.3s ease;
+  }
+  #delivery-toggle.active::after {
+    transform: rotate(-180deg);
+  }
+  #delivery-options {
+    display: none;
+    margin-top: 10px;
+    padding-left: 15px;
+  }
+  #delivery-options label {
+    font-weight: normal;
+    display: block;
+    margin-top: 10px;
+  }
+  /* Скрываемые блоки */
+  .hidden {
+    display: none;
+  }
+</style>
 </head>
 <body>
-  <header>
-    <h1>Кожані ремінці NATO для годинників – стиль та якість преміум-класу</h1>
-    <p>Натуральна шкіра, широкий вибір кольорів і розмірів. Замовляйте з доставкою по Україні!</p>
-  </header>
-  <main>
-    <div class="carousel-container">
-      <button class="carousel-arrow prev">&#10094;</button>
-      <div class="carousel-slide" id="carousel-slide">
-        <img src="https://raw.githubusercontent.com/qgor5/kupittovar/refs/heads/main/Leather-Watch-Straps.webp" alt="Кожаний ремінець NATO Червоного кольору">
-        <img src="https://raw.githubusercontent.com/qgor5/kupittovar/refs/heads/main/skiryani-remintsi-u-stili-nato.webp" alt="Ремінець NATO Чорного кольору">
-        <img src="https://raw.githubusercontent.com/qgor5/kupittovar/refs/heads/main/kozhani-remintsi-u-styli-nato-riznykh-koloriv.webp" alt="Кожані ремінці NATO різних кольорів">
-        <img src="https://raw.githubusercontent.com/qgor5/kupittovar/refs/heads/main/yakisni-shkiryani-remintsi-dlya-hodynnyka.webp" alt="Якісні шкіряні ремінці для годинника">
-        <img src="https://raw.githubusercontent.com/qgor5/kupittovar/refs/heads/main/remintsi-dlya-hodynnyka-z-naturalnoi-yakisnoi-shkiry%20(2).webp" alt="Якісні шкіряні ремінці для годинника">
-      </div>
-      <button class="carousel-arrow next">&#10095;</button>
+
+<h2>Оформлення замовлення</h2>
+
+<!-- Блок с товаром -->
+<div id="product-summary">
+  <img id="product-image" src="" alt="Фото товару" />
+  <div id="product-details">
+    <h3 id="product-name"></h3>
+    <p>Ціна за одиницю: <span id="unit-price">0</span> грн</p>
+    <div id="quantity-control">
+      <label for="quantity">Кількість:</label>
+      <button type="button" id="decrease">−</button>
+      <input type="number" id="quantity" name="quantity" value="1" min="1" />
+      <button type="button" id="increase">+</button>
     </div>
+    <p id="total-price">Загальна сума: 0 грн</p>
+  </div>
+</div>
 
-    <div class="product-action">
-      <span class="price">Ціна: 183&nbsp;грн</span>
-      <label for="quantity" class="quantity-label">Кількість:</label>
-      <input type="number" id="quantity" class="quantity-input" value="1" min="1">
-      <a href="https://kupittovar.netlify.app/kozhani-korzina" class="btn-buy" id="buyBtn">Замовити</a>
-    </div>
+<form id="order-form" method="POST" action="https://formspree.io/f/mgvyvdeb" novalidate>
+  
+  <label for="fullname">ПІБ <span class="required-star">*</span></label>
+  <input type="text" id="fullname" name="fullname" required placeholder="Ваше повне ім’я" />
 
-    <section>
-      <h2>Особливості ремінців NATO з натуральної шкіри</h2>
-      <p>Ремінці NATO – це класика, яка поєднує стиль, комфорт і надійність. Наші ремінці виготовлені з високоякісної натуральної шкіри, що гарантує довговічність і приємні тактильні відчуття.</p>
-      <ul>
-        <li>100 % натуральна шкіра преміум-класу</li>
-        <li>Водостійкість і стійкість до зношування</li>
-        <li>Кольори: чорний, коричневий, темно-зелений, бежевий та інші</li>
-        <li>Підходять для більшості моделей годинників</li>
-        <li>Легко змінюються без інструментів</li>
-      </ul>
-      <p>Обираючи наш ремінець NATO, ви отримуєте стильний аксесуар, який підкреслить індивідуальність і доповнить ваш образ.</p>
-    </section>
+  <label for="phone">Телефон <span class="required-star">*</span></label>
+  <input type="tel" id="phone" name="phone" required placeholder="+380..." pattern="^\+?\d{7,15}$" />
 
-    <section class="reviews">
-      <h3>Відгуки наших клієнтів</h3>
-      <div class="review-item">
-        <p class="review-author">Олена, Київ:</p>
-        <p class="review-text">«Ремінець чудової якості, дуже зручний і приємний на дотик. Замовила два кольори – обидва ідеальні!»</p>
-      </div>
-      <div class="review-item">
-        <p class="review-author">Ігор, Львів:</p>
-        <p class="review-text">«Стильний і міцний ремінець. Доставили швидко, упаковка супер. Рекомендую!»</p>
-      </div>
-      <div class="review-item">
-        <p class="review-author">Світлана, Харків:</p>
-        <p class="review-text">«Дуже сподобався дизайн і якість шкіри. Ідеально підійшов до мого годинника.»</p>
-      </div>
-    </section>
-  </main>
-  <footer>
-    &copy; 2025 KupitTovar. Всі права захищені.
-  </footer>
-  <script>
-    const slide = document.getElementById('carousel-slide');
-    const images = slide.querySelectorAll('img');
-    const prevBtn = document.querySelector('.carousel-arrow.prev');
-    const nextBtn = document.querySelector('.carousel-arrow.next');
-    let currentIndex = 0;
-    function showSlide(index) {
-      if (index < 0) index = images.length - 1;
-      if (index >= images.length) index = 0;
-      slide.style.transform = 'translateX(' + (-index * 100) + '%)';
-      currentIndex = index;
+  <div id="delivery-toggle">Пошта <span class="required-star">*</span></div>
+  
+  <div id="delivery-options">
+    <label>
+      <input type="radio" name="delivery-service" value="ukrpost" />
+      Укрпошта
+    </label>
+    <label>
+      <input type="radio" name="delivery-service" value="np" />
+      Нова пошта
+    </label>
+  </div>
+
+  <div id="ukrpost-fields" class="hidden" style="margin-top: 15px;">
+    <label for="ukrpost-index">Поштовий індекс <span class="required-star">*</span></label>
+    <input type="text" id="ukrpost-index" name="ukrpost-index" pattern="^\d{5}$" placeholder="Наприклад: 01001" />
+
+    <label for="ukrpost-city">Місто <span class="required-star">*</span></label>
+    <input type="text" id="ukrpost-city" name="ukrpost-city" placeholder="Наприклад: Київ" />
+
+    <label for="ukrpost-street">Вулиця <span class="required-star">*</span></label>
+    <input type="text" id="ukrpost-street" name="ukrpost-street" placeholder="Наприклад: Хрещатик, 1" />
+  </div>
+
+  <div id="np-fields" class="hidden" style="margin-top: 15px;">
+    <label for="np-region">Область <span class="required-star">*</span></label>
+    <input type="text" id="np-region" name="np-region" placeholder="Наприклад: Київська" />
+
+    <label for="np-city">Місто <span class="required-star">*</span></label>
+    <input type="text" id="np-city" name="np-city" placeholder="Наприклад: Київ" />
+
+    <label for="np-branch">Номер відділення <span class="required-star">*</span></label>
+    <input type="text" id="np-branch" name="np-branch" placeholder="Наприклад: 45" />
+  </div>
+
+  <label for="color" style="margin-top: 20px;">
+    Виберіть колір <span class="required-star">*</span>
+  </label>
+  <select id="color" name="color" required>
+    <option value="" disabled selected>Оберіть колір</option>
+    <option value="коричневий" style="color:brown;">Коричневий</option>
+    <option value="зелений" style="color:green;">Зелений</option>
+    <option value="червоний" style="color:red;">Червоний</option>
+    <option value="чорний" style="color:black;">Чорний</option>
+  </select>
+
+  <label for="comments" style="margin-top: 15px;">Коментарі / побажання (необов’язково)</label>
+  <textarea id="comments" name="comments" rows="3" placeholder="Ваші побажання до замовлення..."></textarea>
+
+  <!-- Скрытые поля для переноса данных товара -->
+  <input type="hidden" name="product-name" id="hidden-name" />
+  <input type="hidden" name="product-image" id="hidden-image" />
+  <input type="hidden" name="total-price" id="hidden-total" />
+  <input type="hidden" name="quantity" id="hidden-quantity" />
+
+  <!-- Formspree settings -->
+  <input type="hidden" name="_next" value="https://kupittovar.netlify.app/order-success.html" />
+  <input type="hidden" name="_captcha" value="false" />
+
+  <button type="submit" class="submit-btn">Підтвердити замовлення</button>
+</form>
+
+<a href="kozhani-korzina.html" style="display:block; margin-top: 15px; color: #007bff; text-decoration:none;">← Повернутись до кошика</a>
+
+<script>
+  // Аккордеон открытия выбора почты
+  const toggle = document.getElementById('delivery-toggle');
+  const options = document.getElementById('delivery-options');
+
+  toggle.addEventListener('click', () => {
+    options.style.display = options.style.display === 'block' ? 'none' : 'block';
+    toggle.classList.toggle('active');
+  });
+
+  // Показать соответствующие поля доставки
+  const deliveryRadios = document.querySelectorAll('input[name="delivery-service"]');
+  const ukrpostFields = document.getElementById('ukrpost-fields');
+  const npFields = document.getElementById('np-fields');
+
+  deliveryRadios.forEach(radio => {
+    radio.addEventListener('change', () => {
+      if (radio.value === 'ukrpost') {
+        ukrpostFields.classList.remove('hidden');
+        npFields.classList.add('hidden');
+        // Требуем поля укрпочты
+        setRequiredFields(ukrpostFields, true);
+        setRequiredFields(npFields, false);
+      } else if (radio.value === 'np') {
+        npFields.classList.remove('hidden');
+        ukrpostFields.classList.add('hidden');
+        setRequiredFields(npFields, true);
+        setRequiredFields(ukrpostFields, false);
+      }
+    });
+  });
+
+  function setRequiredFields(container, required) {
+    const inputs = container.querySelectorAll('input');
+    inputs.forEach(input => {
+      if(required) {
+        input.setAttribute('required', 'required');
+      } else {
+        input.removeAttribute('required');
+      }
+    });
+  }
+
+  // Получаем данные товара из URL
+  function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+  }
+
+  // Заполняем данные товара
+  const productName = decodeURIComponent(getQueryParam('name') || 'Товар');
+  const productImage = decodeURIComponent(getQueryParam('image') || 'https://via.placeholder.com/100');
+  const unitPrice = parseFloat(getQueryParam('price')) || 0;
+
+  // Элементы на странице
+  const productNameEl = document.getElementById('product-name');
+  const productImageEl = document.getElementById('product-image');
+  const unitPriceEl = document.getElementById('unit-price');
+  const quantityInput = document.getElementById('quantity');
+  const decreaseBtn = document.getElementById('decrease');
+  const increaseBtn = document.getElementById('increase');
+  const totalPriceEl = document.getElementById('total-price');
+
+  const hiddenName = document.getElementById('hidden-name');
+  const hiddenImage = document.getElementById('hidden-image');
+  const hiddenTotal = document.getElementById('hidden-total');
+  const hiddenQuantity = document.getElementById('hidden-quantity');
+
+  function updateTotal() {
+    let qty = parseInt(quantityInput.value);
+    if (qty < 1 || isNaN(qty)) qty = 1;
+    quantityInput.value = qty;
+
+    const total = qty * unitPrice;
+    totalPriceEl.textContent = `Загальна сума: ${total.toFixed(2)} грн`;
+
+    // Обновляем скрытые поля для отправки
+    hiddenName.value = productName;
+    hiddenImage.value = productImage;
+    hiddenTotal.value = total.toFixed(2);
+    hiddenQuantity.value = qty;
+  }
+
+  decreaseBtn.addEventListener('click', () => {
+    let current = parseInt(quantityInput.value);
+    if (current > 1) {
+      quantityInput.value = current - 1;
+      updateTotal();
     }
-    prevBtn.addEventListener('click', () => showSlide(currentIndex - 1));
-    nextBtn.addEventListener('click', () => showSlide(currentIndex + 1));
-    showSlide(0);
-    // Оновлення посилання кнопки відповідно до кількості
-    const qtyInput = document.getElementById('quantity');
-    const buyBtn = document.getElementById('buyBtn');
-    function updateCartLink() {
-      const qty = qtyInput.value || 1;
-      buyBtn.href = `https://kupittovar.netlify.app/kozhani-korzina?qty=${qty}`;
+  });
+
+  increaseBtn.addEventListener('click', () => {
+    let current = parseInt(quantityInput.value);
+    quantityInput.value = current + 1;
+    updateTotal();
+  });
+
+  quantityInput.addEventListener('input', () => {
+    updateTotal();
+  });
+
+  // Инициализация данных товара и цены
+  productNameEl.textContent = productName;
+  productImageEl.src = productImage;
+  unitPriceEl.textContent = unitPrice.toFixed(2);
+  updateTotal();
+
+  // Валидация телефона и формы
+  document.getElementById('order-form').addEventListener('submit', function(event) {
+    const phoneInput = document.getElementById('phone');
+    const phonePattern = /^\+?\d{7,15}$/;
+
+    if (!phonePattern.test(phoneInput.value)) {
+      alert('Введіть коректний номер телефону у форматі +380...');
+      phoneInput.focus();
+      event.preventDefault();
+      return false;
     }
-    qtyInput.addEventListener('input', updateCartLink);
-    updateCartLink();
-  </script>
+  });
+</script>
+
 </body>
 </html>
+
