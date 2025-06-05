@@ -17,19 +17,19 @@
     text-align: center;
   }
   #product-summary {
-    background:#fff; 
-    padding:15px; 
-    border:1px solid #ccc; 
-    border-radius:8px; 
-    margin-bottom:20px; 
-    display:flex; 
-    gap:15px; 
+    background:#fff;
+    padding:15px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    margin-bottom:20px;
+    display:flex;
+    gap:15px;
     align-items:center;
   }
   #product-summary img {
-    width: 100px; 
-    height: auto; 
-    border-radius:6px; 
+    width: 100px;
+    height: auto;
+    border-radius:6px;
     box-shadow:0 2px 6px rgba(0,0,0,0.1);
   }
   #product-details {
@@ -42,8 +42,8 @@
     margin:4px 0;
   }
   #quantity-control {
-    display:flex; 
-    align-items:center; 
+    display:flex;
+    align-items:center;
     gap:10px;
     margin-top:5px;
   }
@@ -54,15 +54,19 @@
     padding:4px 10px;
     cursor: pointer;
   }
+  #quantity-control button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
   #quantity-control input[type=number] {
-    width:50px; 
+    width:50px;
     text-align:center;
     border-radius:4px;
     border:1px solid #ccc;
     padding: 4px;
   }
   #total-price {
-    margin-top:10px; 
+    margin-top:10px;
     font-weight:bold;
   }
   form {
@@ -158,27 +162,27 @@
     <p>Ціна за одиницю: <span id="unit-price">0</span> грн</p>
     <div id="quantity-control">
       <label for="quantity">Кількість:</label>
-      <button type="button" id="decrease">−</button>
+      <button type="button" id="decrease" aria-label="Зменшити кількість">−</button>
       <input type="number" id="quantity" name="quantity" value="1" min="1" />
-      <button type="button" id="increase">+</button>
+      <button type="button" id="increase" aria-label="Збільшити кількість">+</button>
     </div>
     <p id="total-price">Загальна сума: 0 грн</p>
   </div>
 </div>
 
 <form id="order-form" action="https://formspree.io/f/xblylqvd" method="POST" novalidate>
-  
+
   <label for="fullname">ПІБ <span class="required-star">*</span></label>
   <input type="text" id="fullname" name="fullname" required placeholder="Ваше повне ім’я" />
 
   <label for="phone">Телефон <span class="required-star">*</span></label>
   <input type="tel" id="phone" name="phone" required placeholder="+380..." pattern="^\+?\d{7,15}$" />
 
-  <div id="delivery-toggle">Пошта <span class="required-star">*</span></div>
-  
-  <div id="delivery-options">
+  <div id="delivery-toggle" tabindex="0" role="button" aria-expanded="false" aria-controls="delivery-options">Пошта <span class="required-star">*</span></div>
+
+  <div id="delivery-options" role="region" aria-hidden="true">
     <label>
-      <input type="radio" name="delivery-service" value="ukrpost" />
+      <input type="radio" name="delivery-service" value="ukrpost" required />
       Укрпошта
     </label>
     <label>
@@ -190,10 +194,8 @@
   <div id="ukrpost-fields" class="hidden" style="margin-top: 15px;">
     <label for="ukrpost-index">Поштовий індекс <span class="required-star">*</span></label>
     <input type="text" id="ukrpost-index" name="ukrpost-index" pattern="^\d{5}$" placeholder="Наприклад: 01001" />
-
     <label for="ukrpost-city">Місто <span class="required-star">*</span></label>
     <input type="text" id="ukrpost-city" name="ukrpost-city" placeholder="Наприклад: Київ" />
-
     <label for="ukrpost-street">Вулиця <span class="required-star">*</span></label>
     <input type="text" id="ukrpost-street" name="ukrpost-street" placeholder="Наприклад: Хрещатик, 1" />
   </div>
@@ -201,10 +203,8 @@
   <div id="np-fields" class="hidden" style="margin-top: 15px;">
     <label for="np-region">Область <span class="required-star">*</span></label>
     <input type="text" id="np-region" name="np-region" placeholder="Наприклад: Київська" />
-
     <label for="np-city">Місто <span class="required-star">*</span></label>
     <input type="text" id="np-city" name="np-city" placeholder="Наприклад: Київ" />
-
     <label for="np-branch">Номер відділення <span class="required-star">*</span></label>
     <input type="text" id="np-branch" name="np-branch" placeholder="Наприклад: 45" />
   </div>
@@ -227,118 +227,136 @@
   <input type="hidden" name="product-name" id="hidden-name" />
   <input type="hidden" name="product-image" id="hidden-image" />
   <input type="hidden" name="total-price" id="hidden-total" />
-  <input type="hidden" name="quantity" id="hidden-quantity" />
+  <!-- quantity идёт как name="quantity" уже из поля -->
 
   <button type="submit" class="submit-btn">Підтвердити замовлення</button>
 </form>
 
-<a href="kozhani-korzina.html" style="display:block; margin-top: 15px; color: #007bff; text-decoration:none;">← Повернутись до кошика</a>
-
 <script>
-  const toggle = document.getElementById('delivery-toggle');
-  const options = document.getElementById('delivery-options');
-
-  toggle.addEventListener('click', () => {
-    if (options.style.display === 'block') {
-      options.style.display = 'none';
-      toggle.classList.remove('active');
-    } else {
-      options.style.display = 'block';
-      toggle.classList.add('active');
-    }
-  });
-
-  const deliveryRadios = document.querySelectorAll('input[name="delivery-service"]');
-  const ukrpostFields = document.getElementById('ukrpost-fields');
-  const npFields = document.getElementById('np-fields');
-
-  deliveryRadios.forEach(radio => {
-    radio.addEventListener('change', () => {
-      if (radio.value === 'ukrpost') {
-        ukrpostFields.classList.remove('hidden');
-        npFields.classList.add('hidden');
-        ukrpostFields.querySelectorAll('input').forEach(i => i.required = true);
-        npFields.querySelectorAll('input').forEach(i => i.required = false);
-      } else if (radio.value === 'np') {
-        npFields.classList.remove('hidden');
-        ukrpostFields.classList.add('hidden');
-        npFields.querySelectorAll('input').forEach(i => i.required = true);
-        ukrpostFields.querySelectorAll('input').forEach(i => i.required = false);
-      }
-    });
-  });
-
-  function getQueryParam(param) {
-    const params = new URLSearchParams(window.location.search);
-    return params.get(param);
+  // Получаем параметры из URL
+  function getParam(name) {
+    const url = new URL(window.location.href);
+    return url.searchParams.get(name);
   }
 
-  const productNameEl = document.getElementById('product-name');
-  const productImageEl = document.getElementById('product-image');
-  const unitPriceEl = document.getElementById('unit-price');
-  const quantityInput = document.getElementById('quantity');
-  const totalPriceEl = document.getElementById('total-price');
+  // Инициализация данных товара из URL
+  const productName = getParam('productName') || "Кожані ремінці NATO для годинників";
+  const productImage = getParam('productImage') || "https://example.com/default-image.jpg";
+  const unitPrice = parseFloat(getParam('price')) || 600;
 
+  // Заполняем блок товара
+  document.getElementById('product-name').textContent = productName;
+  document.getElementById('product-image').src = productImage;
+  document.getElementById('product-image').alt = `Фото товару: ${productName}`;
+  document.getElementById('unit-price').textContent = unitPrice.toFixed(2);
+
+  const quantityInput = document.getElementById('quantity');
+  const decreaseBtn = document.getElementById('decrease');
+  const increaseBtn = document.getElementById('increase');
+  const totalPriceElem = document.getElementById('total-price');
   const hiddenName = document.getElementById('hidden-name');
   const hiddenImage = document.getElementById('hidden-image');
   const hiddenTotal = document.getElementById('hidden-total');
-  const hiddenQuantity = document.getElementById('hidden-quantity');
-
-  let unitPrice = 0;
-
-  function loadProductData() {
-    const name = getQueryParam('name') || 'Товар';
-    const image = getQueryParam('image') || 'https://via.placeholder.com/100';
-    const priceStr = getQueryParam('price') || '0';
-    unitPrice = parseFloat(priceStr) || 0;
-
-    productNameEl.textContent = name;
-    productImageEl.src = image;
-    productImageEl.alt = name;
-    unitPriceEl.textContent = unitPrice.toFixed(2);
-
-    updateTotal();
-  }
+  const orderForm = document.getElementById('order-form');
 
   function updateTotal() {
-    let qty = parseInt(quantityInput.value);
-    if (isNaN(qty) || qty < 1) {
-      qty = 1;
-      quantityInput.value = qty;
-    }
-    const total = unitPrice * qty;
-    totalPriceEl.textContent = `Загальна сума: ${total.toFixed(2)} грн`;
-
-    hiddenName.value = productNameEl.textContent;
-    hiddenImage.value = productImageEl.src;
+    let qty = parseInt(quantityInput.value) || 1;
+    if (qty < 1) qty = 1;
+    const total = qty * unitPrice;
+    totalPriceElem.textContent = `Загальна сума: ${total.toFixed(2)} грн`;
     hiddenTotal.value = total.toFixed(2);
-    hiddenQuantity.value = qty;
+    hiddenName.value = productName;
+    hiddenImage.value = productImage;
+
+    // Блокируем кнопки, если количество максимально/минимально
+    decreaseBtn.disabled = qty <= 1;
   }
 
-  document.getElementById('increase').addEventListener('click', () => {
-    quantityInput.value = parseInt(quantityInput.value) + 1;
-    updateTotal();
-  });
-  document.getElementById('decrease').addEventListener('click', () => {
-    let current = parseInt(quantityInput.value);
+  decreaseBtn.addEventListener('click', () => {
+    let current = parseInt(quantityInput.value) || 1;
     if (current > 1) {
       quantityInput.value = current - 1;
       updateTotal();
     }
   });
 
-  quantityInput.addEventListener('input', updateTotal);
+  increaseBtn.addEventListener('click', () => {
+    let current = parseInt(quantityInput.value) || 1;
+    quantityInput.value = current + 1;
+    updateTotal();
+  });
 
-  // Простая валидация телефона
-  document.getElementById('phone').addEventListener('input', function () {
-    const val = this.value;
-    if (!/^\+?\d*$/.test(val)) {
-      this.value = val.replace(/[^\d+]/g, '');
+  quantityInput.addEventListener('input', () => {
+    let val = parseInt(quantityInput.value);
+    if (!val || val < 1) quantityInput.value = 1;
+    updateTotal();
+  });
+
+  updateTotal();
+
+  // Аккордеон для доставки
+  const deliveryToggle = document.getElementById('delivery-toggle');
+  const deliveryOptions = document.getElementById('delivery-options');
+  deliveryToggle.addEventListener('click', () => {
+    const expanded = deliveryToggle.classList.toggle('active');
+    deliveryOptions.style.display = expanded ? 'block' : 'none';
+    deliveryToggle.setAttribute('aria-expanded', expanded);
+    deliveryOptions.setAttribute('aria-hidden', !expanded);
+  });
+  deliveryToggle.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      deliveryToggle.click();
     }
   });
 
-  window.addEventListener('load', () => {
-    loadProductData();
+  // Показать/скрыть поля доставки по выбору
+  const deliveryRadios = document.querySelectorAll('input[name="delivery-service"]');
+  const ukrpostFields = document.getElementById('ukrpost-fields');
+  const npFields = document.getElementById('np-fields');
+
+  deliveryRadios.forEach(radio => {
+    radio.addEventListener('change', () => {
+      if (radio.value === 'ukrpost' && radio.checked) {
+        ukrpostFields.classList.remove('hidden');
+        npFields.classList.add('hidden');
+
+        // Устанавливаем required для полей укрпочты
+        ukrpostFields.querySelectorAll('input').forEach(inp => inp.required = true);
+        npFields.querySelectorAll('input').forEach(inp => inp.required = false);
+
+      } else if (radio.value === 'np' && radio.checked) {
+        npFields.classList.remove('hidden');
+        ukrpostFields.classList.add('hidden');
+
+        npFields.querySelectorAll('input').forEach(inp => inp.required = true);
+        ukrpostFields.querySelectorAll('input').forEach(inp => inp.required = false);
+
+      } else {
+        ukrpostFields.classList.add('hidden');
+        npFields.classList.add('hidden');
+        ukrpostFields.querySelectorAll('input').forEach(inp => inp.required = false);
+        npFields.querySelectorAll('input').forEach(inp => inp.required = false);
+      }
+    });
+  });
+
+  // Валидация формы перед отправкой
+  orderForm.addEventListener('submit', (e) => {
+    // Проверяем, что выбрана доставка
+    const selectedDelivery = [...deliveryRadios].find(r => r.checked);
+    if (!selectedDelivery) {
+      alert('Будь ласка, оберіть службу доставки.');
+      e.preventDefault();
+      deliveryToggle.focus();
+      return;
+    }
+    // Проверка валидации браузера с помощью checkValidity()
+    if (!orderForm.checkValidity()) {
+      orderForm.reportValidity();
+      e.preventDefault();
+      return;
+    }
   });
 </script>
 
