@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="uk">
 <head>
 <meta charset="UTF-8" />
@@ -89,9 +89,6 @@
     box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 4px;
-  }
-  .color-option {
-    font-weight: bold;
   }
   select option[value="коричневий"] { color: brown; }
   select option[value="зелений"] { color: green; }
@@ -235,17 +232,16 @@
 </form>
 
 <script>
-  // Функция для получения параметров URL
+  // Получить параметр из URL
   function getQueryParam(param) {
     const params = new URLSearchParams(window.location.search);
     return params.get(param);
   }
 
-  // Заполнение полей товара из URL
+  // Получить данные товара из URL
   const productName = getQueryParam('productName') || "Невідомий товар";
   const productImage = getQueryParam('productImage') || "";
   const unitPrice = parseFloat(getQueryParam('price')) || 0;
-  const initialQuantity = parseInt(getQueryParam('quantity')) || 1;
 
   const productNameEl = document.getElementById('product-name');
   const productImageEl = document.getElementById('product-image');
@@ -260,26 +256,27 @@
   const hiddenTotal = document.getElementById('hidden-total');
 
   productNameEl.textContent = productName;
-  if(productImage) {
+
+  if (productImage) {
+    productImageEl.style.display = 'block';
     productImageEl.src = productImage;
     productImageEl.alt = productName;
-    productImageEl.style.display = 'block';
   } else {
     productImageEl.style.display = 'none';
   }
+
   unitPriceEl.textContent = unitPrice.toFixed(2);
 
-  // Устанавливаем начальное количество из URL (или 1)
-  quantityInput.value = initialQuantity >= 1 ? initialQuantity : 1;
-
-  // Обновление общей суммы и скрытых полей
-  function updateTotal() {
+  // Обновить сумму и скрытые поля
+  function updateTotalPrice() {
     let qty = parseInt(quantityInput.value);
-    if (isNaN(qty) || qty < 1) qty = 1;
-    const total = unitPrice * qty;
+    if (isNaN(qty) || qty < 1) {
+      qty = 1;
+      quantityInput.value = qty;
+    }
+    const total = qty * unitPrice;
     totalPriceEl.textContent = `Загальна сума: ${total.toFixed(2)} грн`;
 
-    // Обновляем скрытые поля
     hiddenName.value = productName;
     hiddenImage.value = productImage;
     hiddenUnitPrice.value = unitPrice.toFixed(2);
@@ -287,100 +284,88 @@
     hiddenTotal.value = total.toFixed(2);
   }
 
-  // Кнопки + и -
+  // Кнопки +/− для количества
   document.getElementById('increase').addEventListener('click', () => {
     quantityInput.value = parseInt(quantityInput.value) + 1;
-    updateTotal();
+    updateTotalPrice();
   });
 
   document.getElementById('decrease').addEventListener('click', () => {
     let current = parseInt(quantityInput.value);
     if (current > 1) {
       quantityInput.value = current - 1;
-      updateTotal();
+      updateTotalPrice();
     }
   });
 
-  // При ручном вводе количества
   quantityInput.addEventListener('input', () => {
     let val = parseInt(quantityInput.value);
-    if (isNaN(val) || val < 1) {
-      quantityInput.value = 1;
-    }
-    updateTotal();
+    if (isNaN(val) || val < 1) quantityInput.value = 1;
+    updateTotalPrice();
   });
 
-  updateTotal();
+  // Инициализация цены и полей при загрузке
+  window.addEventListener('DOMContentLoaded', () => {
+    updateTotalPrice();
+  });
 
-  // Переключатель доставки (аккордеон)
+  // Переключатель доставки
   const deliveryToggle = document.getElementById('delivery-toggle');
   const deliveryOptions = document.getElementById('delivery-options');
   const ukrpostFields = document.getElementById('ukrpost-fields');
   const npFields = document.getElementById('np-fields');
 
-  deliveryToggle.addEventListener('click', () => {
-    const expanded = deliveryToggle.getAttribute('aria-expanded') === 'true';
-    deliveryToggle.setAttribute('aria-expanded', !expanded);
-    deliveryToggle.classList.toggle('active');
-    deliveryOptions.style.display = expanded ? 'none' : 'block';
-    deliveryOptions.setAttribute('aria-hidden', expanded);
-  });
-
+  deliveryToggle.addEventListener('click', toggleDelivery);
   deliveryToggle.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
+    if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
-      deliveryToggle.click();
+      toggleDelivery();
     }
   });
 
-  // Показывать соответствующие поля по выбору доставки
-  deliveryOptions.addEventListener('change', e => {
-    const val = e.target.value;
-    if (val === 'ukrpost') {
-      ukrpostFields.classList.remove('hidden');
-      npFields.classList.add('hidden');
+  function toggleDelivery() {
+    const expanded = deliveryToggle.classList.toggle('active');
+    deliveryOptions.style.display = expanded ? 'block' : 'none';
+    deliveryOptions.setAttribute('aria-hidden', !expanded);
+    deliveryToggle.setAttribute('aria-expanded', expanded);
+  }
 
-      // Добавляем required для укрпошти
-      document.getElementById('ukrpost-index').required = true;
-      document.getElementById('ukrpost-city').required = true;
-      document.getElementById('ukrpost-street').required = true;
+  // Показать/скрыть поля в зависимости от выбора доставки
+  deliveryOptions.addEventListener('change', (e) => {
+    if (e.target.name === 'delivery-service') {
+      if (e.target.value === 'ukrpost') {
+        ukrpostFields.classList.remove('hidden');
+        npFields.classList.add('hidden');
 
-      // Убираем required для нової пошти
-      document.getElementById('np-region').required = false;
-      document.getElementById('np-city').required = false;
-      document.getElementById('np-branch').required = false;
+        // Сделать поля обязательными
+        ukrpostFields.querySelectorAll('input').forEach(inp => inp.required = true);
+        npFields.querySelectorAll('input').forEach(inp => inp.required = false);
+      } else if (e.target.value === 'np') {
+        npFields.classList.remove('hidden');
+        ukrpostFields.classList.add('hidden');
 
-    } else if (val === 'np') {
-      ukrpostFields.classList.add('hidden');
-      npFields.classList.remove('hidden');
-
-      // Добавляем required для нової пошти
-      document.getElementById('np-region').required = true;
-      document.getElementById('np-city').required = true;
-      document.getElementById('np-branch').required = true;
-
-      // Убираем required для укрпошти
-      document.getElementById('ukrpost-index').required = false;
-      document.getElementById('ukrpost-city').required = false;
-      document.getElementById('ukrpost-street').required = false;
+        npFields.querySelectorAll('input').forEach(inp => inp.required = true);
+        ukrpostFields.querySelectorAll('input').forEach(inp => inp.required = false);
+      }
     }
   });
 
-  // Валидация телефона при отправке формы
-  document.getElementById('order-form').addEventListener('submit', e => {
-    const phone = document.getElementById('phone');
-    const phoneRegex = /^\+?\d{7,15}$/;
-    if (!phoneRegex.test(phone.value.trim())) {
-      alert('Введіть коректний телефон у форматі +380...');
-      phone.focus();
-      e.preventDefault();
-      return false;
+  // Валидация телефона (пример простейшей)
+  const phoneInput = document.getElementById('phone');
+  phoneInput.addEventListener('input', () => {
+    phoneInput.setCustomValidity('');
+    if (!phoneInput.validity.valid) {
+      phoneInput.setCustomValidity('Будь ласка, введіть коректний телефон, наприклад +380123456789');
     }
+  });
 
-    // Дополнительная валидация можно добавить здесь
-
-    // Обновить скрытые поля перед отправкой
-    updateTotal();
+  // Валидация формы
+  const form = document.getElementById('order-form');
+  form.addEventListener('submit', (e) => {
+    if (!form.checkValidity()) {
+      e.preventDefault();
+      form.reportValidity();
+    }
   });
 </script>
 
