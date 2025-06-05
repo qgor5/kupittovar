@@ -7,49 +7,115 @@
 <style>
   body {
     font-family: Arial, sans-serif;
-    padding: 20px;
     background: #f9f9f9;
+    padding: 20px;
   }
   .order-container {
-    max-width: 500px;
+    max-width: 520px;
     margin: 0 auto;
     background: #fff;
-    padding: 25px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    padding: 25px;
   }
   h1 {
     text-align: center;
+    margin-bottom: 25px;
+  }
+  .product-summary {
+    display: flex;
+    align-items: center;
     margin-bottom: 20px;
+    gap: 15px;
   }
-  label {
-    display: block;
-    margin-top: 15px;
+  .product-summary img {
+    width: 120px;
+    height: auto;
+    border-radius: 6px;
+    object-fit: cover;
+  }
+  .product-info {
+    flex-grow: 1;
+  }
+  .product-info h2 {
+    margin: 0 0 8px;
+    font-size: 20px;
+  }
+  .price {
     font-weight: bold;
+    font-size: 18px;
+    color: #333;
   }
-  input[type="text"],
-  input[type="tel"],
-  textarea {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+  .quantity-control {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    gap: 10px;
   }
-  button {
-    margin-top: 25px;
-    width: 100%;
-    padding: 12px;
+  .quantity-control button {
+    width: 30px;
+    height: 30px;
     background: #007bff;
     border: none;
     color: white;
-    font-size: 16px;
-    border-radius: 5px;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 4px;
     cursor: pointer;
+    user-select: none;
   }
-  button:hover {
-    background: #0056b3;
+  .quantity-control button:disabled {
+    background: #ccc;
+    cursor: default;
+  }
+  .quantity-control input {
+    width: 50px;
+    text-align: center;
+    font-size: 16px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .total-price {
+    margin-top: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #222;
+  }
+  form label {
+    display: block;
+    margin-top: 18px;
+    font-weight: 600;
+  }
+  form input[type="text"],
+  form input[type="tel"],
+  form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 6px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    font-family: inherit;
+  }
+  form textarea {
+    resize: vertical;
+  }
+  form button {
+    margin-top: 28px;
+    width: 100%;
+    background: #28a745;
+    border: none;
+    color: white;
+    font-size: 18px;
+    padding: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  form button:hover {
+    background: #218838;
   }
 </style>
 </head>
@@ -58,14 +124,27 @@
 <div class="order-container">
   <h1>Оформление заказа</h1>
 
-  <form id="order-form" method="POST" action="https://formsubmit.co/elits485@gmail.com" novalidate>
-    
-    <!-- Информация о товаре (скрытые поля или можно выводить как read-only) -->
-    <input type="hidden" name="product_name" id="product_name" value="Название товара" />
-    <input type="hidden" name="product_qty" id="product_qty" value="1" />
-    <input type="hidden" name="product_price" id="product_price" value="1000" />
+  <div class="product-summary">
+    <img src="https://kupittovar.netlify.app/images/product1.jpg" alt="Название товара" id="product-image" />
+    <div class="product-info">
+      <h2 id="product-name">Кожаный ремешок NATO для часов</h2>
+      <div class="price" id="unit-price">Цена: 1200 ₽</div>
 
-    <!-- Контактная информация -->
+      <div class="quantity-control">
+        <button type="button" id="btn-decrease" aria-label="Уменьшить количество">−</button>
+        <input type="number" id="product-qty" name="product_qty" value="1" min="1" />
+        <button type="button" id="btn-increase" aria-label="Увеличить количество">+</button>
+      </div>
+
+      <div class="total-price" id="total-price">Итого: 1200 ₽</div>
+    </div>
+  </div>
+
+  <form id="order-form" method="POST" action="https://formsubmit.co/elits485@gmail.com" novalidate>
+    <input type="hidden" name="product_name" id="hidden-product-name" value="Кожаный ремешок NATO для часов" />
+    <input type="hidden" name="product_price" id="hidden-product-price" value="1200" />
+    <input type="hidden" name="product_qty" id="hidden-product-qty" value="1" />
+
     <label for="fullname">ФИО:</label>
     <input type="text" id="fullname" name="fullname" required placeholder="Введите ваше имя" />
 
@@ -75,13 +154,63 @@
     <label for="address">Адрес доставки:</label>
     <textarea id="address" name="address" required placeholder="Введите адрес доставки" rows="3"></textarea>
 
-    <!-- Скрытые поля для formsubmit.co -->
+    <!-- Для formsubmit.co -->
     <input type="hidden" name="_next" value="https://kupittovar.netlify.app/order-success.html" />
     <input type="hidden" name="_captcha" value="false" />
 
     <button type="submit">Подтвердить заказ</button>
   </form>
 </div>
+
+<script>
+  const btnDecrease = document.getElementById('btn-decrease');
+  const btnIncrease = document.getElementById('btn-increase');
+  const qtyInput = document.getElementById('product-qty');
+  const totalPriceEl = document.getElementById('total-price');
+  const unitPriceEl = document.getElementById('unit-price');
+  const hiddenQty = document.getElementById('hidden-product-qty');
+  
+  // Число цены из текста, например "Цена: 1200 ₽"
+  function parsePrice(text) {
+    return Number(text.replace(/\D/g, ''));
+  }
+
+  let unitPrice = parsePrice(unitPriceEl.textContent);
+
+  function updateTotalPrice() {
+    let qty = parseInt(qtyInput.value);
+    if (isNaN(qty) || qty < 1) qty = 1;
+    qtyInput.value = qty;
+    hiddenQty.value = qty;
+    totalPriceEl.textContent = `Итого: ${qty * unitPrice} ₽`;
+  }
+
+  btnDecrease.addEventListener('click', () => {
+    let qty = parseInt(qtyInput.value);
+    if (qty > 1) {
+      qty--;
+      qtyInput.value = qty;
+      updateTotalPrice();
+    }
+  });
+
+  btnIncrease.addEventListener('click', () => {
+    let qty = parseInt(qtyInput.value);
+    qty++;
+    qtyInput.value = qty;
+    updateTotalPrice();
+  });
+
+  qtyInput.addEventListener('input', () => {
+    let val = parseInt(qtyInput.value);
+    if (isNaN(val) || val < 1) val = 1;
+    qtyInput.value = val;
+    updateTotalPrice();
+  });
+
+  // Инициализация
+  updateTotalPrice();
+</script>
 
 </body>
 </html>
