@@ -3,426 +3,48 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Оформлення замовлення</title>
+<title>Тестова форма замовлення</title>
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    max-width: 480px;
-    margin: 20px auto;
-    padding: 10px;
-    background: #f9f9f9;
-    color: #333;
+  body { font-family: Arial, sans-serif; max-width: 400px; margin: 40px auto; padding: 10px; background: #f9f9f9; }
+  label { display: block; margin-top: 15px; font-weight: bold; }
+  input, select, textarea, button {
+    width: 100%; padding: 8px; margin-top: 6px; box-sizing: border-box;
+    border-radius: 4px; border: 1px solid #ccc;
   }
-  h2 {
-    text-align: center;
-  }
-  #product-summary {
-    background:#fff; 
-    padding:15px; 
-    border:1px solid #ccc; 
-    border-radius:8px; 
-    margin-bottom:20px; 
-    display:flex; 
-    gap:15px; 
-    align-items:center;
-  }
-  #product-summary img {
-    width: 100px; 
-    height: auto; 
-    border-radius:6px; 
-    box-shadow:0 2px 6px rgba(0,0,0,0.1);
-  }
-  #product-details {
-    flex:1;
-  }
-  #product-details h3 {
-    margin:0 0 10px 0;
-  }
-  #product-details p {
-    margin:4px 0;
-  }
-  #quantity-control {
-    display:flex; 
-    align-items:center; 
-    gap:10px;
-    margin-top:5px;
-  }
-  #quantity-control label {
-    font-weight: bold;
-  }
-  #quantity-control button {
-    padding:4px 10px;
-    cursor: pointer;
-  }
-  #quantity-control input[type=number] {
-    width:50px; 
-    text-align:center;
-    border-radius:4px;
-    border:1px solid #ccc;
-    padding: 4px;
-  }
-  #total-price {
-    margin-top:10px; 
-    font-weight:bold;
-  }
-  form {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-  }
-  label {
-    display: block;
-    margin-top: 15px;
-    font-weight: bold;
-  }
-  input[type="text"],
-  input[type="tel"],
-  select,
-  textarea {
-    width: 100%;
-    padding: 8px;
-    margin-top: 6px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  .color-option {
-    font-weight: bold;
-  }
-  select option[value="коричневий"] { color: brown; }
-  select option[value="зелений"] { color: green; }
-  select option[value="червоний"] { color: red; }
-  select option[value="чорний"] { color: black; }
-  .submit-btn {
-    margin-top: 25px;
-    padding: 12px 20px;
-    background: #007bff;
-    border: none;
-    color: white;
-    font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
-  }
-  .submit-btn:hover {
-    background: #0056b3;
-  }
-  .required-star {
-    color: red;
-  }
-  /* Аккордеон */
-  #delivery-toggle {
-    cursor: pointer;
-    padding: 10px 15px;
-    background: #eee;
-    border-radius: 5px;
-    user-select: none;
-    font-weight: bold;
-    margin-top: 15px;
-    position: relative;
-  }
-  #delivery-toggle::after {
-    content: "▼";
-    position: absolute;
-    right: 15px;
-    transition: transform 0.3s ease;
-  }
-  #delivery-toggle.active::after {
-    transform: rotate(-180deg);
-  }
-  #delivery-options {
-    display: none;
-    margin-top: 10px;
-    padding-left: 15px;
-  }
-  #delivery-options label {
-    font-weight: normal;
-    display: block;
-    margin-top: 10px;
-  }
-  /* Скрываемые блоки */
-  .hidden {
-    display: none;
-  }
+  button { background: #007bff; color: white; font-size: 1rem; border: none; margin-top: 20px; cursor: pointer; }
+  button:hover { background: #0056b3; }
 </style>
 </head>
 <body>
 
-<h2>Оформлення замовлення</h2>
+<h2>Тестова форма замовлення</h2>
 
-<!-- Блок с товаром -->
-<div id="product-summary">
-  <img id="product-image" src="" alt="Фото товару" />
-  <div id="product-details">
-    <h3 id="product-name"></h3>
-    <p>Ціна за одиницю: <span id="unit-price">0</span> грн</p>
-    <div id="quantity-control">
-      <label for="quantity">Кількість:</label>
-      <button type="button" id="decrease">−</button>
-      <input type="number" id="quantity" name="quantity" value="1" min="1" />
-      <button type="button" id="increase">+</button>
-    </div>
-    <p id="total-price">Загальна сума: 0 грн</p>
-  </div>
-</div>
+<form action="https://formspree.io/f/mgvyvdeb" method="POST">
+  <label for="fullname">ПІБ *</label>
+  <input type="text" id="fullname" name="fullname" required />
 
-<form id="order-form" method="POST" action="https://formspree.io/f/mgvyvdeb" novalidate>
-  
-  <label for="fullname">ПІБ <span class="required-star">*</span></label>
-  <input type="text" id="fullname" name="fullname" required placeholder="Ваше повне ім’я" />
+  <label for="phone">Телефон *</label>
+  <input type="tel" id="phone" name="phone" required pattern="^\+?\d{7,15}$" placeholder="+380..." />
 
-  <label for="phone">Телефон <span class="required-star">*</span></label>
-  <input type="tel" id="phone" name="phone" required placeholder="+380..." pattern="^\+?\d{7,15}$" />
-
-  <div id="delivery-toggle">Пошта <span class="required-star">*</span></div>
-  
-  <div id="delivery-options">
-    <label>
-      <input type="radio" name="delivery-service" value="ukrpost" />
-      Укрпошта
-    </label>
-    <label>
-      <input type="radio" name="delivery-service" value="np" />
-      Нова пошта
-    </label>
-  </div>
-
-  <div id="ukrpost-fields" class="hidden" style="margin-top: 15px;">
-    <label for="ukrpost-index">Поштовий індекс <span class="required-star">*</span></label>
-    <input type="text" id="ukrpost-index" name="ukrpost-index" pattern="^\d{5}$" placeholder="Наприклад: 01001" />
-
-    <label for="ukrpost-city">Місто <span class="required-star">*</span></label>
-    <input type="text" id="ukrpost-city" name="ukrpost-city" placeholder="Наприклад: Київ" />
-
-    <label for="ukrpost-street">Вулиця <span class="required-star">*</span></label>
-    <input type="text" id="ukrpost-street" name="ukrpost-street" placeholder="Наприклад: Хрещатик, 1" />
-  </div>
-
-  <div id="np-fields" class="hidden" style="margin-top: 15px;">
-    <label for="np-region">Область <span class="required-star">*</span></label>
-    <input type="text" id="np-region" name="np-region" placeholder="Наприклад: Київська" />
-
-    <label for="np-city">Місто <span class="required-star">*</span></label>
-    <input type="text" id="np-city" name="np-city" placeholder="Наприклад: Київ" />
-
-    <label for="np-branch">Номер відділення <span class="required-star">*</span></label>
-    <input type="text" id="np-branch" name="np-branch" placeholder="Наприклад: 45" />
-  </div>
-
-  <label for="color" style="margin-top: 20px;">
-    Виберіть колір <span class="required-star">*</span>
-  </label>
+  <label for="color">Колір *</label>
   <select id="color" name="color" required>
-    <option value="" disabled selected>Оберіть колір</option>
-    <option value="коричневий" style="color:brown;">Коричневий</option>
-    <option value="зелений" style="color:green;">Зелений</option>
-    <option value="червоний" style="color:red;">Червоний</option>
-    <option value="чорний" style="color:black;">Чорний</option>
+    <option value="">Оберіть колір</option>
+    <option value="коричневий">Коричневий</option>
+    <option value="зелений">Зелений</option>
+    <option value="червоний">Червоний</option>
+    <option value="чорний">Чорний</option>
   </select>
 
-  <label for="comments" style="margin-top: 15px;">Коментарі / побажання (необов’язково)</label>
-  <textarea id="comments" name="comments" rows="3" placeholder="Ваші побажання до замовлення..."></textarea>
+  <label for="comments">Коментарі</label>
+  <textarea id="comments" name="comments" rows="3"></textarea>
 
-  <!-- Скрытые поля для переноса данных товара -->
-  <input type="hidden" name="product-name" id="hidden-name" />
-  <input type="hidden" name="product-image" id="hidden-image" />
-  <input type="hidden" name="total-price" id="hidden-total" />
-  <input type="hidden" name="quantity" id="hidden-quantity" />
-
-  <!-- Formspree settings -->
+  <!-- Редирект после успешной отправки -->
+  <input type="hidden" name="_next" value="https://kupittovar.netlify.app/order-success.html" />
+  <!-- Отключаем CAPTCHA -->
   <input type="hidden" name="_captcha" value="false" />
 
-  <button type="submit" class="submit-btn">Підтвердити замовлення</button>
+  <button type="submit">Відправити замовлення</button>
 </form>
-
-<a href="kozhani-korzina.html" style="display:block; margin-top: 15px; color: #007bff; text-decoration:none;">← Повернутись до кошика</a>
-
-<script>
-  // Аккордеон открытия выбора почты
-  const toggle = document.getElementById('delivery-toggle');
-  const options = document.getElementById('delivery-options');
-
-  toggle.addEventListener('click', () => {
-    options.style.display = options.style.display === 'block' ? 'none' : 'block';
-    toggle.classList.toggle('active');
-  });
-
-  // Показать соответствующие поля доставки
-  const deliveryRadios = document.querySelectorAll('input[name="delivery-service"]');
-  const ukrpostFields = document.getElementById('ukrpost-fields');
-  const npFields = document.getElementById('np-fields');
-
-  deliveryRadios.forEach(radio => {
-    radio.addEventListener('change', () => {
-      if (radio.value === 'ukrpost') {
-        ukrpostFields.classList.remove('hidden');
-        npFields.classList.add('hidden');
-        setRequiredFields(ukrpostFields, true);
-        setRequiredFields(npFields, false);
-      } else if (radio.value === 'np') {
-        npFields.classList.remove('hidden');
-        ukrpostFields.classList.add('hidden');
-        setRequiredFields(npFields, true);
-        setRequiredFields(ukrpostFields, false);
-      }
-    });
-  });
-
-  function setRequiredFields(container, required) {
-    const inputs = container.querySelectorAll('input');
-    inputs.forEach(input => {
-      if (required) {
-        input.setAttribute('required', '');
-      } else {
-        input.removeAttribute('required');
-      }
-    });
-  }
-
-  // Получаем данные товара из URL-параметров
-  function getQueryParams() {
-    const params = {};
-    location.search.substring(1).split("&").forEach(pair => {
-      const [key, value] = pair.split("=");
-      if (key) params[decodeURIComponent(key)] = decodeURIComponent(value || "");
-    });
-    return params;
-  }
-
-  const params = getQueryParams();
-
-  const productNameElem = document.getElementById('product-name');
-  const productImageElem = document.getElementById('product-image');
-  const unitPriceElem = document.getElementById('unit-price');
-  const quantityInput = document.getElementById('quantity');
-  const totalPriceElem = document.getElementById('total-price');
-
-  // Скрытые поля для отправки
-  const hiddenName = document.getElementById('hidden-name');
-  const hiddenImage = document.getElementById('hidden-image');
-  const hiddenTotal = document.getElementById('hidden-total');
-  const hiddenQuantity = document.getElementById('hidden-quantity');
-
-  // Вставляем данные из URL (пример: ?name=Товар&img=img.jpg&price=100)
-  const productName = params['name'] || 'Невідомий товар';
-  const productImage = params['img'] || '';
-  const unitPrice = parseFloat(params['price']) || 0;
-
-  productNameElem.textContent = productName;
-  productImageElem.src = productImage;
-  productImageElem.alt = productName;
-  unitPriceElem.textContent = unitPrice.toFixed(2);
-
-  // Инициализируем цену и скрытые поля
-  function updateTotal() {
-    let qty = parseInt(quantityInput.value);
-    if (isNaN(qty) || qty < 1) qty = 1;
-    quantityInput.value = qty;
-
-    const total = unitPrice * qty;
-    totalPriceElem.textContent = `Загальна сума: ${total.toFixed(2)} грн`;
-
-    hiddenName.value = productName;
-    hiddenImage.value = productImage;
-    hiddenTotal.value = total.toFixed(2);
-    hiddenQuantity.value = qty;
-  }
-
-  updateTotal();
-
-  document.getElementById('increase').addEventListener('click', () => {
-    quantityInput.value = parseInt(quantityInput.value) + 1;
-    updateTotal();
-  });
-
-  document.getElementById('decrease').addEventListener('click', () => {
-    let val = parseInt(quantityInput.value) - 1;
-    if (val < 1) val = 1;
-    quantityInput.value = val;
-    updateTotal();
-  });
-
-  quantityInput.addEventListener('input', () => {
-    let val = parseInt(quantityInput.value);
-    if (isNaN(val) || val < 1) val = 1;
-    quantityInput.value = val;
-    updateTotal();
-  });
-
-  // Валидация телефона на +380 формат (плюс 7-15 цифр)
-  const phoneInput = document.getElementById('phone');
-  phoneInput.addEventListener('input', () => {
-    phoneInput.setCustomValidity('');
-    const pattern = /^\+?\d{7,15}$/;
-    if (!pattern.test(phoneInput.value)) {
-      phoneInput.setCustomValidity('Введіть коректний телефон у форматі +380...');
-    }
-  });
-
-  // Отправка формы через fetch с перенаправлением
-  const form = document.getElementById('order-form');
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    // Простая валидация формы
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      return;
-    }
-
-    // Проверка выбора службы доставки
-    const deliveryChosen = [...deliveryRadios].some(r => r.checked);
-    if (!deliveryChosen) {
-      alert('Будь ласка, оберіть службу доставки.');
-      return;
-    }
-
-    // Дополнительная проверка обязательных полей в зависимости от выбора доставки
-    if (document.querySelector('input[name="delivery-service"]:checked').value === 'ukrpost') {
-      const ukrFields = ['ukrpost-index', 'ukrpost-city', 'ukrpost-street'];
-      for (const id of ukrFields) {
-        const field = document.getElementById(id);
-        if (!field.value.trim()) {
-          alert('Будь ласка, заповніть всі поля для Укрпошти.');
-          field.focus();
-          return;
-        }
-      }
-    } else {
-      const npFieldsIds = ['np-region', 'np-city', 'np-branch'];
-      for (const id of npFieldsIds) {
-        const field = document.getElementById(id);
-        if (!field.value.trim()) {
-          alert('Будь ласка, заповніть всі поля для Нової пошти.');
-          field.focus();
-          return;
-        }
-      }
-    }
-
-    // Формируем данные для отправки
-    const formData = new FormData(form);
-
-    try {
-      const response = await fetch(form.action, {
-        method: form.method,
-        body: formData,
-        headers: {
-          'Accept': 'application/json'
-        }
-      });
-
-      if (response.ok) {
-        window.location.href = 'https://kupittovar.netlify.app/order-success.html';
-      } else {
-        alert('Виникла помилка при відправці форми. Спробуйте пізніше.');
-      }
-    } catch (error) {
-      alert('Помилка мережі. Спробуйте пізніше.');
-    }
-  });
-</script>
 
 </body>
 </html>
