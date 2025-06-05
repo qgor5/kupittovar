@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Оформлення замовлення</title>
 <style>
+  /* Стили оставил как есть */
   body {
     font-family: Arial, sans-serif;
     max-width: 480px;
@@ -114,7 +115,6 @@
   .required-star {
     color: red;
   }
-  /* Аккордеон */
   #delivery-toggle {
     cursor: pointer;
     padding: 10px 15px;
@@ -144,7 +144,6 @@
     display: block;
     margin-top: 10px;
   }
-  /* Скрываемые блоки */
   .hidden {
     display: none;
   }
@@ -171,7 +170,6 @@
 </div>
 
 <form id="order-form" action="https://formspree.io/f/mgvyvdeb" method="POST" novalidate>
-
   <label for="fullname">ПІБ <span class="required-star">*</span></label>
   <input type="text" id="fullname" name="fullname" required placeholder="Ваше повне ім’я" />
 
@@ -227,27 +225,25 @@
   <input type="hidden" name="product-name" id="hidden-name" />
   <input type="hidden" name="product-image" id="hidden-image" />
   <input type="hidden" name="total-price" id="hidden-total" />
-  <!-- quantity идёт как name="quantity" уже из поля -->
+  <!-- quantity уже из поля -->
 
   <button type="submit" class="submit-btn">Підтвердити замовлення</button>
 </form>
 
 <script>
-  // Получаем параметры из URL
   function getParam(name) {
     const url = new URL(window.location.href);
     return url.searchParams.get(name);
   }
 
-  // Инициализация данных товара из URL
   const productName = getParam('productName') || "Кожані ремінці NATO для годинників";
   const productImage = getParam('productImage') || "https://example.com/default-image.jpg";
   const unitPrice = parseFloat(getParam('price')) || 600;
 
-  // Заполняем блок товара
   document.getElementById('product-name').textContent = productName;
-  document.getElementById('product-image').src = productImage;
-  document.getElementById('product-image').alt = `Фото товару: ${productName}`;
+  const productImageElem = document.getElementById('product-image');
+  productImageElem.src = productImage;
+  productImageElem.alt = `Фото товару: ${productName}`;
   document.getElementById('unit-price').textContent = unitPrice.toFixed(2);
 
   const quantityInput = document.getElementById('quantity');
@@ -260,15 +256,15 @@
   const orderForm = document.getElementById('order-form');
 
   function updateTotal() {
-    let qty = parseInt(quantityInput.value) || 1;
-    if (qty < 1) qty = 1;
+    let qty = parseInt(quantityInput.value);
+    if (isNaN(qty) || qty < 1) qty = 1;
+    quantityInput.value = qty; // чтобы не оставалось пустым
     const total = qty * unitPrice;
     totalPriceElem.textContent = `Загальна сума: ${total.toFixed(2)} грн`;
     hiddenTotal.value = total.toFixed(2);
     hiddenName.value = productName;
     hiddenImage.value = productImage;
 
-    // Блокируем кнопки, если количество максимально/минимально
     decreaseBtn.disabled = qty <= 1;
   }
 
@@ -294,15 +290,16 @@
 
   updateTotal();
 
-  // Аккордеон для доставки
   const deliveryToggle = document.getElementById('delivery-toggle');
   const deliveryOptions = document.getElementById('delivery-options');
+
   deliveryToggle.addEventListener('click', () => {
     const expanded = deliveryToggle.classList.toggle('active');
     deliveryOptions.style.display = expanded ? 'block' : 'none';
     deliveryToggle.setAttribute('aria-expanded', expanded);
     deliveryOptions.setAttribute('aria-hidden', !expanded);
   });
+
   deliveryToggle.addEventListener('keypress', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
@@ -310,52 +307,64 @@
     }
   });
 
-  // Показать/скрыть поля доставки по выбору
-  const deliveryRadios = document.querySelectorAll('input[name="delivery-service"]');
   const ukrpostFields = document.getElementById('ukrpost-fields');
   const npFields = document.getElementById('np-fields');
 
-  deliveryRadios.forEach(radio => {
-    radio.addEventListener('change', () => {
-      if (radio.value === 'ukrpost' && radio.checked) {
+  deliveryOptions.addEventListener('change', (e) => {
+    if (e.target.name === 'delivery-service') {
+      if (e.target.value === 'ukrpost') {
         ukrpostFields.classList.remove('hidden');
         npFields.classList.add('hidden');
-
-        // Устанавливаем required для полей укрпочты
-        ukrpostFields.querySelectorAll('input').forEach(inp => inp.required = true);
-        npFields.querySelectorAll('input').forEach(inp => inp.required = false);
-
-      } else if (radio.value === 'np' && radio.checked) {
+        // required for Ukrpost inputs
+        setRequired(ukrpostFields, true);
+        setRequired(npFields, false);
+      } else if (e.target.value === 'np') {
         npFields.classList.remove('hidden');
         ukrpostFields.classList.add('hidden');
+        setRequired(npFields, true);
+        setRequired(ukrpostFields, false);
+      }
+    }
+  });
 
-        npFields.querySelectorAll('input').forEach(inp => inp.required = true);
-        ukrpostFields.querySelectorAll('input').forEach(inp => inp.required = false);
-
+  function setRequired(container, isRequired) {
+    const inputs = container.querySelectorAll('input');
+    inputs.forEach(input => {
+      if (isRequired) {
+        input.setAttribute('required', 'required');
       } else {
-        ukrpostFields.classList.add('hidden');
-        npFields.classList.add('hidden');
-        ukrpostFields.querySelectorAll('input').forEach(inp => inp.required = false);
-        npFields.querySelectorAll('input').forEach(inp => inp.required = false);
+        input.removeAttribute('required');
       }
     });
-  });
+  }
 
   // Валидация формы перед отправкой
   orderForm.addEventListener('submit', (e) => {
-    // Проверяем, что выбрана доставка
-    const selectedDelivery = [...deliveryRadios].find(r => r.checked);
-    if (!selectedDelivery) {
+    // Проверяем, что выбран способ доставки
+    const deliverySelected = [...orderForm.elements['delivery-service']].some(r => r.checked);
+    if (!deliverySelected) {
       alert('Будь ласка, оберіть службу доставки.');
       e.preventDefault();
-      deliveryToggle.focus();
       return;
     }
-    // Проверка валидации браузера с помощью checkValidity()
-    if (!orderForm.checkValidity()) {
-      orderForm.reportValidity();
-      e.preventDefault();
-      return;
+
+    // Дополнительная проверка для почтовых полей:
+    if (orderForm.elements['delivery-service'].value === 'ukrpost') {
+      if (!orderForm.elements['ukrpost-index'].value.trim() ||
+          !orderForm.elements['ukrpost-city'].value.trim() ||
+          !orderForm.elements['ukrpost-street'].value.trim()) {
+        alert('Будь ласка, заповніть всі поля для Укрпошти.');
+        e.preventDefault();
+        return;
+      }
+    } else if (orderForm.elements['delivery-service'].value === 'np') {
+      if (!orderForm.elements['np-region'].value.trim() ||
+          !orderForm.elements['np-city'].value.trim() ||
+          !orderForm.elements['np-branch'].value.trim()) {
+        alert('Будь ласка, заповніть всі поля для Нової пошти.');
+        e.preventDefault();
+        return;
+      }
     }
   });
 </script>
