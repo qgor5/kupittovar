@@ -1,178 +1,186 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="uk">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Оформление заказа</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background: #f9f9f9;
-    padding: 20px;
-  }
-  .order-container {
-    max-width: 520px;
-    margin: 0 auto;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 12px rgba(0,0,0,0.1);
-    padding: 25px;
-  }
-  h1 {
-    text-align: center;
-    margin-bottom: 25px;
-  }
-  .product-summary {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-    gap: 15px;
-  }
-  .product-summary img {
-    width: 120px;
-    height: auto;
-    border-radius: 6px;
-    object-fit: cover;
-  }
-  .product-info {
-    flex-grow: 1;
-  }
-  .product-info h2 {
-    margin: 0 0 8px;
-    font-size: 20px;
-  }
-  .price {
-    font-weight: bold;
-    font-size: 18px;
-    color: #333;
-  }
-  .quantity-control {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-    gap: 10px;
-  }
-  .quantity-control button {
-    width: 30px;
-    height: 30px;
-    background: #007bff;
-    border: none;
-    color: white;
-    font-weight: bold;
-    font-size: 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    user-select: none;
-  }
-  .quantity-control button:disabled {
-    background: #ccc;
-    cursor: default;
-  }
-  .quantity-control input {
-    width: 50px;
-    text-align: center;
-    font-size: 16px;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  .total-price {
-    margin-top: 12px;
-    font-size: 18px;
-    font-weight: bold;
-    color: #222;
-  }
-  form label {
-    display: block;
-    margin-top: 18px;
-    font-weight: 600;
-  }
-  form input[type="text"],
-  form input[type="tel"],
-  form textarea {
-    width: 100%;
-    padding: 8px;
-    margin-top: 6px;
-    box-sizing: border-box;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    font-size: 15px;
-    font-family: inherit;
-  }
-  form textarea {
-    resize: vertical;
-  }
-  form button {
-    margin-top: 28px;
-    width: 100%;
-    background: #28a745;
-    border: none;
-    color: white;
-    font-size: 18px;
-    padding: 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-  }
-  form button:hover {
-    background: #218838;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Оформлення замовлення</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      color: #222;
+      line-height: 1.5;
+    }
+    h1 {
+      color: #0055aa;
+      text-align: center;
+      margin-bottom: 1em;
+    }
+    .product-summary {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 30px;
+      border: 1px solid #ddd;
+      padding: 15px;
+      border-radius: 8px;
+      align-items: center;
+    }
+    .product-summary img {
+      width: 140px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .product-info {
+      flex-grow: 1;
+    }
+    .product-info h2 {
+      margin: 0 0 10px;
+      color: #0077ff;
+    }
+    .price, .total {
+      font-weight: bold;
+      font-size: 1.1em;
+      margin: 8px 0;
+      color: #0077ff;
+    }
+    .qty-control {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .qty-control button {
+      width: 30px;
+      height: 30px;
+      font-size: 20px;
+      line-height: 20px;
+      cursor: pointer;
+      border: 1px solid #0077ff;
+      background: #fff;
+      color: #0077ff;
+      border-radius: 5px;
+      user-select: none;
+    }
+    .qty-control input[type="number"] {
+      width: 60px;
+      font-size: 16px;
+      padding: 4px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      text-align: center;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    label {
+      font-weight: bold;
+      margin-bottom: 6px;
+      display: block;
+    }
+    input[type="text"], input[type="tel"], textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #bbb;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+    button.submit-btn {
+      background: #009944;
+      color: white;
+      font-size: 1.1em;
+      padding: 12px 0;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    button.submit-btn:hover {
+      background: #007733;
+    }
+    .back-btn {
+      margin-top: 15px;
+      background: #0077ff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+    .back-btn:hover {
+      background: #005fcc;
+    }
+  </style>
 </head>
 <body>
 
-<div class="order-container">
-  <h1>Оформление заказа</h1>
+  <h1>Оформлення замовлення</h1>
 
-  <div class="product-summary">
-    <img src="" alt="Название товара" id="product-image" />
+  <div class="product-summary" aria-label="Інформація про товар">
+    <img id="product-image" src="" alt="Фото товару" />
     <div class="product-info">
-      <h2 id="product-name"></h2>
-      <div class="price" id="unit-price"></div>
-
-      <div class="quantity-control">
-        <button type="button" id="btn-decrease" aria-label="Уменьшить количество">−</button>
-        <input type="number" id="product-qty" name="product_qty" value="1" min="1" />
-        <button type="button" id="btn-increase" aria-label="Увеличить количество">+</button>
+      <h2 id="product-name">Назва товару</h2>
+      <div class="price" id="unit-price">Ціна: 0 грн</div>
+      <div class="qty-control" aria-label="Кількість товару">
+        <button type="button" id="qty-decrease" aria-label="Зменшити кількість">−</button>
+        <input type="number" id="product-qty" min="1" value="1" aria-live="polite" aria-atomic="true" aria-label="Кількість товару" />
+        <button type="button" id="qty-increase" aria-label="Збільшити кількість">+</button>
       </div>
-
-      <div class="total-price" id="total-price"></div>
+      <div class="total" id="total-price">Загальна вартість: 0 грн</div>
     </div>
   </div>
 
-  <form id="order-form" method="POST" action="https://formsubmit.co/elits485@gmail.com" novalidate>
-    <input type="hidden" name="product_name" id="hidden-product-name" value="" />
-    <input type="hidden" name="product_price" id="hidden-product-price" value="" />
-    <input type="hidden" name="product_qty" id="hidden-product-qty" value="1" />
-
-    <label for="fullname">ФИО:</label>
-    <input type="text" id="fullname" name="fullname" required placeholder="Введите ваше имя" />
+  <form id="order-form" novalidate>
+    <label for="full-name">ПІБ (Прізвище, ім'я, по батькові):</label>
+    <input type="text" id="full-name" name="full-name" required autocomplete="name" />
 
     <label for="phone">Телефон:</label>
-    <input type="tel" id="phone" name="phone" required placeholder="+7 999 999-99-99" pattern="\+?\d{7,15}" />
+    <input type="tel" id="phone" name="phone" required pattern="^\+?\d{7,15}$" placeholder="+380..." autocomplete="tel" />
 
-    <label for="address">Адрес доставки:</label>
-    <textarea id="address" name="address" required placeholder="Введите адрес доставки" rows="3"></textarea>
+    <label for="address">Адреса доставки:</label>
+    <textarea id="address" name="address" required></textarea>
 
-    <input type="hidden" name="_next" value="https://kupittovar.netlify.app/order-success.html" />
-    <input type="hidden" name="_captcha" value="false" />
+    <!-- Скрытые поля для передачи данных заказа -->
+    <input type="hidden" id="hidden-product-name" name="product-name" />
+    <input type="hidden" id="hidden-product-price" name="product-price" />
+    <input type="hidden" id="hidden-product-qty" name="product-qty" />
 
-    <button type="submit">Подтвердить заказ</button>
+    <button type="submit" class="submit-btn" aria-label="Підтвердити замовлення">Підтвердити замовлення</button>
   </form>
-</div>
+
+  <a href="kozhani-korzina.html" class="back-btn" aria-label="Повернутись до кошика">Повернутись до кошика</a>
 
 <script>
+  // Получаем параметры из URL
   function getUrlParams() {
     const params = {};
-    window.location.search.substring(1).split("&").forEach(pair => {
-      const [key, value] = pair.split("=");
-      if (key) params[key] = decodeURIComponent(value || "");
+    location.search.substr(1).split("&").forEach(function(item) {
+      if (item) {
+        let parts = item.split("=");
+        params[decodeURIComponent(parts[0])] = decodeURIComponent(parts[1] || "");
+      }
     });
     return params;
   }
 
   const params = getUrlParams();
 
+  // Элементы
   const productImage = document.getElementById("product-image");
   const productName = document.getElementById("product-name");
   const unitPriceEl = document.getElementById("unit-price");
@@ -183,57 +191,77 @@
   const hiddenPrice = document.getElementById("hidden-product-price");
   const hiddenQty = document.getElementById("hidden-product-qty");
 
-  let unitPrice = 0;
-
-  // Задаём данные из URL или значения по умолчанию
-  productImage.src = params.img || "https://kupittovar.netlify.app/images/product1.jpg";
+  // Устанавливаем данные из параметров или дефолты
+  productImage.src = params.image || "https://kupittovar.netlify.app/images/product1.jpg";
   productImage.alt = params.name || "Товар";
 
-  productName.textContent = params.name || "Название товара";
+  productName.textContent = params.name || "Товар";
 
-  unitPrice = parseInt(params.price) || 1200;
-  unitPriceEl.textContent = `Цена: ${unitPrice} ₽`;
+  let unitPrice = parseInt(params.price) || 1200;
+  unitPriceEl.textContent = `Ціна: ${unitPrice} грн`;
 
   let qty = parseInt(params.qty) || 1;
   if (qty < 1) qty = 1;
   qtyInput.value = qty;
 
-  hiddenName.value = productName.textContent;
-  hiddenPrice.value = unitPrice;
-  hiddenQty.value = qty;
-
-  function updateTotalPrice() {
+  // Функция обновления общей цены и скрытых полей
+  function updateTotal() {
     let currentQty = parseInt(qtyInput.value);
     if (isNaN(currentQty) || currentQty < 1) currentQty = 1;
     qtyInput.value = currentQty;
+
+    const total = currentQty * unitPrice;
+    totalPriceEl.textContent = `Загальна вартість: ${total} грн`;
+
+    hiddenName.value = productName.textContent;
+    hiddenPrice.value = unitPrice;
     hiddenQty.value = currentQty;
-    totalPriceEl.textContent = `Итого: ${currentQty * unitPrice} ₽`;
   }
 
-  document.getElementById("btn-decrease").addEventListener("click", () => {
-    let currentQty = parseInt(qtyInput.value);
-    if (currentQty > 1) {
-      currentQty--;
-      qtyInput.value = currentQty;
-      updateTotalPrice();
+  updateTotal();
+
+  // Обработчики для кнопок + и -
+  document.getElementById("qty-decrease").addEventListener("click", () => {
+    let val = parseInt(qtyInput.value);
+    if (val > 1) {
+      qtyInput.value = val - 1;
+      updateTotal();
     }
   });
 
-  document.getElementById("btn-increase").addEventListener("click", () => {
-    let currentQty = parseInt(qtyInput.value);
-    currentQty++;
-    qtyInput.value = currentQty;
-    updateTotalPrice();
-  });
-
-  qtyInput.addEventListener("input", () => {
+  document.getElementById("qty-increase").addEventListener("click", () => {
     let val = parseInt(qtyInput.value);
-    if (isNaN(val) || val < 1) val = 1;
-    qtyInput.value = val;
-    updateTotalPrice();
+    qtyInput.value = val + 1;
+    updateTotal();
   });
 
-  updateTotalPrice();
+  // Обновляем цену при ручном вводе в поле
+  qtyInput.addEventListener("input", () => {
+    updateTotal();
+  });
+
+  // Валидация формы
+  const form = document.getElementById("order-form");
+  form.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    if (!form.checkValidity()) {
+      alert("Будь ласка, заповніть усі обов'язкові поля коректно.");
+      return;
+    }
+
+    // Можно здесь отправлять данные на сервер или показывать сообщение
+    alert(`Дякуємо за замовлення!\n
+Товар: ${hiddenName.value}\n
+Кількість: ${hiddenQty.value}\n
+Загальна сума: ${hiddenQty.value * hiddenPrice.value} грн\n
+Ми зв'яжемося з вами найближчим часом.`);
+
+    // После подтверждения - можно очистить форму или перенаправить
+    form.reset();
+    // При желании, перейти на страницу благодарности
+    window.location.href = "order-success.html";
+  });
 </script>
 
 </body>
