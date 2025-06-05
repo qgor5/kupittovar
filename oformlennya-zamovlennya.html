@@ -2,23 +2,18 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8" />
-  <title>Тестова форма Formspree</title>
+  <title>Тест Formspree</title>
 </head>
 <body>
-  <h2>Тестова форма для перевірки Formspree</h2>
+  <h2>Тестова форма</h2>
   <form action="https://formspree.io/f/mgvyvdeb" method="POST">
-    <label>
-      Ваше ім'я:
-      <input type="text" name="name" required />
-    </label><br /><br />
-    <label>
-      Телефон:
-      <input type="tel" name="phone" required />
-    </label><br /><br />
-    <label>
-      Email (обов’язково для Formspree):
+    <label>Ваш email (обов’язково):
       <input type="email" name="email" required />
-    </label><br /><br />
+    </label><br/><br/>
+    
+    <label>Повідомлення:
+      <textarea name="message" required></textarea>
+    </label><br/><br/>
     
     <input type="hidden" name="_next" value="https://kupittovar.netlify.app/order-success.html" />
     <input type="hidden" name="_captcha" value="false" />
