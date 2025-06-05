@@ -38,9 +38,6 @@
   #product-details h3 {
     margin:0 0 10px 0;
   }
-  #product-details p {
-    margin:4px 0;
-  }
   #quantity-control {
     display:flex; 
     align-items:center; 
@@ -86,13 +83,6 @@
     border: 1px solid #ccc;
     border-radius: 4px;
   }
-  .color-option {
-    font-weight: bold;
-  }
-  select option[value="коричневий"] { color: brown; }
-  select option[value="зелений"] { color: green; }
-  select option[value="червоний"] { color: red; }
-  select option[value="чорний"] { color: black; }
   .submit-btn {
     margin-top: 25px;
     padding: 12px 20px;
@@ -110,39 +100,14 @@
   .required-star {
     color: red;
   }
-  /* Аккордеон */
-  #delivery-toggle {
-    cursor: pointer;
-    padding: 10px 15px;
-    background: #eee;
-    border-radius: 5px;
-    user-select: none;
-    font-weight: bold;
-    margin-top: 15px;
-    position: relative;
+  a.back-link {
+    display:block;
+    margin-top: 15px; 
+    color: #007bff; 
+    text-decoration:none;
   }
-  #delivery-toggle::after {
-    content: "▼";
-    position: absolute;
-    right: 15px;
-    transition: transform 0.3s ease;
-  }
-  #delivery-toggle.active::after {
-    transform: rotate(-180deg);
-  }
-  #delivery-options {
-    display: none;
-    margin-top: 10px;
-    padding-left: 15px;
-  }
-  #delivery-options label {
-    font-weight: normal;
-    display: block;
-    margin-top: 10px;
-  }
-  /* Скрываемые блоки */
-  .hidden {
-    display: none;
+  a.back-link:hover {
+    text-decoration: underline;
   }
 </style>
 </head>
@@ -172,56 +137,22 @@
   <input type="text" id="fullname" name="fullname" required placeholder="Ваше повне ім’я" />
 
   <label for="phone">Телефон <span class="required-star">*</span></label>
-  <input type="tel" id="phone" name="phone" required placeholder="+380..." pattern="^\+?\d{7,15}$" />
+  <input type="tel" id="phone" name="phone" required placeholder="+380501234567" pattern="^\+?\d{7,15}$" />
 
-  <div id="delivery-toggle">Пошта <span class="required-star">*</span></div>
-  
-  <div id="delivery-options">
-    <label>
-      <input type="radio" name="delivery-service" value="ukrpost" />
-      Укрпошта
-    </label>
-    <label>
-      <input type="radio" name="delivery-service" value="np" />
-      Нова пошта
-    </label>
-  </div>
+  <label for="address">Адреса доставки <span class="required-star">*</span></label>
+  <input type="text" id="address" name="address" required placeholder="Ваша адреса" />
 
-  <div id="ukrpost-fields" class="hidden" style="margin-top: 15px;">
-    <label for="ukrpost-index">Поштовий індекс <span class="required-star">*</span></label>
-    <input type="text" id="ukrpost-index" name="ukrpost-index" pattern="^\d{5}$" placeholder="Наприклад: 01001" />
-
-    <label for="ukrpost-city">Місто <span class="required-star">*</span></label>
-    <input type="text" id="ukrpost-city" name="ukrpost-city" placeholder="Наприклад: Київ" />
-
-    <label for="ukrpost-street">Вулиця <span class="required-star">*</span></label>
-    <input type="text" id="ukrpost-street" name="ukrpost-street" placeholder="Наприклад: Хрещатик, 1" />
-  </div>
-
-  <div id="np-fields" class="hidden" style="margin-top: 15px;">
-    <label for="np-region">Область <span class="required-star">*</span></label>
-    <input type="text" id="np-region" name="np-region" placeholder="Наприклад: Київська" />
-
-    <label for="np-city">Місто <span class="required-star">*</span></label>
-    <input type="text" id="np-city" name="np-city" placeholder="Наприклад: Київ" />
-
-    <label for="np-branch">Номер відділення <span class="required-star">*</span></label>
-    <input type="text" id="np-branch" name="np-branch" placeholder="Наприклад: 45" />
-  </div>
-
-  <label for="color" style="margin-top: 20px;">
-    Виберіть колір <span class="required-star">*</span>
-  </label>
+  <label for="color">Виберіть колір <span class="required-star">*</span></label>
   <select id="color" name="color" required>
     <option value="" disabled selected>Оберіть колір</option>
-    <option value="коричневий" style="color:brown;">Коричневий</option>
-    <option value="зелений" style="color:green;">Зелений</option>
-    <option value="червоний" style="color:red;">Червоний</option>
-    <option value="чорний" style="color:black;">Чорний</option>
+    <option value="коричневий">Коричневий</option>
+    <option value="зелений">Зелений</option>
+    <option value="червоний">Червоний</option>
+    <option value="чорний">Чорний</option>
   </select>
 
-  <label for="comments" style="margin-top: 15px;">Коментарі / побажання (необов’язково)</label>
-  <textarea id="comments" name="comments" rows="3" placeholder="Ваші побажання до замовлення..."></textarea>
+  <label for="comments" style="margin-top: 15px;">Коментарі (необов’язково)</label>
+  <textarea id="comments" name="comments" rows="3" placeholder="Ваші побажання..."></textarea>
 
   <!-- Скрытые поля для передачи данных товара -->
   <input type="hidden" name="product-name" id="hidden-name" />
@@ -229,58 +160,17 @@
   <input type="hidden" name="total-price" id="hidden-total" />
   <input type="hidden" name="quantity" id="hidden-quantity" />
 
-  <!-- Formspree settings -->
+  <!-- Formspree перенаправление -->
   <input type="hidden" name="_next" value="https://kupittovar.netlify.app/order-success.html" />
   <input type="hidden" name="_captcha" value="false" />
 
   <button type="submit" class="submit-btn">Підтвердити замовлення</button>
 </form>
 
-<a href="kozhani-korzina.html" style="display:block; margin-top: 15px; color: #007bff; text-decoration:none;">← Повернутись до кошика</a>
+<a href="kozhani-korzina.html" class="back-link">← Повернутись до кошика</a>
 
 <script>
-  // Аккордеон для выбора почты
-  const toggle = document.getElementById('delivery-toggle');
-  const options = document.getElementById('delivery-options');
-
-  toggle.addEventListener('click', () => {
-    options.style.display = options.style.display === 'block' ? 'none' : 'block';
-    toggle.classList.toggle('active');
-  });
-
-  // Показать соответствующие поля доставки
-  const deliveryRadios = document.querySelectorAll('input[name="delivery-service"]');
-  const ukrpostFields = document.getElementById('ukrpost-fields');
-  const npFields = document.getElementById('np-fields');
-
-  deliveryRadios.forEach(radio => {
-    radio.addEventListener('change', () => {
-      if (radio.value === 'ukrpost') {
-        ukrpostFields.classList.remove('hidden');
-        npFields.classList.add('hidden');
-        setRequired(ukrpostFields, true);
-        setRequired(npFields, false);
-      } else if (radio.value === 'np') {
-        npFields.classList.remove('hidden');
-        ukrpostFields.classList.add('hidden');
-        setRequired(npFields, true);
-        setRequired(ukrpostFields, false);
-      }
-    });
-  });
-
-  function setRequired(container, isRequired) {
-    const inputs = container.querySelectorAll('input');
-    inputs.forEach(input => {
-      if (isRequired) {
-        input.setAttribute('required', 'required');
-      } else {
-        input.removeAttribute('required');
-      }
-    });
-  }
-
-  // Получаем параметры из URL
+  // Функция для получения параметров из URL
   function getUrlParams() {
     const params = new URLSearchParams(window.location.search);
     return {
@@ -312,6 +202,7 @@
     document.getElementById('hidden-total').value = (data.price * data.quantity).toFixed(2);
   }
 
+  // Обновить итоговую сумму
   function updateTotalPrice(unitPrice, quantity) {
     const total = unitPrice * quantity;
     document.getElementById('total-price').textContent = `Загальна сума: ${total.toFixed(2)} грн`;
@@ -320,50 +211,37 @@
 
   // Управление количеством
   document.getElementById('increase').addEventListener('click', () => {
-    const quantityInput = document.getElementById('quantity');
-    let qty = parseInt(quantityInput.value);
-    qty++;
-    quantityInput.value = qty;
-    quantityChanged(qty);
+    const qtyInput = document.getElementById('quantity');
+    qtyInput.value = parseInt(qtyInput.value) + 1;
+    onQuantityChange();
   });
 
   document.getElementById('decrease').addEventListener('click', () => {
-    const quantityInput = document.getElementById('quantity');
-    let qty = parseInt(quantityInput.value);
-    if (qty > 1) qty--;
-    quantityInput.value = qty;
-    quantityChanged(qty);
+    const qtyInput = document.getElementById('quantity');
+    let val = parseInt(qtyInput.value);
+    if (val > 1) qtyInput.value = val - 1;
+    onQuantityChange();
   });
 
-  document.getElementById('quantity').addEventListener('input', (e) => {
-    let val = parseInt(e.target.value);
+  document.getElementById('quantity').addEventListener('input', () => {
+    let val = parseInt(document.getElementById('quantity').value);
     if (isNaN(val) || val < 1) val = 1;
-    e.target.value = val;
-    quantityChanged(val);
+    document.getElementById('quantity').value = val;
+    onQuantityChange();
   });
 
-  function quantityChanged(newQty) {
+  function onQuantityChange() {
+    const qty = parseInt(document.getElementById('quantity').value);
     const unitPrice = parseFloat(document.getElementById('unit-price').textContent);
-    updateTotalPrice(unitPrice, newQty);
-    document.getElementById('hidden-quantity').value = newQty;
+    updateTotalPrice(unitPrice, qty);
+    document.getElementById('hidden-quantity').value = qty;
   }
 
-  // Валидация телефона простой
-  const phoneInput = document.getElementById('phone');
-  phoneInput.addEventListener('input', () => {
-    const pattern = /^\+?\d{7,15}$/;
-    if (!pattern.test(phoneInput.value)) {
-      phoneInput.setCustomValidity('Введіть коректний номер телефону, наприклад +380501234567');
-    } else {
-      phoneInput.setCustomValidity('');
-    }
-  });
-
-  // Инициализация страницы с параметрами товара
+  // Инициализация
   const productData = getUrlParams();
   updateProductBlock(productData);
 
-  // Перед отправкой формы еще раз обновим количество в скрытых полях
+  // Перед отправкой обновляем скрытые поля
   document.getElementById('order-form').addEventListener('submit', () => {
     const qty = parseInt(document.getElementById('quantity').value) || 1;
     document.getElementById('hidden-quantity').value = qty;
