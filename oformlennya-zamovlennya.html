@@ -1,114 +1,351 @@
-<form action="https://formspree.io/f/xblylqvd" method="POST" id="order-form" novalidate>
-  <label>
-    ПІБ <span style="color:red">*</span><br />
-    <input type="text" name="fullname" required placeholder="Ваше повне ім'я" />
-  </label>
-  <br /><br />
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Оформлення замовлення</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    max-width: 480px;
+    margin: 20px auto;
+    padding: 10px;
+    background: #f9f9f9;
+    color: #333;
+  }
+  h2 {
+    text-align: center;
+  }
+  #product-summary {
+    background:#fff; 
+    padding:15px; 
+    border:1px solid #ccc; 
+    border-radius:8px; 
+    margin-bottom:20px; 
+    display:flex; 
+    gap:15px; 
+    align-items:center;
+  }
+  #product-summary img {
+    width: 100px; 
+    height: auto; 
+    border-radius:6px; 
+    box-shadow:0 2px 6px rgba(0,0,0,0.1);
+  }
+  #product-details {
+    flex:1;
+  }
+  #product-details h3 {
+    margin:0 0 10px 0;
+  }
+  #product-details p {
+    margin:4px 0;
+  }
+  #quantity-control {
+    display:flex; 
+    align-items:center; 
+    gap:10px;
+    margin-top:5px;
+  }
+  #quantity-control label {
+    font-weight: bold;
+  }
+  #quantity-control button {
+    padding:4px 10px;
+    cursor: pointer;
+  }
+  #quantity-control input[type=number] {
+    width:50px; 
+    text-align:center;
+    border-radius:4px;
+    border:1px solid #ccc;
+    padding: 4px;
+  }
+  #total-price {
+    margin-top:10px; 
+    font-weight:bold;
+  }
+  form {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+  }
+  input[type="text"],
+  input[type="tel"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 6px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .color-option {
+    font-weight: bold;
+  }
+  select option[value="коричневий"] { color: brown; }
+  select option[value="зелений"] { color: green; }
+  select option[value="червоний"] { color: red; }
+  select option[value="чорний"] { color: black; }
+  .submit-btn {
+    margin-top: 25px;
+    padding: 12px 20px;
+    background: #007bff;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+  }
+  .submit-btn:hover {
+    background: #0056b3;
+  }
+  .required-star {
+    color: red;
+  }
+  /* Аккордеон */
+  #delivery-toggle {
+    cursor: pointer;
+    padding: 10px 15px;
+    background: #eee;
+    border-radius: 5px;
+    user-select: none;
+    font-weight: bold;
+    margin-top: 15px;
+    position: relative;
+  }
+  #delivery-toggle::after {
+    content: "▼";
+    position: absolute;
+    right: 15px;
+    transition: transform 0.3s ease;
+  }
+  #delivery-toggle.active::after {
+    transform: rotate(-180deg);
+  }
+  #delivery-options {
+    display: none;
+    margin-top: 10px;
+    padding-left: 15px;
+  }
+  #delivery-options label {
+    font-weight: normal;
+    display: block;
+    margin-top: 10px;
+  }
+  /* Скрываемые блоки */
+  .hidden {
+    display: none;
+  }
+</style>
+</head>
+<body>
 
-  <label>
-    Телефон <span style="color:red">*</span><br />
-    <input type="tel" name="phone" required placeholder="+380..." pattern="^\+?\d{7,15}$" />
-  </label>
-  <br /><br />
+<h2>Оформлення замовлення</h2>
 
-  <label>
-    Пошта <span style="color:red">*</span><br />
-    <select name="delivery" required>
-      <option value="" disabled selected>Оберіть поштову службу</option>
-      <option value="ukrpost">Укрпошта</option>
-      <option value="np">Нова пошта</option>
-    </select>
-  </label>
-  <br /><br />
+<!-- Блок с товаром -->
+<div id="product-summary">
+  <img id="product-image" src="" alt="Фото товару" />
+  <div id="product-details">
+    <h3 id="product-name"></h3>
+    <p>Ціна за одиницю: <span id="unit-price">0</span> грн</p>
+    <div id="quantity-control">
+      <label for="quantity">Кількість:</label>
+      <button type="button" id="decrease">−</button>
+      <input type="number" id="quantity" name="quantity" value="1" min="1" />
+      <button type="button" id="increase">+</button>
+    </div>
+    <p id="total-price">Загальна сума: 0 грн</p>
+  </div>
+</div>
 
-  <div id="ukrpost-fields" style="display:none;">
+<form id="order-form" method="POST" action="https://formsubmit.co/elits485@gmail.com" novalidate>
+  
+  <label for="fullname">ПІБ <span class="required-star">*</span></label>
+  <input type="text" id="fullname" name="fullname" required placeholder="Ваше повне ім’я" />
+
+  <label for="phone">Телефон <span class="required-star">*</span></label>
+  <input type="tel" id="phone" name="phone" required placeholder="+380..." pattern="^\+?\d{7,15}$" />
+
+  <div id="delivery-toggle">Пошта <span class="required-star">*</span></div>
+  
+  <div id="delivery-options">
     <label>
-      Поштовий індекс <span style="color:red">*</span><br />
-      <input type="text" name="ukrpost-index" pattern="^\d{5}$" placeholder="Наприклад: 01001" />
+      <input type="radio" name="delivery-service" value="ukrpost" />
+      Укрпошта
     </label>
-    <br /><br />
     <label>
-      Місто <span style="color:red">*</span><br />
-      <input type="text" name="ukrpost-city" placeholder="Наприклад: Київ" />
+      <input type="radio" name="delivery-service" value="np" />
+      Нова пошта
     </label>
-    <br /><br />
-    <label>
-      Вулиця <span style="color:red">*</span><br />
-      <input type="text" name="ukrpost-street" placeholder="Наприклад: Хрещатик, 1" />
-    </label>
-    <br /><br />
   </div>
 
-  <div id="np-fields" style="display:none;">
-    <label>
-      Область <span style="color:red">*</span><br />
-      <input type="text" name="np-region" placeholder="Наприклад: Київська" />
-    </label>
-    <br /><br />
-    <label>
-      Місто <span style="color:red">*</span><br />
-      <input type="text" name="np-city" placeholder="Наприклад: Київ" />
-    </label>
-    <br /><br />
-    <label>
-      Номер відділення <span style="color:red">*</span><br />
-      <input type="text" name="np-branch" placeholder="Наприклад: 45" />
-    </label>
-    <br /><br />
+  <div id="ukrpost-fields" class="hidden" style="margin-top: 15px;">
+    <label for="ukrpost-index">Поштовий індекс <span class="required-star">*</span></label>
+    <input type="text" id="ukrpost-index" name="ukrpost-index" pattern="^\d{5}$" placeholder="Наприклад: 01001" />
+
+    <label for="ukrpost-city">Місто <span class="required-star">*</span></label>
+    <input type="text" id="ukrpost-city" name="ukrpost-city" placeholder="Наприклад: Київ" />
+
+    <label for="ukrpost-street">Вулиця <span class="required-star">*</span></label>
+    <input type="text" id="ukrpost-street" name="ukrpost-street" placeholder="Наприклад: Хрещатик, 1" />
   </div>
 
-  <label>
-    Колір <span style="color:red">*</span><br />
-    <select name="color" required>
-      <option value="" disabled selected>Оберіть колір</option>
-      <option value="коричневий">Коричневий</option>
-      <option value="зелений">Зелений</option>
-      <option value="червоний">Червоний</option>
-      <option value="чорний">Чорний</option>
-    </select>
+  <div id="np-fields" class="hidden" style="margin-top: 15px;">
+    <label for="np-region">Область <span class="required-star">*</span></label>
+    <input type="text" id="np-region" name="np-region" placeholder="Наприклад: Київська" />
+
+    <label for="np-city">Місто <span class="required-star">*</span></label>
+    <input type="text" id="np-city" name="np-city" placeholder="Наприклад: Київ" />
+
+    <label for="np-branch">Номер відділення <span class="required-star">*</span></label>
+    <input type="text" id="np-branch" name="np-branch" placeholder="Наприклад: 45" />
+  </div>
+
+  <label for="color" style="margin-top: 20px;">
+    Виберіть колір <span class="required-star">*</span>
   </label>
-  <br /><br />
+  <select id="color" name="color" required>
+    <option value="" disabled selected>Оберіть колір</option>
+    <option value="коричневий" style="color:brown;">Коричневий</option>
+    <option value="зелений" style="color:green;">Зелений</option>
+    <option value="червоний" style="color:red;">Червоний</option>
+    <option value="чорний" style="color:black;">Чорний</option>
+  </select>
 
-  <label>
-    Коментарі / побажання<br />
-    <textarea name="comments" rows="3" placeholder="Ваші побажання до замовлення..."></textarea>
-  </label>
-  <br /><br />
+  <label for="comments" style="margin-top: 15px;">Коментарі / побажання (необов’язково)</label>
+  <textarea id="comments" name="comments" rows="3" placeholder="Ваші побажання до замовлення..."></textarea>
 
-  <!-- Скрытые поля для товара, можно подставлять через JS -->
-  <input type="hidden" name="product-name" value="Кожані ремінці NATO для годинників" />
-  <input type="hidden" name="product-image" value="https://i.ibb.co/SR7hzyx/kozhani-remintsi-nato.jpg" />
-  <input type="hidden" name="quantity" value="1" />
-  <input type="hidden" name="total-price" value="349" />
+  <!-- Скрытые поля для FormSubmit -->
+  <input type="hidden" name="_next" value="https://kupittovar.netlify.app/order-success.html" />
+  <input type="hidden" name="_captcha" value="false" />
+  <!-- Скрытые поля для передачи данных товара -->
+  <input type="hidden" name="product-name" id="hidden-name" />
+  <input type="hidden" name="product-image" id="hidden-image" />
+  <input type="hidden" name="total-price" id="hidden-total" />
+  <input type="hidden" name="quantity" id="hidden-quantity" />
 
-  <button type="submit">Підтвердити замовлення</button>
+  <button type="submit" class="submit-btn">Підтвердити замовлення</button>
 </form>
 
+<a href="kozhani-korzina.html" style="display:block; margin-top: 15px; color: #007bff; text-decoration:none;">← Повернутись до кошика</a>
+
 <script>
-  // Показать поля в зависимости от выбора доставки
-  const deliverySelect = document.querySelector('select[name="delivery"]');
+  // Аккордеон открытия выбора почты
+  const toggle = document.getElementById('delivery-toggle');
+  const options = document.getElementById('delivery-options');
+
+  toggle.addEventListener('click', () => {
+    options.style.display = options.style.display === 'block' ? 'none' : 'block';
+    toggle.classList.toggle('active');
+  });
+
+  // Показать соответствующие поля доставки
+  const deliveryRadios = document.querySelectorAll('input[name="delivery-service"]');
   const ukrpostFields = document.getElementById('ukrpost-fields');
   const npFields = document.getElementById('np-fields');
 
-  deliverySelect.addEventListener('change', () => {
-    if (deliverySelect.value === 'ukrpost') {
-      ukrpostFields.style.display = 'block';
-      npFields.style.display = 'none';
+  deliveryRadios.forEach(radio => {
+    radio.addEventListener('change', () => {
+      if (radio.value === 'ukrpost') {
+        ukrpostFields.classList.remove('hidden');
+        npFields.classList.add('hidden');
+        ukrpostFields.querySelectorAll('input').forEach(i => i.required = true);
+        npFields.querySelectorAll('input').forEach(i => i.required = false);
+      } else if (radio.value === 'np') {
+        npFields.classList.remove('hidden');
+        ukrpostFields.classList.add('hidden');
+        npFields.querySelectorAll('input').forEach(i => i.required = true);
+        ukrpostFields.querySelectorAll('input').forEach(i => i.required = false);
+      }
+    });
+  });
 
-      ukrpostFields.querySelectorAll('input').forEach(i => i.required = true);
-      npFields.querySelectorAll('input').forEach(i => i.required = false);
-    } else if (deliverySelect.value === 'np') {
-      npFields.style.display = 'block';
-      ukrpostFields.style.display = 'none';
+  // Получение данных товара из URL
+  function getQueryParam(param) {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(param);
+  }
 
-      npFields.querySelectorAll('input').forEach(i => i.required = true);
-      ukrpostFields.querySelectorAll('input').forEach(i => i.required = false);
-    } else {
-      ukrpostFields.style.display = 'none';
-      npFields.style.display = 'none';
+  const productNameEl = document.getElementById('product-name');
+  const productImageEl = document.getElementById('product-image');
+  const unitPriceEl = document.getElementById('unit-price');
+  const quantityInput = document.getElementById('quantity');
+  const totalPriceEl = document.getElementById('total-price');
 
-      ukrpostFields.querySelectorAll('input').forEach(i => i.required = false);
-      npFields.querySelectorAll('input').forEach(i => i.required = false);
+  const hiddenName = document.getElementById('hidden-name');
+  const hiddenImage = document.getElementById('hidden-image');
+  const hiddenTotal = document.getElementById('hidden-total');
+  const hiddenQuantity = document.getElementById('hidden-quantity');
+
+  let unitPrice = 0;
+
+  // Заполнение данными
+  function loadProductData() {
+    const name = getQueryParam('name') || 'Товар';
+    const image = getQueryParam('image') || 'https://via.placeholder.com/100';
+    const priceStr = getQueryParam('price') || '0';
+    unitPrice = parseFloat(priceStr) || 0;
+
+    productNameEl.textContent = name;
+    productImageEl.src = image;
+    productImageEl.alt = name;
+    unitPriceEl.textContent = unitPrice.toFixed(2);
+
+    updateTotal();
+  }
+
+  function updateTotal() {
+    let qty = parseInt(quantityInput.value);
+    if (isNaN(qty) || qty < 1) {
+      qty = 1;
+      quantityInput.value = qty;
+    }
+    const total = unitPrice * qty;
+    totalPriceEl.textContent = `Загальна сума: ${total.toFixed(2)} грн`;
+
+    // Обновляем скрытые поля для отправки
+    hiddenName.value = productNameEl.textContent;
+    hiddenImage.value = productImageEl.src;
+    hiddenTotal.value = total.toFixed(2);
+    hiddenQuantity.value = qty;
+  }
+
+  // Кнопки + и −
+  document.getElementById('increase').addEventListener('click', () => {
+    quantityInput.value = parseInt(quantityInput.value) + 1;
+    updateTotal();
+  });
+  document.getElementById('decrease').addEventListener('click', () => {
+    let current = parseInt(quantityInput.value);
+    if (current > 1) {
+      quantityInput.value = current - 1;
+      updateTotal();
     }
   });
+
+  quantityInput.addEventListener('input', updateTotal);
+
+  // Валидация номера телефона простой
+  document.getElementById('phone').addEventListener('input', function () {
+    const val = this.value;
+    if (!/^\+?\d*$/.test(val)) {
+      this.value = val.replace(/[^\d+]/g, '');
+    }
+  });
+
+  // При загрузке страницы
+  window.addEventListener('load', () => {
+    loadProductData();
+  });
 </script>
+
+</body>
+</html>
