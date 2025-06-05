@@ -237,12 +237,12 @@
 </form>
 
 <script>
-  // Функция для получения параметров URL
+  // Функция для получения параметров URL с декодированием img
   function getUrlParams() {
     const params = new URLSearchParams(window.location.search);
     return {
       name: params.get('name') || 'Товар',
-      img: params.get('img') || '',
+      img: params.get('img') ? decodeURIComponent(params.get('img')) : '',
       price: parseFloat(params.get('price')) || 0,
       qty: parseInt(params.get('qty')) || 1
     };
@@ -270,10 +270,12 @@
     let qty = parseInt(quantityInput.value);
     if (isNaN(qty) || qty < 1) qty = 1;
     quantityInput.value = qty;
-    const total = qty * product.price;
-    totalPriceEl.textContent = `Загальна сума: ${total.toFixed(2)} грн`;
+    const total = (product.price * qty).toFixed(2);
+    totalPriceEl.textContent = `Загальна сума: ${total} грн`;
   }
+  updateTotal();
 
+  // Обработчики кнопок +/-
   decreaseBtn.addEventListener('click', () => {
     let qty = parseInt(quantityInput.value);
     if (qty > 1) {
@@ -281,63 +283,84 @@
       updateTotal();
     }
   });
-
   increaseBtn.addEventListener('click', () => {
     let qty = parseInt(quantityInput.value);
     quantityInput.value = qty + 1;
     updateTotal();
   });
-
   quantityInput.addEventListener('input', () => {
+    let qty = parseInt(quantityInput.value);
+    if (isNaN(qty) || qty < 1) {
+      quantityInput.value = 1;
+    }
     updateTotal();
   });
 
-  updateTotal();
-
-  // Кнопка возврата в корзину
+  // Кнопка "Повернутись до кошика"
   backToCartBtn.addEventListener('click', () => {
-    window.location.href = 'kozhani-korzina.html';
+    window.history.back();
   });
 
-  // Логика для блока выбора доставки (показ полей)
+  // Раскрытие выбора доставки
   const deliveryToggle = document.getElementById('delivery-toggle');
   const deliveryOptions = document.getElementById('delivery-options');
   const ukrpostFields = document.getElementById('ukrpost-fields');
   const npFields = document.getElementById('np-fields');
 
-  function toggleDeliveryOptions() {
-    const expanded = deliveryToggle.getAttribute('aria-expanded') === 'true';
-    deliveryToggle.setAttribute('aria-expanded', !expanded);
+  deliveryToggle.addEventListener('click', () => {
+    const isExpanded = deliveryToggle.getAttribute('aria-expanded') === 'true';
+    deliveryToggle.setAttribute('aria-expanded', !isExpanded);
     deliveryToggle.classList.toggle('active');
-    if (!expanded) {
+    if (!isExpanded) {
       deliveryOptions.style.display = 'block';
       deliveryOptions.setAttribute('aria-hidden', 'false');
     } else {
       deliveryOptions.style.display = 'none';
       deliveryOptions.setAttribute('aria-hidden', 'true');
-    }
-  }
-
-  deliveryToggle.addEventListener('click', toggleDeliveryOptions);
-  deliveryToggle.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      toggleDeliveryOptions();
+      // Скрыть все поля доставки
+      ukrpostFields.classList.add('hidden');
+      npFields.classList.add('hidden');
     }
   });
 
-  deliveryOptions.addEventListener('change', (e) => {
-    if (e.target.value === 'ukrpost') {
-      ukrpostFields.classList.remove('hidden');
-      npFields.classList.add('hidden');
-      // Сделать поля обязательными
-      ukrpostFields.querySelectorAll('input').forEach(input => input.required = true);
-      npFields.querySelectorAll('input').forEach(input => input.required = false);
-    } else if (e.target.value === 'np') {
-      npFields.classList.remove('hidden');
-      ukrpostFields.classList.add('hidden');
-      npFields.querySelectorAll('input').forEach(input => input.required = true);
-      ukrpostFields.querySelectorAll('input').forEach(input => input.required = false);
+  // Показать поля формы в зависимости от выбора доставки
+  deliveryOptions.addEventListener('change', e => {
+    if (e.target.name === 'delivery-service') {
+      if (e.target.value === 'ukrpost') {
+        ukrpostFields.classList.remove('hidden');
+        npFields.classList.add('hidden');
+      } else if (e.target.value === 'np') {
+        npFields.classList.remove('hidden');
+        ukrpostFields.classList.add('hidden');
+      }
+    }
+  });
+
+  // Валидация доставки
+  document.getElementById('order-form').addEventListener('submit', e => {
+    const delivery = document.querySelector('input[name="delivery-service"]:checked');
+    if (!delivery) {
+      alert('Будь ласка, оберіть службу доставки.');
+      e.preventDefault();
+      return;
+    }
+    if (delivery.value === 'ukrpost') {
+      if (!document.getElementById('ukrpost-index').value.trim() ||
+          !document.getElementById('ukrpost-city').value.trim() ||
+          !document.getElementById('ukrpost-street').value.trim()) {
+        alert('Будь ласка, заповніть всі поля для Укрпошти.');
+        e.preventDefault();
+        return;
+      }
+    }
+    if (delivery.value === 'np') {
+      if (!document.getElementById('np-region').value.trim() ||
+          !document.getElementById('np-city').value.trim() ||
+          !document.getElementById('np-branch').value.trim()) {
+        alert('Будь ласка, заповніть всі поля для Нової пошти.');
+        e.preventDefault();
+        return;
+      }
     }
   });
 </script>
