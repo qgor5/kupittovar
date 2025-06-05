@@ -38,9 +38,6 @@
   #product-details h3 {
     margin:0 0 10px 0;
   }
-  #product-details p {
-    margin:4px 0;
-  }
   #quantity-control {
     display:flex;
     align-items:center;
@@ -154,14 +151,14 @@
   <img id="product-image" src="" alt="Фото товару" />
   <div id="product-details">
     <h3 id="product-name"></h3>
-    <p>Ціна за одиницю: <span id="unit-price">0</span> грн</p>
+    <p>Ціна за одиницю: <span id="unit-price">0.00</span> грн</p>
     <div id="quantity-control">
       <label for="quantity">Кількість:</label>
       <button type="button" id="decrease" aria-label="Зменшити кількість">−</button>
       <input type="number" id="quantity" name="quantity" value="1" min="1" />
       <button type="button" id="increase" aria-label="Збільшити кількість">+</button>
     </div>
-    <p id="total-price">Загальна сума: 0 грн</p>
+    <p id="total-price">Загальна сума: 0.00 грн</p>
   </div>
 </div>
 
@@ -232,17 +229,20 @@
 </form>
 
 <script>
-  // Получить параметр из URL
+  // Функция для получения параметров из URL
   function getQueryParam(param) {
-    const params = new URLSearchParams(window.location.search);
-    return params.get(param);
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
   }
 
-  // Получить данные товара из URL
-  const productName = getQueryParam('productName') || "Невідомий товар";
-  const productImage = getQueryParam('productImage') || "";
+  // Получаем данные из URL
+  const productName = decodeURIComponent(getQueryParam('productName') || "Невідомий товар");
+  const productImage = decodeURIComponent(getQueryParam('productImage') || "");
   const unitPrice = parseFloat(getQueryParam('price')) || 0;
+  let initialQuantity = parseInt(getQueryParam('quantity'));
+  if (isNaN(initialQuantity) || initialQuantity < 1) initialQuantity = 1;
 
+  // Ссылки на элементы
   const productNameEl = document.getElementById('product-name');
   const productImageEl = document.getElementById('product-image');
   const unitPriceEl = document.getElementById('unit-price');
@@ -255,20 +255,22 @@
   const hiddenQuantity = document.getElementById('hidden-quantity');
   const hiddenTotal = document.getElementById('hidden-total');
 
+  // Установка начальных значений
   productNameEl.textContent = productName;
 
   if (productImage) {
-    productImageEl.style.display = 'block';
     productImageEl.src = productImage;
     productImageEl.alt = productName;
+    productImageEl.style.display = 'block';
   } else {
     productImageEl.style.display = 'none';
   }
 
   unitPriceEl.textContent = unitPrice.toFixed(2);
+  quantityInput.value = initialQuantity;
 
-  // Обновить сумму и скрытые поля
-  function updateTotalPrice() {
+  // Функция для обновления итоговой суммы и скрытых полей
+  function updateTotal() {
     let qty = parseInt(quantityInput.value);
     if (isNaN(qty) || qty < 1) {
       qty = 1;
@@ -277,6 +279,7 @@
     const total = qty * unitPrice;
     totalPriceEl.textContent = `Загальна сума: ${total.toFixed(2)} грн`;
 
+    // Обновляем скрытые поля для отправки
     hiddenName.value = productName;
     hiddenImage.value = productImage;
     hiddenUnitPrice.value = unitPrice.toFixed(2);
@@ -284,29 +287,30 @@
     hiddenTotal.value = total.toFixed(2);
   }
 
-  // Кнопки +/− для количества
+  // Обработчики кнопок + и −
   document.getElementById('increase').addEventListener('click', () => {
     quantityInput.value = parseInt(quantityInput.value) + 1;
-    updateTotalPrice();
+    updateTotal();
   });
 
   document.getElementById('decrease').addEventListener('click', () => {
     let current = parseInt(quantityInput.value);
     if (current > 1) {
       quantityInput.value = current - 1;
-      updateTotalPrice();
+      updateTotal();
     }
   });
 
+  // Обновление при ручном вводе количества
   quantityInput.addEventListener('input', () => {
     let val = parseInt(quantityInput.value);
     if (isNaN(val) || val < 1) quantityInput.value = 1;
-    updateTotalPrice();
+    updateTotal();
   });
 
-  // Инициализация цены и полей при загрузке
+  // Инициализация при загрузке страницы
   window.addEventListener('DOMContentLoaded', () => {
-    updateTotalPrice();
+    updateTotal();
   });
 
   // Переключатель доставки
@@ -314,6 +318,13 @@
   const deliveryOptions = document.getElementById('delivery-options');
   const ukrpostFields = document.getElementById('ukrpost-fields');
   const npFields = document.getElementById('np-fields');
+
+  function toggleDelivery() {
+    const expanded = deliveryToggle.classList.toggle('active');
+    deliveryOptions.style.display = expanded ? 'block' : 'none';
+    deliveryToggle.setAttribute('aria-expanded', expanded);
+    deliveryOptions.setAttribute('aria-hidden', !expanded);
+  }
 
   deliveryToggle.addEventListener('click', toggleDelivery);
   deliveryToggle.addEventListener('keydown', (e) => {
@@ -323,34 +334,23 @@
     }
   });
 
-  function toggleDelivery() {
-    const expanded = deliveryToggle.classList.toggle('active');
-    deliveryOptions.style.display = expanded ? 'block' : 'none';
-    deliveryOptions.setAttribute('aria-hidden', !expanded);
-    deliveryToggle.setAttribute('aria-expanded', expanded);
-  }
-
-  // Показать/скрыть поля в зависимости от выбора доставки
   deliveryOptions.addEventListener('change', (e) => {
     if (e.target.name === 'delivery-service') {
       if (e.target.value === 'ukrpost') {
         ukrpostFields.classList.remove('hidden');
         npFields.classList.add('hidden');
-
-        // Сделать поля обязательными
         ukrpostFields.querySelectorAll('input').forEach(inp => inp.required = true);
         npFields.querySelectorAll('input').forEach(inp => inp.required = false);
       } else if (e.target.value === 'np') {
         npFields.classList.remove('hidden');
         ukrpostFields.classList.add('hidden');
-
         npFields.querySelectorAll('input').forEach(inp => inp.required = true);
         ukrpostFields.querySelectorAll('input').forEach(inp => inp.required = false);
       }
     }
   });
 
-  // Валидация телефона (пример простейшей)
+  // Валидация телефона
   const phoneInput = document.getElementById('phone');
   phoneInput.addEventListener('input', () => {
     phoneInput.setCustomValidity('');
