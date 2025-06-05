@@ -1,254 +1,29 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Оформлення замовлення</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    max-width: 480px;
-    margin: 20px auto;
-    padding: 10px;
-    background: #f9f9f9;
-    color: #333;
-  }
-  h2 {
-    text-align: center;
-  }
-  #product-summary {
-    background:#fff; 
-    padding:15px; 
-    border:1px solid #ccc; 
-    border-radius:8px; 
-    margin-bottom:20px; 
-    display:flex; 
-    gap:15px; 
-    align-items:center;
-  }
-  #product-summary img {
-    width: 100px; 
-    height: auto; 
-    border-radius:6px; 
-    box-shadow:0 2px 6px rgba(0,0,0,0.1);
-  }
-  #product-details {
-    flex:1;
-  }
-  #product-details h3 {
-    margin:0 0 10px 0;
-  }
-  #quantity-control {
-    display:flex; 
-    align-items:center; 
-    gap:10px;
-    margin-top:5px;
-  }
-  #quantity-control label {
-    font-weight: bold;
-  }
-  #quantity-control button {
-    padding:4px 10px;
-    cursor: pointer;
-  }
-  #quantity-control input[type=number] {
-    width:50px; 
-    text-align:center;
-    border-radius:4px;
-    border:1px solid #ccc;
-    padding: 4px;
-  }
-  #total-price {
-    margin-top:10px; 
-    font-weight:bold;
-  }
-  form {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-  }
-  label {
-    display: block;
-    margin-top: 15px;
-    font-weight: bold;
-  }
-  input[type="text"],
-  input[type="tel"],
-  select,
-  textarea {
-    width: 100%;
-    padding: 8px;
-    margin-top: 6px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  .submit-btn {
-    margin-top: 25px;
-    padding: 12px 20px;
-    background: #007bff;
-    border: none;
-    color: white;
-    font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
-  }
-  .submit-btn:hover {
-    background: #0056b3;
-  }
-  .required-star {
-    color: red;
-  }
-  a.back-link {
-    display:block;
-    margin-top: 15px; 
-    color: #007bff; 
-    text-decoration:none;
-  }
-  a.back-link:hover {
-    text-decoration: underline;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <title>Тестова форма Formspree</title>
 </head>
 <body>
-
-<h2>Оформлення замовлення</h2>
-
-<!-- Блок з товаром -->
-<div id="product-summary">
-  <img id="product-image" src="" alt="Фото товару" />
-  <div id="product-details">
-    <h3 id="product-name"></h3>
-    <p>Ціна за одиницю: <span id="unit-price">0</span> грн</p>
-    <div id="quantity-control">
-      <label for="quantity">Кількість:</label>
-      <button type="button" id="decrease">−</button>
-      <input type="number" id="quantity" name="quantity" value="1" min="1" />
-      <button type="button" id="increase">+</button>
-    </div>
-    <p id="total-price">Загальна сума: 0 грн</p>
-  </div>
-</div>
-
-<form id="order-form" method="POST" action="https://formspree.io/f/mgvyvdeb" novalidate>
-  
-  <label for="fullname">ПІБ <span class="required-star">*</span></label>
-  <input type="text" id="fullname" name="fullname" required placeholder="Ваше повне ім’я" />
-
-  <label for="phone">Телефон <span class="required-star">*</span></label>
-  <input type="tel" id="phone" name="phone" required placeholder="+380501234567" pattern="^\+?\d{7,15}$" />
-
-  <label for="address">Адреса доставки <span class="required-star">*</span></label>
-  <input type="text" id="address" name="address" required placeholder="Ваша адреса" />
-
-  <label for="color">Виберіть колір <span class="required-star">*</span></label>
-  <select id="color" name="color" required>
-    <option value="" disabled selected>Оберіть колір</option>
-    <option value="коричневий">Коричневий</option>
-    <option value="зелений">Зелений</option>
-    <option value="червоний">Червоний</option>
-    <option value="чорний">Чорний</option>
-  </select>
-
-  <label for="comments" style="margin-top: 15px;">Коментарі (необов’язково)</label>
-  <textarea id="comments" name="comments" rows="3" placeholder="Ваші побажання..."></textarea>
-
-  <!-- Скрытые поля для передачи данных товара -->
-  <input type="hidden" name="product-name" id="hidden-name" />
-  <input type="hidden" name="product-image" id="hidden-image" />
-  <input type="hidden" name="total-price" id="hidden-total" />
-  <input type="hidden" name="quantity" id="hidden-quantity" />
-
-  <!-- Formspree перенаправление -->
-  <input type="hidden" name="_next" value="https://kupittovar.netlify.app/order-success.html" />
-  <input type="hidden" name="_captcha" value="false" />
-
-  <button type="submit" class="submit-btn">Підтвердити замовлення</button>
-</form>
-
-<a href="kozhani-korzina.html" class="back-link">← Повернутись до кошика</a>
-
-<script>
-  // Функция для получения параметров из URL
-  function getUrlParams() {
-    const params = new URLSearchParams(window.location.search);
-    return {
-      name: params.get('name') || 'Товар',
-      image: params.get('img') || 'https://via.placeholder.com/100?text=Фото',
-      price: parseFloat(params.get('price')) || 0,
-      quantity: parseInt(params.get('qty')) || 1,
-    };
-  }
-
-  // Обновление блока с товаром
-  function updateProductBlock(data) {
-    document.getElementById('product-name').textContent = data.name;
-    const imgEl = document.getElementById('product-image');
-    imgEl.src = data.image;
-    imgEl.alt = data.name;
-
-    document.getElementById('unit-price').textContent = data.price.toFixed(2);
-
-    const quantityInput = document.getElementById('quantity');
-    quantityInput.value = data.quantity;
-
-    updateTotalPrice(data.price, data.quantity);
-
-    // Устанавливаем скрытые поля
-    document.getElementById('hidden-name').value = data.name;
-    document.getElementById('hidden-image').value = data.image;
-    document.getElementById('hidden-quantity').value = data.quantity;
-    document.getElementById('hidden-total').value = (data.price * data.quantity).toFixed(2);
-  }
-
-  // Обновить итоговую сумму
-  function updateTotalPrice(unitPrice, quantity) {
-    const total = unitPrice * quantity;
-    document.getElementById('total-price').textContent = `Загальна сума: ${total.toFixed(2)} грн`;
-    document.getElementById('hidden-total').value = total.toFixed(2);
-  }
-
-  // Управление количеством
-  document.getElementById('increase').addEventListener('click', () => {
-    const qtyInput = document.getElementById('quantity');
-    qtyInput.value = parseInt(qtyInput.value) + 1;
-    onQuantityChange();
-  });
-
-  document.getElementById('decrease').addEventListener('click', () => {
-    const qtyInput = document.getElementById('quantity');
-    let val = parseInt(qtyInput.value);
-    if (val > 1) qtyInput.value = val - 1;
-    onQuantityChange();
-  });
-
-  document.getElementById('quantity').addEventListener('input', () => {
-    let val = parseInt(document.getElementById('quantity').value);
-    if (isNaN(val) || val < 1) val = 1;
-    document.getElementById('quantity').value = val;
-    onQuantityChange();
-  });
-
-  function onQuantityChange() {
-    const qty = parseInt(document.getElementById('quantity').value);
-    const unitPrice = parseFloat(document.getElementById('unit-price').textContent);
-    updateTotalPrice(unitPrice, qty);
-    document.getElementById('hidden-quantity').value = qty;
-  }
-
-  // Инициализация
-  const productData = getUrlParams();
-  updateProductBlock(productData);
-
-  // Перед отправкой обновляем скрытые поля
-  document.getElementById('order-form').addEventListener('submit', () => {
-    const qty = parseInt(document.getElementById('quantity').value) || 1;
-    document.getElementById('hidden-quantity').value = qty;
-    const unitPrice = parseFloat(document.getElementById('unit-price').textContent);
-    document.getElementById('hidden-total').value = (unitPrice * qty).toFixed(2);
-  });
-</script>
-
+  <h2>Тестова форма для перевірки Formspree</h2>
+  <form action="https://formspree.io/f/mgvyvdeb" method="POST">
+    <label>
+      Ваше ім'я:
+      <input type="text" name="name" required />
+    </label><br /><br />
+    <label>
+      Телефон:
+      <input type="tel" name="phone" required />
+    </label><br /><br />
+    <label>
+      Email (обов’язково для Formspree):
+      <input type="email" name="email" required />
+    </label><br /><br />
+    
+    <input type="hidden" name="_next" value="https://kupittovar.netlify.app/order-success.html" />
+    <input type="hidden" name="_captcha" value="false" />
+    
+    <button type="submit">Відправити</button>
+  </form>
 </body>
 </html>
