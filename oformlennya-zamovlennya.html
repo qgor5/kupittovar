@@ -166,7 +166,7 @@
   </div>
 </div>
 
-<form id="order-form" method="POST" action="https://formsubmit.co/elits485@gmail.com" novalidate>
+<form id="order-form" action="https://formspree.io/f/xblylqvd" method="POST" novalidate>
   
   <label for="fullname">ПІБ <span class="required-star">*</span></label>
   <input type="text" id="fullname" name="fullname" required placeholder="Ваше повне ім’я" />
@@ -223,10 +223,7 @@
   <label for="comments" style="margin-top: 15px;">Коментарі / побажання (необов’язково)</label>
   <textarea id="comments" name="comments" rows="3" placeholder="Ваші побажання до замовлення..."></textarea>
 
-  <!-- Скрытые поля для FormSubmit -->
-  <input type="hidden" name="_next" value="https://kupittovar.netlify.app/order-success.html" />
-  <input type="hidden" name="_captcha" value="false" />
-  <!-- Скрытые поля для передачи данных товара -->
+  <!-- Скрытые поля с данными товара -->
   <input type="hidden" name="product-name" id="hidden-name" />
   <input type="hidden" name="product-image" id="hidden-image" />
   <input type="hidden" name="total-price" id="hidden-total" />
@@ -238,16 +235,19 @@
 <a href="kozhani-korzina.html" style="display:block; margin-top: 15px; color: #007bff; text-decoration:none;">← Повернутись до кошика</a>
 
 <script>
-  // Аккордеон открытия выбора почты
   const toggle = document.getElementById('delivery-toggle');
   const options = document.getElementById('delivery-options');
 
   toggle.addEventListener('click', () => {
-    options.style.display = options.style.display === 'block' ? 'none' : 'block';
-    toggle.classList.toggle('active');
+    if (options.style.display === 'block') {
+      options.style.display = 'none';
+      toggle.classList.remove('active');
+    } else {
+      options.style.display = 'block';
+      toggle.classList.add('active');
+    }
   });
 
-  // Показать соответствующие поля доставки
   const deliveryRadios = document.querySelectorAll('input[name="delivery-service"]');
   const ukrpostFields = document.getElementById('ukrpost-fields');
   const npFields = document.getElementById('np-fields');
@@ -268,7 +268,6 @@
     });
   });
 
-  // Получение данных товара из URL
   function getQueryParam(param) {
     const params = new URLSearchParams(window.location.search);
     return params.get(param);
@@ -287,7 +286,6 @@
 
   let unitPrice = 0;
 
-  // Заполнение данными
   function loadProductData() {
     const name = getQueryParam('name') || 'Товар';
     const image = getQueryParam('image') || 'https://via.placeholder.com/100';
@@ -311,14 +309,12 @@
     const total = unitPrice * qty;
     totalPriceEl.textContent = `Загальна сума: ${total.toFixed(2)} грн`;
 
-    // Обновляем скрытые поля для отправки
     hiddenName.value = productNameEl.textContent;
     hiddenImage.value = productImageEl.src;
     hiddenTotal.value = total.toFixed(2);
     hiddenQuantity.value = qty;
   }
 
-  // Кнопки + и −
   document.getElementById('increase').addEventListener('click', () => {
     quantityInput.value = parseInt(quantityInput.value) + 1;
     updateTotal();
@@ -333,7 +329,7 @@
 
   quantityInput.addEventListener('input', updateTotal);
 
-  // Валидация номера телефона простой
+  // Простая валидация телефона
   document.getElementById('phone').addEventListener('input', function () {
     const val = this.value;
     if (!/^\+?\d*$/.test(val)) {
@@ -341,7 +337,6 @@
     }
   });
 
-  // При загрузке страницы
   window.addEventListener('load', () => {
     loadProductData();
   });
