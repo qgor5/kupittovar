@@ -2,138 +2,102 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Оформлення замовлення</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 20px;
-      background: #fff;
-      color: #222;
-    }
-    h1 {
-      color: #0055aa;
-      text-align: center;
-      margin-bottom: 1em;
-    }
-    .product-summary {
-      display: flex;
-      gap: 20px;
-      margin-bottom: 30px;
-      align-items: center;
-      border-bottom: 1px solid #ccc;
-      padding-bottom: 20px;
-    }
-    .product-summary img {
-      width: 180px;
-      height: 120px;
-      object-fit: cover;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    .product-details {
-      flex-grow: 1;
-    }
-    .product-details h2 {
-      margin: 0 0 10px;
-      color: #0077ff;
-    }
-    .product-details p {
-      margin: 4px 0;
-      font-size: 1.1em;
-    }
-    form input[type="text"], form input[type="tel"], form textarea {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 1em;
-    }
-    form button {
-      background: #0077ff;
-      color: #fff;
-      padding: 14px 24px;
-      font-size: 1.1em;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    form button:hover {
-      background: #005fcc;
-    }
-    .back-btn {
-      background: #777;
-      margin-right: 10px;
-    }
-    .hidden {
-      display: none;
-    }
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f9f9f9; }
+    .product-summary { display: flex; align-items: center; gap: 20px; background: #fff; padding: 15px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .product-summary img { width: 100px; height: auto; border-radius: 8px; }
+    .product-details { flex: 1; }
+    .quantity-controls { display: flex; align-items: center; gap: 10px; }
+    .quantity-controls button { padding: 5px 10px; font-size: 16px; }
+    .order-form { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .order-form input, .order-form textarea { width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc; }
+    .order-form button { padding: 10px 20px; font-size: 16px; cursor: pointer; background-color: #4CAF50; color: white; border: none; border-radius: 4px; }
+    .order-form button.back { background-color: #777; margin-left: 10px; }
+    .total { font-weight: bold; margin-top: 10px; }
   </style>
 </head>
 <body>
+
   <h1>Оформлення замовлення</h1>
 
-  <div id="product-block" class="product-summary" style="display:none;">
-    <img id="product-image" src="" alt="Фото товару">
+  <div class="product-summary">
+    <img id="productImage" src="" alt="Товар">
     <div class="product-details">
-      <h2 id="product-name">Назва товару</h2>
-      <p>Ціна: <span id="product-price"></span> грн</p>
-      <p>Кількість: <span id="product-qty"></span></p>
-      <p><strong>Сума: <span id="product-total"></span> грн</strong></p>
+      <h2 id="productName">Назва товару</h2>
+      <p>Ціна: <span id="productPrice">0</span> грн</p>
+      <div class="quantity-controls">
+        <button type="button" onclick="changeQuantity(-1)">−</button>
+        <input type="number" id="productQty" value="1" min="1" style="width: 50px; text-align: center;">
+        <button type="button" onclick="changeQuantity(1)">+</button>
+      </div>
+      <p class="total">Сума: <span id="totalPrice">0</span> грн</p>
     </div>
   </div>
 
-  <form action="order-success.html" method="GET">
-    <input type="hidden" name="product_name" id="hidden-name">
-    <input type="hidden" name="product_image" id="hidden-image">
-    <input type="hidden" name="product_price" id="hidden-price">
-    <input type="hidden" name="product_quantity" id="hidden-qty">
-    <input type="hidden" name="total_price" id="hidden-total">
+  <form class="order-form" action="order-success.html" method="GET">
+    <input type="text" name="full_name" placeholder="ПІБ" required>
+    <input type="tel" name="phone" placeholder="Телефон" required>
+    <textarea name="address" placeholder="Адреса доставки" required></textarea>
 
-    <label for="fullname">ПІБ</label>
-    <input type="text" id="fullname" name="fullname" placeholder="Ваше повне ім’я" required>
-
-    <label for="phone">Телефон</label>
-    <input type="tel" id="phone" name="phone" placeholder="+380..." required>
-
-    <label for="address">Адреса доставки</label>
-    <textarea id="address" name="address" rows="3" placeholder="Місто, вулиця, номер будинку/квартири" required></textarea>
+    <!-- Приховані поля -->
+    <input type="hidden" name="product_name" id="hiddenProductName">
+    <input type="hidden" name="product_image" id="hiddenProductImage">
+    <input type="hidden" name="product_price" id="hiddenProductPrice">
+    <input type="hidden" name="product_quantity" id="hiddenProductQty">
+    <input type="hidden" name="total_price" id="hiddenTotalPrice">
 
     <button type="submit">Підтвердити замовлення</button>
-    <a href="kozhani-korzina.html" class="back-btn btn">Повернутись до кошика</a>
+    <button type="button" class="back" onclick="window.location.href='kozhani-korzina.html'">Повернутись до кошика</button>
   </form>
 
   <script>
-    function getParam(name) {
+    function getQueryParam(name) {
       const urlParams = new URLSearchParams(window.location.search);
       return urlParams.get(name);
     }
 
-    const name = getParam("name");
-    const price = parseFloat(getParam("price"));
-    const qty = parseInt(getParam("qty"));
-    const image = getParam("image");
-    const total = qty * price;
+    function updateSummary() {
+      const price = parseFloat(getQueryParam('price')) || 0;
+      const qty = parseInt(document.getElementById('productQty').value);
+      const total = price * qty;
 
-    if (name && price && qty && image) {
-      document.getElementById("product-block").style.display = "flex";
-      document.getElementById("product-name").textContent = name;
-      document.getElementById("product-price").textContent = price.toFixed(2);
-      document.getElementById("product-qty").textContent = qty;
-      document.getElementById("product-total").textContent = total.toFixed(2);
-      document.getElementById("product-image").src = image;
-      document.getElementById("product-image").alt = "Фото товару: " + name;
-
-      document.getElementById("hidden-name").value = name;
-      document.getElementById("hidden-image").value = image;
-      document.getElementById("hidden-price").value = price.toFixed(2);
-      document.getElementById("hidden-qty").value = qty;
-      document.getElementById("hidden-total").value = total.toFixed(2);
+      document.getElementById('totalPrice').textContent = total.toFixed(2);
+      document.getElementById('hiddenProductQty').value = qty;
+      document.getElementById('hiddenTotalPrice').value = total.toFixed(2);
     }
+
+    function changeQuantity(change) {
+      const qtyInput = document.getElementById('productQty');
+      let qty = parseInt(qtyInput.value);
+      qty = isNaN(qty) ? 1 : qty + change;
+      qty = qty < 1 ? 1 : qty;
+      qtyInput.value = qty;
+      updateSummary();
+    }
+
+    // Заповнення даних при завантаженні
+    window.onload = () => {
+      const name = getQueryParam('productName') || 'Товар';
+      const img = getQueryParam('productImage') || 'placeholder.jpg';
+      const price = parseFloat(getQueryParam('price')) || 0;
+      const qty = parseInt(getQueryParam('qty')) || 1;
+
+      document.getElementById('productName').textContent = name;
+      document.getElementById('productImage').src = img;
+      document.getElementById('productPrice').textContent = price.toFixed(2);
+      document.getElementById('productQty').value = qty;
+      document.getElementById('totalPrice').textContent = (price * qty).toFixed(2);
+
+      // Приховані поля
+      document.getElementById('hiddenProductName').value = name;
+      document.getElementById('hiddenProductImage').value = img;
+      document.getElementById('hiddenProductPrice').value = price.toFixed(2);
+      document.getElementById('hiddenProductQty').value = qty;
+      document.getElementById('hiddenTotalPrice').value = (price * qty).toFixed(2);
+    };
   </script>
+
 </body>
 </html>
