@@ -1,100 +1,75 @@
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Купити шкіряні ремінці NATO для годинників. Висока якість, надійна фурнітура. Швидка доставка по Україні. Великий вибір кольорів та розмірів.">
-  <title>Шкіряні ремінці NATO для годинників | Купити в Україні</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="script.js" defer></script>
+<!-- Блок з товаром -->
+<div id="product-summary">
+  <img id="product-image" src="" alt="Фото товару" />
+  <div id="product-details">
+    <h3 id="product-name"></h3>
+    <p>Ціна за одиницю: <span id="unit-price">0</span> грн</p>
+    <div id="quantity-control">
+      <label for="quantity">Кількість:</label>
+      <button type="button" id="decrease" aria-label="Зменшити кількість">−</button>
+      <input type="number" id="quantity" name="quantity" value="1" min="1" />
+      <button type="button" id="increase" aria-label="Збільшити кількість">+</button>
+    </div>
+    <p id="total-price">Загальна сума: 0 грн</p>
+  </div>
+</div>
 
-  <!-- Структуровані дані JSON-LD -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org/",
-    "@type": "Product",
-    "name": "Шкіряні ремінці NATO для годинників",
-    "image": [
-      "images/reminec1.jpg",
-      "images/reminec2.jpg",
-      "images/reminec3.jpg"
-    ],
-    "description": "Високоякісні шкіряні ремінці NATO для класичних та спортивних годинників. Міцна фурнітура, приємна на дотик шкіра, ширина від 18 до 24 мм.",
-    "brand": {
-      "@type": "Brand",
-      "name": "KupitTovar"
-    },
-    "offers": {
-      "@type": "Offer",
-      "url": "https://kupittovar.netlify.app/kozhani-remintsi-nato-dlya-godynnykiv.html",
-      "priceCurrency": "UAH",
-      "price": "450",
-      "availability": "https://schema.org/InStock"
-    }
+<script>
+  // Получаем параметры из URL
+  function getQueryParam(param) {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(param);
   }
-  </script>
-</head>
-<body>
-  <header>
-    <h1>Шкіряні ремінці NATO для годинників</h1>
-    <nav>
-      <a href="index.html">Головна</a>
-      <a href="#opis">Опис</a>
-      <a href="#vidhuky">Відгуки</a>
-      <a href="#kontakt">Контакти</a>
-    </nav>
-  </header>
 
-  <main>
-    <section class="carousel">
-      <img src="images/reminec1.jpg" alt="Ремінець NATO - вигляд 1" />
-      <img src="images/reminec2.jpg" alt="Ремінець NATO - вигляд 2" />
-      <img src="images/reminec3.jpg" alt="Ремінець NATO - вигляд 3" />
-    </section>
+  const productName = getQueryParam('productName') || "Невідомий товар";
+  const productImage = getQueryParam('productImage') || "";
+  const unitPrice = parseFloat(getQueryParam('price')) || 0;
 
-    <section id="opis">
-      <h2>Опис товару</h2>
-      <p>
-        Шкіряні ремінці NATO створені для справжніх цінителів якості та стилю. Виготовлені з натуральної шкіри, вони поєднують комфорт, довговічність та естетику. Ідеально підходять для класичних та спортивних годинників. Ремінці мають ширину 18 мм, 20 мм, 22 мм та 24 мм. Надійна фурнітура з нержавіючої сталі гарантує довговічність використання. Пропонуємо широкий вибір кольорів: чорний, коричневий, сірий, синій. Універсальність та простота заміни роблять ці ремінці найкращим вибором для щоденного використання.
-      </p>
-    </section>
+  const productNameEl = document.getElementById('product-name');
+  const productImageEl = document.getElementById('product-image');
+  const unitPriceEl = document.getElementById('unit-price');
+  const quantityInput = document.getElementById('quantity');
+  const totalPriceEl = document.getElementById('total-price');
 
-    <section class="product-details">
-      <p><strong>Ціна:</strong> <span id="price">450</span> грн</p>
-      <label for="qty">Кількість:</label>
-      <input type="number" id="qty" name="qty" value="1" min="1" />
-      <button onclick="addToCart('Шкіряні ремінці NATO для годинників', 450, 'images/reminec1.jpg')">Замовити</button>
-    </section>
+  productNameEl.textContent = productName;
+  if(productImage) {
+    productImageEl.src = productImage;
+    productImageEl.alt = productName;
+    productImageEl.style.display = 'block';
+  } else {
+    productImageEl.style.display = 'none';
+  }
+  unitPriceEl.textContent = unitPrice.toFixed(2);
 
-    <section id="vidhuky">
-      <h2>Відгуки</h2>
-      <article>
-        <p><strong>Олег:</strong> Якість супер, ремінець приємно носиться!</p>
-      </article>
-      <article>
-        <p><strong>Ірина:</strong> Замовляла для чоловіка, він у захваті!</p>
-      </article>
-    </section>
+  // Обновление общей суммы
+  function updateTotalPrice() {
+    let qty = parseInt(quantityInput.value);
+    if (isNaN(qty) || qty < 1) {
+      qty = 1;
+      quantityInput.value = qty;
+    }
+    const total = qty * unitPrice;
+    totalPriceEl.textContent = `Загальна сума: ${total.toFixed(2)} грн`;
 
-    <section id="kontakt">
-      <h2>Зв’язатися з нами</h2>
-      <form action="https://formspree.io/f/mjvnzzyy" method="POST">
-        <label for="name">Ваше ім’я:</label>
-        <input type="text" name="name" id="name" required />
+    // Обновляем скрытые поля, если они есть
+    const hiddenQuantity = document.getElementById('hidden-quantity');
+    const hiddenTotal = document.getElementById('hidden-total');
+    if(hiddenQuantity) hiddenQuantity.value = qty;
+    if(hiddenTotal) hiddenTotal.value = total.toFixed(2);
+  }
 
-        <label for="email">Ваш Email:</label>
-        <input type="email" name="email" id="email" required />
+  quantityInput.addEventListener('input', updateTotalPrice);
+  document.getElementById('increase').addEventListener('click', () => {
+    quantityInput.value = parseInt(quantityInput.value) + 1;
+    updateTotalPrice();
+  });
+  document.getElementById('decrease').addEventListener('click', () => {
+    let val = parseInt(quantityInput.value);
+    if (val > 1) {
+      quantityInput.value = val - 1;
+      updateTotalPrice();
+    }
+  });
 
-        <label for="message">Повідомлення:</label>
-        <textarea name="message" id="message" required></textarea>
-
-        <button type="submit">Надіслати</button>
-      </form>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 KupitTovar. Всі права захищено.</p>
-  </footer>
-</body>
-</html>
+  updateTotalPrice();
+</script>
