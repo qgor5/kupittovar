@@ -17,7 +17,7 @@
       background: #fff;
       color: #222;
       line-height: 1.6;
-      position: relative; /* для позиционирования переключателя */
+      position: relative;
     }
     h1, h2 { color: #0055aa; margin-top: 1.2em; margin-bottom: 0.5em; }
     a       { color: #0055aa; text-decoration: none; }
@@ -152,166 +152,66 @@
 
     <section>
       <h2 id="features-title">Особливості ремінців NATO з натуральної шкіри</h2>
-      <p id="features-desc">Ремінці NATO – це класика, яка поєднує стиль, комфорт і надійність. Наші ремінці виготовлені з високоякісної натуральної шкіри, що гарантує довговічність і приємні тактильні відчуття.</p>
-      <ul id="features-list">
-        <li>100 % натуральна шкіра преміум-класу</li>
-        <li>Водостійкість і стійкість до зношування</li>
-        <li>Кольори: чорний, коричневий, темно-зелений, бежевий та інші</li>
-        <li>Підходять для більшості моделей годинників</li>
-        <li>Легко змінюються без інструментів</li>
+      <ul>
+        <li>Виготовлені з високоякісної натуральної шкіри.</li>
+        <li>Підходять до всіх типів годинників.</li>
+        <li>Довговічні та зручні в носінні.</li>
+        <li>Різні кольори на будь-який смак.</li>
       </ul>
-      <p id="features-desc-2">Обираючи наш ремінець NATO, ви отримуєте стильний аксесуар, який підкреслить індивідуальність і доповнить ваш образ.</p>
     </section>
 
     <section class="reviews">
-      <h3 id="reviews-title">Відгуки наших клієнтів</h3>
+      <h3>Відгуки</h3>
       <div class="review-item">
-        <p class="review-author">Олена, Київ:</p>
-        <p class="review-text">«Ремінець чудової якості, дуже зручний і приємний на дотик. Замовила два кольори – обидва ідеальні!»</p>
+        <div class="review-author">Олександр</div>
+        <div class="review-text">Якість на висоті, ремінець виглядає чудово на годиннику!</div>
       </div>
       <div class="review-item">
-        <p class="review-author">Ігор, Львів:</p>
-        <p class="review-text">«Стильний і міцний ремінець. Доставили швидко, упаковка супер. Рекомендую!»</p>
-      </div>
-      <div class="review-item">
-        <p class="review-author">Світлана, Харків:</p>
-        <p class="review-text">«Дуже сподобався дизайн і якість шкіри. Ідеально підійшов до мого годинника.»</p>
+        <div class="review-author">Марія</div>
+        <div class="review-text">Придбала червоний ремінець — виглядає дуже стильно і зручно!</div>
       </div>
     </section>
   </main>
 
   <footer>
-    &copy; 2025 KupitTovar. Всі права захищені.
+    <p>&copy; 2024 Купити Товар | Усі права захищені</p>
   </footer>
 
   <script>
-    // Карусель (без изменений)
-    const slide = document.getElementById('carousel-slide');
-    const images = slide.querySelectorAll('img');
-    const prevBtn = document.querySelector('.carousel-arrow.prev');
-    const nextBtn = document.querySelector('.carousel-arrow.next');
-    let currentIndex = 0;
-
-    function showSlide(index) {
-      if (index < 0) index = images.length - 1;
-      if (index >= images.length) index = 0;
-      slide.style.transform = `translateX(${-index * 100}%)`;
-      currentIndex = index;
-    }
-    prevBtn.addEventListener('click', () => showSlide(currentIndex - 1));
-    nextBtn.addEventListener('click', () => showSlide(currentIndex + 1));
-    showSlide(0);
-
-    // Передача кількості товару в корзину (без изменений)
-    document.getElementById('buyBtn').addEventListener('click', function (e) {
-      e.preventDefault();
-      const qty = document.getElementById('quantity').value || 1;
-      const baseUrl = this.href;
-      const url = new URL(baseUrl);
-      url.searchParams.set('qty', qty);
-      window.location.href = url.toString();
-    });
-
-    // Переключатель языка
-    const langSwitcher = document.getElementById('lang-switcher');
-
-    // Простой словарь переводов (можно расширять)
-    const translations = {
-      ru: {
-        title: "Кожаные ремешки NATO для часов – стиль и качество премиум-класса",
-        subtitle: "Натуральная кожа, широкий выбор цветов и размеров. Заказывайте с доставкой по Украине!",
-        price: "Цена: 183&nbsp;грн",
-        quantityLabel: "Количество:",
-        buyBtn: "Заказать",
-        featuresTitle: "Особенности ремешков NATO из натуральной кожи",
-        featuresDesc: "Ремешки NATO – это классика, сочетающая стиль, комфорт и надёжность. Наши ремешки изготовлены из высококачественной натуральной кожи, что гарантирует долговечность и приятные тактильные ощущения.",
-        featuresList: [
-          "100 % натуральная кожа премиум-класса",
-          "Водостойкость и устойчивость к износу",
-          "Цвета: чёрный, коричневый, тёмно-зелёный, бежевый и другие",
-          "Подходят для большинства моделей часов",
-          "Легко меняются без инструментов"
-        ],
-        reviewsTitle: "Отзывы наших клиентов",
-
-        reviewAuthors: ["Олена, Киев:", "Игорь, Львов:", "Светлана, Харьков:"],
-
-        reviewTexts: [
-
-          "«Ремешок отличного качества, очень удобный и приятный на ощупь. Заказала два цвета – оба идеальные!»",
-
-          "«Стильный и прочный ремешок. Доставили быстро, упаковка супер. Рекомендую!»",
-
-          "«Очень понравился дизайн и качество кожи. Идеально подошёл к моим часам.»"
-        ],
-        footer: "© 2025 KupitTovar. Все права защищены."
-      },
-      uk: null  // украинский язык — исходные тексты в HTML
-    };
-
-    function translate(lang) {
-      if (lang === 'uk') {
-        document.documentElement.lang = 'uk';
-        // Восстанавливаем украинский текст из HTML (не меняем)
-        document.getElementById('title').textContent = "Кожані ремінці NATO для годинників – стиль та якість преміум-класу";
-        document.getElementById('subtitle').textContent = "Натуральна шкіра, широкий вибір кольорів і розмірів. Замовляйте з доставкою по Україні!";
-        document.getElementById('price').innerHTML = "Ціна: 183&nbsp;грн";
-        document.getElementById('quantity-label').textContent = "Кількість:";
-        document.getElementById('buyBtn').textContent = "Замовити";
-        document.getElementById('features-title').textContent = "Особливості ремінців NATO з натуральної шкіри";
-        document.getElementById('features-desc').textContent = "Ремінці NATO – це класика, яка поєднує стиль, комфорт і надійність. Наші ремінці виготовлені з високоякісної натуральної шкіри, що гарантує довговічність і приємні тактильні відчуття.";
-        const featuresList = document.getElementById('features-list');
-        featuresList.innerHTML = `
-          <li>100 % натуральна шкіра преміум-класу</li>
-          <li>Водостійкість і стійкість до зношування</li>
-          <li>Кольори: чорний, коричневий, темно-зелений, бежевий та інші</li>
-          <li>Підходять для більшості моделей годинників</li>
-          <li>Легко змінюються без інструментів</li>
-        `;
-        document.getElementById('features-desc-2').textContent = "Обираючи наш ремінець NATO, ви отримуєте стильний аксесуар, який підкреслить індивідуальність і доповнить ваш образ.";
-        document.getElementById('reviews-title').textContent = "Відгуки наших клієнтів";
-        const reviewAuthors = document.querySelectorAll('.review-author');
-        const reviewTexts = document.querySelectorAll('.review-text');
-        reviewAuthors[0].textContent = "Олена, Київ:";
-        reviewTexts[0].textContent = "«Ремінець чудової якості, дуже зручний і приємний на дотик. Замовила два кольори – обидва ідеальні!»";
-        reviewAuthors[1].textContent = "Ігор, Львів:";
-        reviewTexts[1].textContent = "«Стильний і міцний ремінець. Доставили швидко, упаковка супер. Рекомендую!»";
-        reviewAuthors[2].textContent = "Світлана, Харків:";
-        reviewTexts[2].textContent = "«Дуже сподобався дизайн і якість шкіри. Ідеально підійшов до мого годинника.»";
-        document.querySelector('footer').innerHTML = "&copy; 2025 KupitTovar. Всі права захищені.";
-      } else if (lang === 'ru') {
-        document.documentElement.lang = 'ru';
-        const tr = translations.ru;
-        document.getElementById('title').textContent = tr.title;
-        document.getElementById('subtitle').textContent = tr.subtitle;
-        document.getElementById('price').innerHTML = tr.price;
-        document.getElementById('quantity-label').textContent = tr.quantityLabel;
-        document.getElementById('buyBtn').textContent = tr.buyBtn;
-        document.getElementById('features-title').textContent = tr.featuresTitle;
-        document.getElementById('features-desc').textContent = tr.featuresDesc;
-        const featuresList = document.getElementById('features-list');
-        featuresList.innerHTML = tr.featuresList.map(li => `<li>${li}</li>`).join('');
-        document.getElementById('features-desc-2').textContent = tr.featuresDesc2;
-        document.getElementById('reviews-title').textContent = tr.reviewsTitle;
-        const reviewAuthors = document.querySelectorAll('.review-author');
-        const reviewTexts = document.querySelectorAll('.review-text');
-        reviewAuthors[0].textContent = tr.reviewAuthors[0];
-        reviewTexts[0].textContent = tr.reviewTexts[0];
-        reviewAuthors[1].textContent = tr.reviewAuthors[1];
-        reviewTexts[1].textContent = tr.reviewTexts[1];
-        reviewAuthors[2].textContent = tr.reviewAuthors[2];
-        reviewTexts[2].textContent = tr.reviewTexts[2];
-        document.querySelector('footer').innerHTML = tr.footer;
+    document.getElementById('lang-switcher').addEventListener('change', function(e) {
+      const lang = e.target.value;
+      if (lang === 'ru') {
+        document.getElementById('title').textContent = 'Кожаные ремешки NATO для часов – стиль и качество премиум-класса';
+        document.getElementById('subtitle').textContent = 'Натуральная кожа, широкий выбор цветов и размеров. Заказывайте с доставкой по Украине!';
+        document.getElementById('price').textContent = 'Цена: 183 грн';
+        document.getElementById('quantity-label').textContent = 'Количество:';
+        document.getElementById('buyBtn').textContent = 'Заказать';
+        document.getElementById('features-title').textContent = 'Особенности ремешков NATO из натуральной кожи';
+        document.getElementById('reviews-title').textContent = 'Отзывы';
+      } else {
+        document.getElementById('title').textContent = 'Кожані ремінці NATO для годинників – стиль та якість преміум-класу';
+        document.getElementById('subtitle').textContent = 'Натуральна шкіра, широкий вибір кольорів і розмірів. Замовляйте з доставкою по Україні!';
+        document.getElementById('price').textContent = 'Ціна: 183 грн';
+        document.getElementById('quantity-label').textContent = 'Кількість:';
+        document.getElementById('buyBtn').textContent = 'Замовити';
+        document.getElementById('features-title').textContent = 'Особливості ремінців NATO з натуральної шкіри';
       }
-    }
-
-    langSwitcher.addEventListener('change', () => {
-      const lang = langSwitcher.value;
-      translate(lang);
     });
 
-    // Инициализация
-    translate(langSwitcher.value);
+    // Код для каруселі изображений
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel-slide img');
+    const totalSlides = slides.length;
+
+    document.querySelector('.carousel-arrow.next').addEventListener('click', () => {
+      currentSlide = (currentSlide + 1) % totalSlides;
+      document.querySelector('.carousel-slide').style.transform = `translateX(-${currentSlide * 100}%)`;
+    });
+
+    document.querySelector('.carousel-arrow.prev').addEventListener('click', () => {
+      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+      document.querySelector('.carousel-slide').style.transform = `translateX(-${currentSlide * 100}%)`;
+    });
   </script>
 </body>
 </html>
