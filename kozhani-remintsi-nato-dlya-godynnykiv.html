@@ -135,7 +135,7 @@
 
   <main>
     <div class="carousel-container">
-      <button class="carousel-arrow prev">&#10094;</button>
+      <button class="carousel-arrow prev" onclick="moveSlide(-1)">&#10094;</button>
       <div class="carousel-slide" id="carousel-slide">
         <img src="https://raw.githubusercontent.com/qgor5/kupittovar/refs/heads/main/Leather-Watch-Straps.webp" alt="Кожаний ремінець NATO Червоного кольору" />
         <img src="https://raw.githubusercontent.com/qgor5/kupittovar/refs/heads/main/skiryani-remintsi-u-stili-nato.webp" alt="Ремінець NATO Чорного кольору" />
@@ -143,7 +143,7 @@
         <img src="https://raw.githubusercontent.com/qgor5/kupittovar/refs/heads/main/yakisni-shkiryani-remintsi-dlya-hodynnyka.webp" alt="Якісні шкіряні ремінці для годинника" />
         <img src="https://raw.githubusercontent.com/qgor5/kupittovar/refs/heads/main/remintsi-dlya-hodynnyka-z-naturalnoi-yakisnoi-shkiry%20(2).webp" alt="Якісні шкіряні ремінці для годинника" />
       </div>
-      <button class="carousel-arrow next">&#10095;</button>
+      <button class="carousel-arrow next" onclick="moveSlide(1)">&#10095;</button>
     </div>
 
     <div class="product-action">
@@ -157,9 +157,8 @@
       <h2 id="features-title">Особливості ремінців NATO з натуральної шкіри</h2>
       <p id="features-desc">Ремінці NATO – це класика, яка поєднує стиль, комфорт і надійність. Наші ремінці виготовлені з високоякісної натуральної шкіри, що гарантує довговічність і приємні тактильні відчуття.</p>
       <ul id="features-list">
-        <li>100 % натуральна шкіра преміум-класу</li>
-        <li>Водостійкість і стійкість до зношування</li>
-        <li>Кольори: чорний, коричневий, темно-синій, червоний і багато інших</li>
+        <li>Натуральна шкіра преміум якості</li>
+        <li>Широкий вибір кольорів: чорний, коричневий, темно-синій, червоний і багато інших</li>
         <li>Різні розміри під будь-який годинник</li>
         <li>Сумісність з більшістю моделей годинників</li>
       </ul>
@@ -191,5 +190,37 @@
   <footer>
     <p>&copy; 2025 Купити товар | Всі права захищено.</p>
   </footer>
+
+  <script>
+    let currentSlide = 0;
+
+    function moveSlide(direction) {
+      const slides = document.getElementById('carousel-slide');
+      const totalSlides = slides.children.length;
+      currentSlide += direction;
+      if (currentSlide < 0) currentSlide = totalSlides - 1;
+      if (currentSlide >= totalSlides) currentSlide = 0;
+      slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+    }
+
+    // Включение / отключение языка
+    document.getElementById('lang-switcher').addEventListener('change', function (e) {
+      if (e.target.value === 'ru') {
+        document.getElementById('title').innerText = 'Кожаные ремешки NATO для часов – стиль и качество премиум-класса';
+        document.getElementById('subtitle').innerText = 'Натуральная кожа, широкий выбор цветов и размеров. Заказывайте с доставкой по Украине!';
+        document.getElementById('features-title').innerText = 'Особенности ремешков NATO из натуральной кожи';
+        document.getElementById('features-desc').innerText = 'Ремешки NATO – это классика, которая сочетает стиль, комфорт и надежность.';
+        document.getElementById('quantity-label').innerText = 'Количество:';
+        document.getElementById('buyBtn').innerText = 'Заказать';
+      } else {
+        document.getElementById('title').innerText = 'Кожані ремінці NATO для годинників – стиль та якість преміум-класу';
+        document.getElementById('subtitle').innerText = 'Натуральна шкіра, широкий вибір кольорів і розмірів. Замовляйте з доставкою по Україні!';
+        document.getElementById('features-title').innerText = 'Особливості ремінців NATO з натуральної шкіри';
+        document.getElementById('features-desc').innerText = 'Ремінці NATO – це класика, яка поєднує стиль, комфорт і надійність.';
+        document.getElementById('quantity-label').innerText = 'Кількість:';
+        document.getElementById('buyBtn').innerText = 'Замовити';
+      }
+    });
+  </script>
 </body>
 </html>
