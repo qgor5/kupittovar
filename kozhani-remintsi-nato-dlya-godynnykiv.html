@@ -9,7 +9,6 @@
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://kupittovar.netlify.app/kozhani-remintsi-nato-dlya-godynnykiv.html" />
   <style>
-    /* Добавлены стили */
     body {
       font-family: Arial, sans-serif;
       margin: 0 auto;
@@ -21,7 +20,7 @@
       position: relative;
     }
     h1, h2 { color: #0055aa; margin-top: 1.2em; margin-bottom: 0.5em; }
-    a       { color: #0055aa; text-decoration: none; }
+    a { color: #0055aa; text-decoration: none; }
     a:hover { text-decoration: underline; }
     .btn-buy {
       display: inline-block;
@@ -35,45 +34,12 @@
       text-decoration: none;
     }
     .btn-buy:hover { background: #005fcc; }
-    ul      { padding-left: 20px; }
-    header  { text-align: center; margin-bottom: 30px; }
-    footer  {
+    ul { padding-left: 20px; }
+    header { text-align: center; margin-bottom: 30px; }
+    footer {
       text-align: center; margin-top: 40px; padding: 10px 0;
       border-top: 1px solid #ddd; font-size: 0.9em; color: #666;
     }
-    .carousel-container {
-      position: relative;
-      max-width: 600px; height: 400px;
-      margin: 20px auto;
-      overflow: hidden;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    .carousel-slide {
-      display: flex;
-      transition: transform 0.5s ease-in-out;
-      width: 100%;
-    }
-    .carousel-slide img {
-      width: 100%; height: 400px; object-fit: cover;
-      border-radius: 10px; flex-shrink: 0;
-    }
-    .carousel-arrow {
-      position: absolute; top: 50%; transform: translateY(-50%);
-      font-size: 32px; color: #0077ff;
-      background: rgba(255,255,255,0.8);
-      border: none; cursor: pointer; z-index: 10;
-      padding: 5px 12px; border-radius: 50%; user-select: none;
-    }
-    .carousel-arrow:hover { background: #ddd; }
-    .carousel-arrow.prev { left: 10px; }
-    .carousel-arrow.next { right: 10px; }
-    .reviews { margin-top: 30px; background: #f9f9f9; padding: 15px; border-radius: 8px; }
-    .reviews h3   { margin-bottom: 15px; color: #004a99; }
-    .review-item  { margin-bottom: 12px; border-bottom: 1px solid #ddd; padding-bottom: 10px; }
-    .review-author{ font-weight: bold; color: #333; }
-    .review-text  { margin-top: 4px; color: #555; }
-    .review-item:last-child { border-bottom: none; }
     .product-action {
       display: flex;
       flex-wrap: wrap;
@@ -95,114 +61,132 @@
       border: 1px solid #ccc;
       border-radius: 4px;
       text-align: center;
-      color: black;
     }
-
-    /* Стили для переключателя языка */
-    #lang-switcher {
+    /* Стиль для корзины */
+    .cart-container {
       position: fixed;
-      top: 10px;
-      right: 10px;
-      background: #0077ff;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      padding: 6px 12px;
-      font-size: 14px;
-      cursor: pointer;
-      z-index: 1000;
-      user-select: none;
-      font-weight: bold;
+      top: 20%;
+      right: 20px;
+      width: 250px;
+      height: 300px;
+      background: #f4f4f4;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      display: none;
+      flex-direction: column;
+      overflow-y: auto;
     }
-    #lang-switcher option {
-      color: black;
+    .cart-container h3 {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+      color: #0077ff;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+    .cart-item .item-name { font-weight: bold; }
+    .cart-item .item-quantity { font-size: 0.9em; color: #888; }
+    .cart-item .item-price { font-weight: bold; color: #0077ff; }
+    .cart-item .remove-item {
+      cursor: pointer;
+      color: red;
+    }
+    .cart-total {
+      margin-top: 20px;
+      text-align: center;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <!-- Переключатель языков -->
-  <select id="lang-switcher" aria-label="Вибір мови">
-    <option value="uk" selected>Українська</option>
-    <option value="ru">Русский</option>
-  </select>
-
   <header>
-    <h1 id="title">Кожані ремінці NATO для годинників – стиль та якість преміум-класу</h1>
-    <p id="subtitle">Натуральна шкіра, широкий вибір кольорів і розмірів. Замовляйте з доставкою по Україні!</p>
+    <h1>Кожані ремінці NATO для годинників – стиль та якість преміум-класу</h1>
+    <p>Натуральна шкіра, широкий вибір кольорів і розмірів. Замовляйте з доставкою по Україні!</p>
   </header>
 
   <main>
-    <div class="carousel-container">
-      <button class="carousel-arrow prev">&#10094;</button>
-      <div class="carousel-slide" id="carousel-slide">
-        <img src="https://raw.githubusercontent.com/qgor5/kupittovar/refs/heads/main/Leather-Watch-Straps.webp" alt="Кожаний ремінець NATO Червоного кольору" />
-        <img src="https://raw.githubusercontent.com/qgor5/kupittovar/refs/heads/main/skiryani-remintsi-u-stili-nato.webp" alt="Ремінець NATO Чорного кольору" />
-        <img src="https://raw.githubusercontent.com/qgor5/kupittovar/refs/heads/main/kozhani-remintsi-u-styli-nato-riznykh-koloriv.webp" alt="Кожані ремінці NATO різних кольорів" />
-        <img src="https://raw.githubusercontent.com/qgor5/kupittovar/refs/heads/main/yakisni-shkiryani-remintsi-dlya-hodynnyka.webp" alt="Якісні шкіряні ремінці для годинника" />
-        <img src="https://raw.githubusercontent.com/qgor5/kupittovar/refs/heads/main/remintsi-dlya-hodynnyka-z-naturalnoi-yakisnoi-shkiry%20(2).webp" alt="Якісні шкіряні ремінці для годинника" />
-      </div>
-      <button class="carousel-arrow next">&#10095;</button>
-    </div>
-
     <div class="product-action">
-      <span class="price" id="price">Ціна: 183&nbsp;грн</span>
+      <span class="price" id="price">Ціна: 183 грн</span>
       <label for="quantity" class="quantity-label" id="quantity-label">Кількість:</label>
       <input type="number" id="quantity" class="quantity-input" value="1" min="1" />
-      <a href="https://kupittovar.netlify.app/kozhani-korzina" class="btn-buy" id="buyBtn">Замовити</a>
+      <a href="javascript:void(0);" class="btn-buy" id="buyBtn">Замовити</a>
     </div>
-
-    <section>
-      <h2 id="features-title">Особливості ремінців NATO з натуральної шкіри</h2>
-      <p id="features-desc">Ремінці NATO – це класика, яка поєднує стиль, комфорт і надійність. Наші ремінці виготовлені з високоякісної натуральної шкіри, що гарантує довговічність і приємні тактильні відчуття.</p>
-      <ul id="features-list">
-        <li>100 % натуральна шкіра преміум-класу</li>
-        <li>Водостійкість і стійкість до зношування</li>
-        <li>Кольори: чорний, коричневий, темно-зелений, синій та інші</li>
-        <li>Ширина 18, 20, 22 мм, для різних моделей годинників</li>
-        <li>Відмінна якість швів та фурнітури</li>
-      </ul>
-    </section>
-
-    <section class="reviews">
-      <h3>Відгуки наших клієнтів</h3>
-      <div class="review-item">
-        <span class="review-author">Анна К.</span>
-        <p class="review-text">Чудовий ремінець, виглядає дуже стильно, а якість шкіри просто на висоті!</p>
-      </div>
-      <div class="review-item">
-        <span class="review-author">Максим П.</span>
-        <p class="review-text">Прекрасний вибір для тих, хто цінує якість і стиль. Ремінець чудово сидить на годиннику.</p>
-      </div>
-      <div class="review-item">
-        <span class="review-author">Олександра М.</span>
-        <p class="review-text">Натуральна шкіра дійсно помітна. Ремінець зручний і приємний на дотик.</p>
-      </div>
-    </section>
   </main>
+
+  <!-- Корзина -->
+  <div class="cart-container" id="cartContainer">
+    <h3>Корзина</h3>
+    <div id="cartItems"></div>
+    <div class="cart-total" id="cartTotal">Всього: 0 грн</div>
+  </div>
 
   <footer>
     <p>© 2025 Купити Товар – Все про годинники та аксесуари</p>
   </footer>
 
   <script>
-    document.querySelector("#lang-switcher").addEventListener("change", function(e) {
-      if (e.target.value === "ru") {
-        document.getElementById("title").innerText = "Кожаные ремешки NATO для часов - стиль и качество премиум-класса";
-        document.getElementById("subtitle").innerText = "Натуральная кожа, широкий выбор цветов и размеров. Заказывайте с доставкой по Украине!";
-        document.getElementById("features-title").innerText = "Особенности ремешков NATO из натуральной кожи";
-        document.getElementById("features-desc").innerText = "Ремешки NATO — это классика, которая сочетает стиль, комфорт и надежность. Наши ремешки изготовлены из высококачественной натуральной кожи, что гарантирует долговечность и приятные тактильные ощущения.";
-        document.getElementById("quantity-label").innerText = "Количество:";
-        document.getElementById("price").innerText = "Цена: 183&nbsp;грн";
-        document.querySelector("#buyBtn").innerText = "Заказать";
-        document.getElementById("features-list").innerHTML = `
-          <li>100% натуральная кожа премиум-класса</li>
-          <li>Водостойкость и устойчивость к износу</li>
-          <li>Цвета: черный, коричневый, темно-зеленый, синий и другие</li>
-          <li>Ширина 18, 20, 22 мм, для различных моделей часов</li>
-          <li>Отличное качество швов и фурнитуры</li>
+    // Инициализация корзины
+    let cart = [];
+    
+    // Функция для добавления товара в корзину
+    function addToCart() {
+      const quantity = document.getElementById("quantity").value;
+      const price = 183;  // Цена товара
+      const totalPrice = quantity * price;
+
+      // Добавляем товар в корзину
+      cart.push({ name: "Кожаний ремінець NATO", quantity, price, totalPrice });
+
+      // Обновляем отображение корзины
+      updateCart();
+    }
+
+    // Функция для обновления корзины
+    function updateCart() {
+      const cartContainer = document.getElementById("cartContainer");
+      const cartItems = document.getElementById("cartItems");
+      const cartTotal = document.getElementById("cartTotal");
+
+      // Очищаем текущие товары в корзине
+      cartItems.innerHTML = "";
+
+      // Добавляем товары в корзину
+      cart.forEach((item, index) => {
+        const cartItem = document.createElement("div");
+        cartItem.classList.add("cart-item");
+
+        cartItem.innerHTML = `
+          <span class="item-name">${item.name}</span>
+          <span class="item-quantity">Кількість: ${item.quantity}</span>
+          <span class="item-price">${item.totalPrice} грн</span>
+          <span class="remove-item" onclick="removeItem(${index})">Видалити</span>
         `;
-        document.querySelector(".review-author").innerText = "Анна К.";
-      }
+
+        cartItems.appendChild(cartItem);
+      });
+
+      // Обновляем общую цену
+      const totalAmount = cart.reduce((total, item) => total + item.totalPrice, 0);
+      cartTotal.innerText = `Всього: ${totalAmount} грн`;
+
+      // Показать или скрыть корзину
+      cartContainer.style.display = cart.length > 0 ? "block" : "none";
+    }
+
+    // Функция для удаления товара из корзины
+    function removeItem(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
+
+    // Слушатель события на кнопку "Замовити"
+    document.getElementById("buyBtn").addEventListener("click", function() {
+      addToCart();
     });
   </script>
 </body>
