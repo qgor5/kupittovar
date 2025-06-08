@@ -15,14 +15,15 @@
     header {
       background: #000;
       padding: 1rem 0;
+      position: relative;
     }
     nav {
       display: flex;
       justify-content: center;
       gap: 2.5rem;
-      position: relative;
       max-width: 1200px;
       margin: 0 auto;
+      align-items: center;
     }
     nav a, nav button {
       color: #fff;
@@ -173,6 +174,33 @@
         gap: 1.5rem;
       }
     }
+
+    /* Языковой переключатель */
+    .lang-switcher {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      gap: 0.75rem;
+    }
+    .lang-switcher button {
+      background: none;
+      border: 2px solid transparent;
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      user-select: none;
+    }
+    .lang-switcher button.active,
+    .lang-switcher button:hover {
+      border-color: #facc15;
+      color: #facc15;
+    }
   </style>
 </head>
 <body>
@@ -191,6 +219,13 @@
         </div>
       </div>
       <a href="#trailers">Трейлеры</a>
+
+      <!-- Языковой переключатель -->
+      <div class="lang-switcher" role="group" aria-label="Переключатель языков">
+        <button type="button" class="active" data-lang="ru" aria-pressed="true" title="Русский">RU</button>
+        <button type="button" data-lang="ua" aria-pressed="false" title="Українська">UA</button>
+        <button type="button" data-lang="en" aria-pressed="false" title="English">EN</button>
+      </div>
     </nav>
   </header>
 
@@ -228,6 +263,23 @@
   <footer>
     <p>&copy; 2025 TopKino. Все права защищены.</p>
   </footer>
+
+  <script>
+    // Логика переключения языка: подсвечиваем активный язык
+    const langButtons = document.querySelectorAll('.lang-switcher button');
+    langButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        langButtons.forEach(btn => {
+          btn.classList.remove('active');
+          btn.setAttribute('aria-pressed', 'false');
+        });
+        button.classList.add('active');
+        button.setAttribute('aria-pressed', 'true');
+        // Тут можно добавить логику смены языка (например, подгрузка текста)
+        console.log('Выбран язык:', button.dataset.lang);
+      });
+    });
+  </script>
 
 </body>
 </html>
