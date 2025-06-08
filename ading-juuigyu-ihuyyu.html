@@ -17,12 +17,20 @@
       background-color: #000;
       color: #fff;
       padding: 1rem 2rem;
-      text-align: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem;
     }
     nav a {
       color: #fff;
       text-decoration: none;
-      margin: 0 1rem;
       font-weight: 700;
       font-size: 1rem;
       transition: color 0.3s ease;
@@ -30,6 +38,16 @@
     nav a:hover {
       color: #facc15;
     }
+    .lang-switch {
+      margin-left: auto;
+    }
+    select#languageSwitcher {
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      border: none;
+      font-weight: bold;
+    }
+
     .hero {
       background: linear-gradient(135deg, #facc15 0%, #ef4444 100%);
       color: white;
@@ -91,16 +109,29 @@
       font-size: 1rem;
     }
     footer p {
-      margin: 0;
+      margin: 0 auto;
       font-size: 0.9rem;
       color: #d1d5db;
+      text-align: center;
     }
+
     @media (max-width: 600px) {
       .hero h1 {
         font-size: 2rem;
       }
       .hero p {
         font-size: 1rem;
+      }
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      nav {
+        margin-bottom: 0.5rem;
+      }
+      .lang-switch {
+        align-self: flex-end;
+        margin-top: 0.5rem;
       }
     }
   </style>
@@ -109,45 +140,137 @@
 
   <header>
     <nav>
-      <a href="#home">Главная</a>
-      <a href="#genres">Жанры</a>
-      <a href="#trailers">Трейлеры</a>
+      <a href="#home" id="nav-home">Главная</a>
+      <a href="#genres" id="nav-genres">Жанры</a>
+      <a href="#trailers" id="nav-trailers">Трейлеры</a>
     </nav>
+    <div class="lang-switch">
+      <select id="languageSwitcher">
+        <option value="ru">Рус</option>
+        <option value="uk">Укр</option>
+        <option value="en">Eng</option>
+      </select>
+    </div>
   </header>
 
   <section class="hero" id="home">
-    <h1>TopKino — Мир кино у тебя дома</h1>
-    <p>Добро пожаловать в уникальный блог, где собраны лучшие обзоры и трейлеры фильмов разных жанров. Погрузитесь в мир кино с нами!</p>
+    <h1 id="hero-title">TopKino — Мир кино у тебя дома</h1>
+    <p id="hero-desc">Добро пожаловать в уникальный блог, где собраны лучшие обзоры и трейлеры фильмов разных жанров. Погрузитесь в мир кино с нами!</p>
   </section>
 
   <main>
     <section id="genres" aria-label="Популярные жанры кино">
-      <h2>🎞 Популярные жанры кино</h2>
+      <h2 id="genres-title">🎞 Популярные жанры кино</h2>
       <div class="genres-grid">
-        <article class="genre" tabindex="0">
-          <img src="https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?auto=format&fit=crop&w=800&q=80" alt="Боевик — сцена с динамичным экшеном" loading="lazy" />
-          <h3>Боевик</h3>
-          <p>Жанр, полный драйва, погонь и героических подвигов. Боевики захватывают динамикой и напряжёнными сюжетами, даря острые ощущения.</p>
+        <article class="genre">
+          <img src="https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?auto=format&fit=crop&w=800&q=80" alt="Боевик" />
+          <h3 id="genre-action">Боевик</h3>
+          <p id="desc-action">Жанр, полный драйва, погонь и героических подвигов. Боевики захватывают динамикой и напряжёнными сюжетами, даря острые ощущения.</p>
         </article>
 
-        <article class="genre" tabindex="0">
-          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="Комедия — актёры в забавных ситуациях" loading="lazy" />
-          <h3>Комедия</h3>
-          <p>Фильмы для поднятия настроения и смеха. Лёгкие сюжеты, юмор и яркие персонажи помогают расслабиться и получить удовольствие.</p>
+        <article class="genre">
+          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="Комедия" />
+          <h3 id="genre-comedy">Комедия</h3>
+          <p id="desc-comedy">Фильмы для поднятия настроения и смеха. Лёгкие сюжеты, юмор и яркие персонажи помогают расслабиться и получить удовольствие.</p>
         </article>
 
-        <article class="genre" tabindex="0">
-          <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80" alt="Фантастика — космос и футуристические технологии" loading="lazy" />
-          <h3>Фантастика</h3>
-          <p>Этот жанр открывает двери в новые миры, исследует будущее и технологии, расширяя горизонты воображения и научных идей.</p>
+        <article class="genre">
+          <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80" alt="Фантастика" />
+          <h3 id="genre-scifi">Фантастика</h3>
+          <p id="desc-scifi">Этот жанр открывает двери в новые миры, исследует будущее и технологии, расширяя горизонты воображения и научных идей.</p>
         </article>
       </div>
     </section>
   </main>
 
   <footer>
-    <p>&copy; 2025 TopKino. Все права защищены.</p>
+    <p id="footer-text">&copy; 2025 TopKino. Все права защищены.</p>
   </footer>
+
+  <script>
+    const translations = {
+      ru: {
+        home: "Главная",
+        genres: "Жанры",
+        trailers: "Трейлеры",
+        heroTitle: "TopKino — Мир кино у тебя дома",
+        heroDesc: "Добро пожаловать в уникальный блог, где собраны лучшие обзоры и трейлеры фильмов разных жанров. Погрузитесь в мир кино с нами!",
+        genresTitle: "🎞 Популярные жанры кино",
+        action: "Боевик",
+        actionDesc: "Жанр, полный драйва, погонь и героических подвигов. Боевики захватывают динамикой и напряжёнными сюжетами, даря острые ощущения.",
+        comedy: "Комедия",
+        comedyDesc: "Фильмы для поднятия настроения и смеха. Лёгкие сюжеты, юмор и яркие персонажи помогают расслабиться и получить удовольствие.",
+        scifi: "Фантастика",
+        scifiDesc: "Этот жанр открывает двери в новые миры, исследует будущее и технологии, расширяя горизонты воображения и научных идей.",
+        footer: "&copy; 2025 TopKino. Все права защищены."
+      },
+      uk: {
+        home: "Головна",
+        genres: "Жанри",
+        trailers: "Трейлери",
+        heroTitle: "TopKino — Світ кіно у тебе вдома",
+        heroDesc: "Ласкаво просимо до унікального блогу з найкращими оглядами та трейлерами фільмів різних жанрів. Поринь у світ кіно з нами!",
+        genresTitle: "🎞 Популярні жанри кіно",
+        action: "Бойовик",
+        actionDesc: "Жанр з динамікою, погонями та героїкою. Бойовики захоплюють сюжетом і дарують гострі враження.",
+        comedy: "Комедія",
+        comedyDesc: "Фільми для підняття настрою та сміху. Легкі сюжети, гумор і яскраві персонажі дарують задоволення.",
+        scifi: "Фантастика",
+        scifiDesc: "Фантастика відкриває двері в нові світи, досліджує майбутнє та технології.",
+        footer: "&copy; 2025 TopKino. Всі права захищені."
+      },
+      en: {
+        home: "Home",
+        genres: "Genres",
+        trailers: "Trailers",
+        heroTitle: "TopKino — The World of Movies at Home",
+        heroDesc: "Welcome to a unique blog with top film reviews and trailers. Dive into the world of cinema with us!",
+        genresTitle: "🎞 Popular Movie Genres",
+        action: "Action",
+        actionDesc: "A genre full of thrill, chases, and heroic feats. Action films deliver adrenaline and gripping plots.",
+        comedy: "Comedy",
+        comedyDesc: "Movies to lift your mood and bring laughter. Lighthearted plots, humor, and vivid characters.",
+        scifi: "Sci-Fi",
+        scifiDesc: "Explore futuristic worlds, technologies, and ideas beyond imagination.",
+        footer: "&copy; 2025 TopKino. All rights reserved."
+      }
+    };
+
+    const elements = {
+      navHome: document.getElementById('nav-home'),
+      navGenres: document.getElementById('nav-genres'),
+      navTrailers: document.getElementById('nav-trailers'),
+      heroTitle: document.getElementById('hero-title'),
+      heroDesc: document.getElementById('hero-desc'),
+      genresTitle: document.getElementById('genres-title'),
+      genreAction: document.getElementById('genre-action'),
+      descAction: document.getElementById('desc-action'),
+      genreComedy: document.getElementById('genre-comedy'),
+      descComedy: document.getElementById('desc-comedy'),
+      genreScifi: document.getElementById('genre-scifi'),
+      descScifi: document.getElementById('desc-scifi'),
+      footer: document.getElementById('footer-text')
+    };
+
+    document.getElementById('languageSwitcher').addEventListener('change', e => {
+      const lang = e.target.value;
+      const t = translations[lang];
+
+      elements.navHome.textContent = t.home;
+      elements.navGenres.textContent = t.genres;
+      elements.navTrailers.textContent = t.trailers;
+      elements.heroTitle.textContent = t.heroTitle;
+      elements.heroDesc.textContent = t.heroDesc;
+      elements.genresTitle.textContent = t.genresTitle;
+      elements.genreAction.textContent = t.action;
+      elements.descAction.textContent = t.actionDesc;
+      elements.genreComedy.textContent = t.comedy;
+      elements.descComedy.textContent = t.comedyDesc;
+      elements.genreScifi.textContent = t.scifi;
+      elements.descScifi.textContent = t.scifiDesc;
+      elements.footer.innerHTML = t.footer;
+    });
+  </script>
 
 </body>
 </html>
