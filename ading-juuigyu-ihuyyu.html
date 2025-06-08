@@ -6,149 +6,148 @@
   <title>TopKino — Лучшие трейлеры и обзоры фильмов</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
   <style>
-    /* Стили аналогично ранее описанным, включая header, nav, main, hero и адаптивность */
-    /* Полный стиль см. в предыдущем сообщении */
+    body {
+      font-family: 'Montserrat', sans-serif;
+      margin: 0;
+      background-color: #f3f4f6;
+      color: #111827;
+      line-height: 1.6;
+    }
+    header, footer {
+      background-color: #000;
+      color: #fff;
+      padding: 1rem 2rem;
+      text-align: center;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 1rem;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #facc15;
+    }
+    .hero {
+      background: linear-gradient(135deg, #facc15 0%, #ef4444 100%);
+      color: white;
+      padding: 4rem 1rem;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      font-size: 1.25rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    main {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    main h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      color: #111827;
+    }
+    .genres-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap: 2rem;
+    }
+    article.genre {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    article.genre img {
+      width: 100%;
+      display: block;
+      border-bottom: 4px solid #ef4444;
+      border-radius: 8px 8px 0 0;
+      object-fit: cover;
+      height: 180px;
+      loading: lazy;
+    }
+    article.genre h3 {
+      font-size: 1.5rem;
+      margin: 1rem;
+      color: #ef4444;
+    }
+    article.genre p {
+      margin: 0 1rem 1.5rem;
+      flex-grow: 1;
+      color: #4b5563;
+      font-size: 1rem;
+    }
+    footer p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #d1d5db;
+    }
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+    }
   </style>
 </head>
 <body>
+
   <header>
     <nav>
-      <a href="#home" class="menu-link" data-i18n="menuHome">Главная</a>
-      <div class="genres-group">
-        <button id="genres-button" data-i18n="menuGenres">Жанры ▾</button>
-        <div class="genres-dropdown">
-          <a href="#action" data-i18n="genreAction">Боевики</a>
-          <a href="#comedy" data-i18n="genreComedy">Комедии</a>
-          <a href="#drama" data-i18n="genreDrama">Драмы</a>
-          <a href="#sci-fi" data-i18n="genreSciFi">Фантастика</a>
-          <a href="#horror" data-i18n="genreHorror">Ужасы</a>
-        </div>
-      </div>
-      <a href="#blogs" class="menu-link" data-i18n="menuBlogs">Блоги</a>
+      <a href="#home">Главная</a>
+      <a href="#genres">Жанры</a>
+      <a href="#trailers">Трейлеры</a>
     </nav>
-    <div class="lang-switcher">
-      <button class="active" data-lang="ru">RU</button>
-      <button data-lang="uk">UK</button>
-      <button data-lang="en">EN</button>
-    </div>
   </header>
 
-  <section id="home" class="hero">
-    <h2 data-i18n="heroTitle">TopKino — Мир кино у тебя дома</h2>
-    <p data-i18n="heroDesc">Добро пожаловать в блог о кино. Только лучшее. Только для тебя.</p>
+  <section class="hero" id="home">
+    <h1>TopKino — Мир кино у тебя дома</h1>
+    <p>Добро пожаловать в уникальный блог, где собраны лучшие обзоры и трейлеры фильмов разных жанров. Погрузитесь в мир кино с нами!</p>
   </section>
 
   <main>
-    <h2 data-i18n="genresHeader">Обзор жанров кино</h2>
-    <div class="genres-blocks">
-      <article class="genre-card" id="action">
-        <img class="genre-image" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" alt="" />
-        <div class="genre-content">
-          <h3 data-i18n="genreAction">Боевики</h3>
-          <p data-i18n="genreActionDesc">Энергичные фильмы с погонями, сражениями и подвигами.</p>
-        </div>
-      </article>
-      <article class="genre-card" id="comedy">
-        <img class="genre-image" src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91" alt="" />
-        <div class="genre-content">
-          <h3 data-i18n="genreComedy">Комедии</h3>
-          <p data-i18n="genreComedyDesc">Фильмы, вызывающие смех и хорошее настроение.</p>
-        </div>
-      </article>
-      <article class="genre-card" id="drama">
-        <img class="genre-image" src="https://images.unsplash.com/photo-1542204165-65bf26472b9b" alt="" />
-        <div class="genre-content">
-          <h3 data-i18n="genreDrama">Драмы</h3>
-          <p data-i18n="genreDramaDesc">Трогательные истории о жизни, отношениях и чувствах.</p>
-        </div>
-      </article>
-    </div>
+    <section id="genres" aria-label="Популярные жанры кино">
+      <h2>🎞 Популярные жанры кино</h2>
+      <div class="genres-grid">
+        <article class="genre" tabindex="0">
+          <img src="https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?auto=format&fit=crop&w=800&q=80" alt="Боевик — сцена с динамичным экшеном" loading="lazy" />
+          <h3>Боевик</h3>
+          <p>Жанр, полный драйва, погонь и героических подвигов. Боевики захватывают динамикой и напряжёнными сюжетами, даря острые ощущения.</p>
+        </article>
 
-    <section id="blogs">
-      <h2 data-i18n="blogsHeader">Блоги</h2>
-      <p data-i18n="blogsDesc">Интересные статьи, обзоры и рекомендации для киноманов.</p>
+        <article class="genre" tabindex="0">
+          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="Комедия — актёры в забавных ситуациях" loading="lazy" />
+          <h3>Комедия</h3>
+          <p>Фильмы для поднятия настроения и смеха. Лёгкие сюжеты, юмор и яркие персонажи помогают расслабиться и получить удовольствие.</p>
+        </article>
+
+        <article class="genre" tabindex="0">
+          <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80" alt="Фантастика — космос и футуристические технологии" loading="lazy" />
+          <h3>Фантастика</h3>
+          <p>Этот жанр открывает двери в новые миры, исследует будущее и технологии, расширяя горизонты воображения и научных идей.</p>
+        </article>
+      </div>
     </section>
   </main>
 
   <footer>
-    <p>© 2025 TopKino. Все права защищены.</p>
+    <p>&copy; 2025 TopKino. Все права защищены.</p>
   </footer>
 
-  <script>
-    const texts = {
-      ru: {
-        menuHome: "Главная",
-        menuGenres: "Жанры",
-        menuBlogs: "Блоги",
-        heroTitle: "TopKino — Мир кино у тебя дома",
-        heroDesc: "Добро пожаловать в блог о кино. Только лучшее. Только для тебя.",
-        genresHeader: "Обзор жанров кино",
-        genreAction: "Боевики",
-        genreActionDesc: "Энергичные фильмы с погонями, сражениями и подвигами.",
-        genreComedy: "Комедии",
-        genreComedyDesc: "Фильмы, вызывающие смех и хорошее настроение.",
-        genreDrama: "Драмы",
-        genreDramaDesc: "Трогательные истории о жизни, отношениях и чувствах.",
-        genreSciFi: "Фантастика",
-        genreHorror: "Ужасы",
-        blogsHeader: "Блоги",
-        blogsDesc: "Интересные статьи, обзоры и рекомендации для киноманов."
-      },
-      uk: {
-        menuHome: "Головна",
-        menuGenres: "Жанри",
-        menuBlogs: "Блоги",
-        heroTitle: "TopKino — Світ кіно у тебе вдома",
-        heroDesc: "Ласкаво просимо до блогу про кіно. Лише найкраще. Лише для тебе.",
-        genresHeader: "Огляд жанрів кіно",
-        genreAction: "Бойовики",
-        genreActionDesc: "Енергійні фільми з погонями та битвами.",
-        genreComedy: "Комедії",
-        genreComedyDesc: "Фільми, що викликають сміх і гарний настрій.",
-        genreDrama: "Драми",
-        genreDramaDesc: "Зворушливі історії про життя та почуття.",
-        genreSciFi: "Фантастика",
-        genreHorror: "Жахи",
-        blogsHeader: "Блоги",
-        blogsDesc: "Цікаві статті, огляди та рекомендації для кіноманів."
-      },
-      en: {
-        menuHome: "Home",
-        menuGenres: "Genres",
-        menuBlogs: "Blogs",
-        heroTitle: "TopKino — The world of cinema at home",
-        heroDesc: "Welcome to the movie blog. Only the best. Just for you.",
-        genresHeader: "Movie genres overview",
-        genreAction: "Action",
-        genreActionDesc: "High-energy films with chases, battles, and stunts.",
-        genreComedy: "Comedy",
-        genreComedyDesc: "Films that make you laugh and lift your mood.",
-        genreDrama: "Drama",
-        genreDramaDesc: "Touching stories about life, relationships, and emotions.",
-        genreSciFi: "Sci-Fi",
-        genreHorror: "Horror",
-        blogsHeader: "Blogs",
-        blogsDesc: "Interesting articles, reviews and movie lover tips."
-      }
-    };
-
-    function setLanguage(lang) {
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (texts[lang][key]) el.textContent = texts[lang][key];
-      });
-
-      document.querySelectorAll('.lang-switcher button').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.lang === lang);
-        btn.setAttribute('aria-pressed', btn.dataset.lang === lang);
-      });
-    }
-
-    document.querySelectorAll('.lang-switcher button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        setLanguage(btn.dataset.lang);
-      });
-    });
-  </script>
 </body>
 </html>
