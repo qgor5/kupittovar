@@ -21,6 +21,9 @@
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
     nav {
       display: flex;
@@ -34,6 +37,7 @@
       font-weight: 700;
       font-size: 1rem;
       transition: color 0.3s ease;
+      cursor: pointer;
     }
     nav a:hover {
       color: #facc15;
@@ -46,6 +50,40 @@
       border-radius: 4px;
       border: none;
       font-weight: bold;
+    }
+
+    /* Выпадающее меню Жанры */
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 2.2rem;
+      left: 0;
+      background-color: #1f2937;
+      padding: 0.5rem;
+      border-radius: 4px;
+      z-index: 999;
+      min-width: 120px;
+    }
+
+    .dropdown-content a {
+      display: block;
+      padding: 0.25rem 0.5rem;
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    .dropdown-content a:hover {
+      color: #facc15;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
     }
 
     .hero {
@@ -141,7 +179,12 @@
   <header>
     <nav>
       <a href="#home" id="nav-home">Главная</a>
-      <a href="#genres" id="nav-genres">Жанры</a>
+      <div class="dropdown">
+        <a href="#genres" id="nav-genres">Жанры</a>
+        <div class="dropdown-content">
+          <a href="#genre-animation">Мультфильмы</a>
+        </div>
+      </div>
       <a href="#trailers" id="nav-trailers">Трейлеры</a>
     </nav>
     <div class="lang-switch">
@@ -178,6 +221,13 @@
           <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80" alt="Фантастика" />
           <h3 id="genre-scifi">Фантастика</h3>
           <p id="desc-scifi">Этот жанр открывает двери в новые миры, исследует будущее и технологии, расширяя горизонты воображения и научных идей.</p>
+        </article>
+
+        <!-- Добавленный блок Мультфильмы -->
+        <article class="genre" id="genre-animation">
+          <img src="https://images.unsplash.com/photo-1583337130417-3346a1a4e032?auto=format&fit=crop&w=800&q=80" alt="Мультфильмы" />
+          <h3>Мультфильмы</h3>
+          <p>Красочные и увлекательные истории для всей семьи. Анимационные фильмы радуют зрителей всех возрастов своими сюжетами и визуальным стилем.</p>
         </article>
       </div>
     </section>
