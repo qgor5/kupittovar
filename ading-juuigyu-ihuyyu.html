@@ -15,7 +15,10 @@
     header {
       background: #000;
       padding: 1rem 0;
-      position: relative;
+      position: sticky; /* фиксируем */
+      top: 0;
+      z-index: 10000;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.3);
     }
     nav {
       display: flex;
@@ -24,6 +27,7 @@
       max-width: 1200px;
       margin: 0 auto;
       align-items: center;
+      position: relative;
     }
     nav a, nav button {
       color: #fff;
@@ -84,6 +88,7 @@
       color: white;
       text-align: center;
       padding: 4rem 1rem;
+      margin-top: 1rem; /* Чтобы меню не перекрывало */
     }
     .hero h2 {
       font-size: 2rem;
@@ -174,10 +179,29 @@
       }
       nav {
         gap: 1.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      /* Переключатель языков — теперь по центру сверху */
+      .lang-switcher {
+        position: static;
+        transform: none;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 0.5rem;
+        gap: 1rem;
+        order: 1; /* выводим ниже в потоке для мобильных */
+      }
+      .lang-switcher button {
+        padding: 0.5rem 1rem;
+        font-size: 1.1rem;
+        border-radius: 6px;
+        border: 2px solid transparent;
       }
     }
 
-    /* Языковой переключатель */
+    /* Языковой переключатель - для десктопа */
     .lang-switcher {
       position: absolute;
       right: 1rem;
@@ -185,6 +209,7 @@
       transform: translateY(-50%);
       display: flex;
       gap: 0.75rem;
+      user-select: none;
     }
     .lang-switcher button {
       background: none;
@@ -196,7 +221,6 @@
       border-radius: 4px;
       transition: all 0.3s ease;
       font-size: 0.9rem;
-      user-select: none;
     }
     .lang-switcher button.active,
     .lang-switcher button:hover {
@@ -290,9 +314,9 @@
         navHome: "Головна",
         navGenres: "Жанри ▼",
         navTrailers: "Трейлери",
-        heroTitle: "TopKino — Світ кіно у тебе вдома",
-        heroText: "Ласкаво просимо до блогу про кіно. Тільки найкраще. Тільки для тебе.",
-        seoTitle: "Всі жанри кіно — докладний огляд",
+        heroTitle: "TopKino — Світ кіно у вас вдома",
+        heroText: "Ласкаво просимо до блогу про кіно. Тільки найкраще. Тільки для вас.",
+        seoTitle: "Усі жанри кіно — докладний огляд",
         seoBoeviki: "Бойовики — динамічні фільми з захоплюючими сценами, повні пригод, погонь та героїчних подвигів.",
         seoKomedii: "Комедії — легкі та веселі фільми, які піднімають настрій, з гумором та романтикою.",
         seoDramy: "Драми — глибокі історії про життя, кохання та випробування, що викликають сильні емоції та роздуми.",
@@ -325,7 +349,6 @@
     };
 
     function setLanguage(lang) {
-      // Меняем тексты по ключам
       document.querySelectorAll('[data-key]').forEach(el => {
         const key = el.getAttribute('data-key');
         if (translations[lang] && translations[lang][key]) {
@@ -333,7 +356,6 @@
         }
       });
 
-      // Обновляем aria-pressed и классы у кнопок
       document.querySelectorAll('.lang-switcher button').forEach(btn => {
         const isActive = btn.getAttribute('data-lang') === lang;
         btn.classList.toggle('active', isActive);
@@ -341,7 +363,6 @@
       });
     }
 
-    // Событие переключения языка
     document.querySelectorAll('.lang-switcher button').forEach(btn => {
       btn.addEventListener('click', () => {
         const lang = btn.getAttribute('data-lang');
@@ -349,7 +370,6 @@
       });
     });
 
-    // По умолчанию русский
     setLanguage('ru');
   </script>
 </body>
