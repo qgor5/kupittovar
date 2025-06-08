@@ -2,75 +2,27 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TopKino — Лучшие трейлеры и обзоры фильмов</title>
-  <script src="Да и теперь вот по адресу как у нас будет блок https://kupittovar.netlify.app/"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Montserrat', sans-serif;
     }
-    /* Стили карусели */
-    .carousel {
-      overflow: hidden;
-      position: relative;
-      background: linear-gradient(90deg, #ffcc00, #ff6600);
-      padding: 1rem 0;
-      border-radius: 0 0 12px 12px;
+    .lazyload {
+      opacity: 0;
+      transition: opacity 0.5s ease-in;
     }
-    .carousel-track {
-      display: flex;
-      gap: 1rem;
-      transition: transform 0.5s ease;
-    }
-    .carousel-item {
-      flex: 0 0 calc((100% - 2rem) / 3);
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 4px 6px rgb(0 0 0 / 0.2);
-      cursor: pointer;
-      user-select: none;
-      background: #fff;
-    }
-    .carousel-item img {
-      width: 100%;
-      display: block;
-      object-fit: cover;
-      height: 150px;
-      transition: transform 0.3s ease;
-    }
-    .carousel-item:hover img {
-      transform: scale(1.05);
-    }
-    /* Название */
-    .carousel-title {
-      color: #fff;
-      font-weight: 700;
-      font-size: 1.8rem;
-      text-align: center;
-      margin-bottom: 0.75rem;
-      text-shadow: 0 0 8px rgba(0,0,0,0.4);
-      user-select: none;
+    .lazyloaded {
+      opacity: 1;
     }
   </style>
 </head>
 <body class="bg-gray-100 text-gray-900">
 
-  <!-- Карусель с кадрами фильмов -->
-  <section class="carousel max-w-7xl mx-auto">
-    <h2 class="carousel-title">Лучшие кадры из фильмов</h2>
-    <div class="carousel-track" id="carouselTrack">
-      <div class="carousel-item"><img src="https://image.tmdb.org/t/p/w500/7prYzufdIOy1KCTZKVWpjBFqqNr.jpg" alt="Кадр Дюна" /></div>
-      <div class="carousel-item"><img src="https://image.tmdb.org/t/p/w500/a2NpoDwHtU2fiNLd6HqTW5PhJZT.jpg" alt="Кадр Джон Уик 4" /></div>
-      <div class="carousel-item"><img src="https://image.tmdb.org/t/p/w500/r2J02Z2OpNTctfOSN1Ydgii51I3.jpg" alt="Кадр Стражи Галактики 3" /></div>
-      <div class="carousel-item"><img src="https://image.tmdb.org/t/p/w500/gE8i8AnMIS3b0CYQYjhhCb5nLUr.jpg" alt="Кадр Черная Пантера" /></div>
-      <div class="carousel-item"><img src="https://image.tmdb.org/t/p/w500/3iYQTLGoy7QnjcUYRJy4YrAgGvp.jpg" alt="Кадр Матрица" /></div>
-      <div class="carousel-item"><img src="https://image.tmdb.org/t/p/w500/6Vx85Sd8lNGxQvTj3dzc5kVSnjE.jpg" alt="Кадр Властелин колец" /></div>
-    </div>
-  </section>
-
   <!-- Навигация -->
-  <header class="bg-black text-white sticky top-0 z-50 shadow-lg mt-4">
+  <header class="bg-black text-white sticky top-0 z-50 shadow-lg">
     <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
       <nav class="flex space-x-6 items-center">
         <a href="#home" class="hover:text-yellow-400 font-bold text-lg">Главная</a>
@@ -89,8 +41,8 @@
   </header>
 
   <!-- Герой секция -->
-  <section id="home" class="bg-gradient-to-br from-yellow-400 to-red-500 text-white py-20 text-center mt-4 rounded-lg max-w-5xl mx-auto">
-    <div>
+  <section id="home" class="bg-gradient-to-br from-yellow-400 to-red-500 text-white py-20 text-center">
+    <div class="max-w-3xl mx-auto">
       <h2 class="text-4xl font-bold mb-4">TopKino — Мир кино у тебя дома</h2>
       <p class="text-lg mb-6">Добро пожаловать в уникальный блог о кино. Только лучшее. Только для тебя.</p>
     </div>
@@ -117,7 +69,7 @@
     <h2 class="text-2xl font-bold mb-6">🎬 Популярные трейлеры</h2>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       <div class="bg-white p-4 rounded shadow">
-        <h3 class="text-lg font-semibold mb-2">Дюна: Часть вторая</h3>
+        <h3 class="text-lg font-semibold mb-2">Дюна 2</h3>
         <iframe class="w-full aspect-video rounded" src="https://www.youtube.com/embed/n9xhJrPXop4" frameborder="0" allowfullscreen></iframe>
       </div>
       <div class="bg-white p-4 rounded shadow">
@@ -125,7 +77,7 @@
         <iframe class="w-full aspect-video rounded" src="https://www.youtube.com/embed/qEVUtrk8_B4" frameborder="0" allowfullscreen></iframe>
       </div>
       <div class="bg-white p-4 rounded shadow">
-        <h3 class="text-lg font-semibold mb-2">Стражи Галактики: Часть 3</h3>
+        <h3 class="text-lg font-semibold mb-2">Стражи Галактики 3</h3>
         <iframe class="w-full aspect-video rounded" src="https://www.youtube.com/embed/u3V5KDHRQvk" frameborder="0" allowfullscreen></iframe>
       </div>
     </div>
@@ -136,23 +88,5 @@
     <p>&copy; 2025 TopKino. Все права защищены. Контент обновляется ежедневно.</p>
   </footer>
 
-  <script>
-    // Карусель с автопрокруткой
-    const track = document.getElementById('carouselTrack');
-    const items = track.children;
-    const totalItems = items.length;
-    let index = 0;
-
-    function moveCarousel() {
-      index++;
-      if(index > totalItems - 3) { // Показываем по 3 слайдера одновременно
-        index = 0;
-      }
-      const itemWidth = items[0].offsetWidth + 16; // с учётом gap 1rem (16px)
-      track.style.transform = `translateX(-${index * itemWidth}px)`;
-    }
-
-    setInterval(moveCarousel, 3000); // Каждые 3 секунды сдвигаем
-  </script>
 </body>
 </html>
