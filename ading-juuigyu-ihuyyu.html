@@ -149,7 +149,14 @@
       font-size: 1.5rem;
       font-weight: 700;
       margin-bottom: 1rem;
+      line-height: 1.2;
     }
+    /* Сделаем блоги заголовок чуть меньше и чтобы помещался */
+    #blogs h2 {
+      font-size: 1.3rem;
+      margin-top: 0;
+    }
+
     .genres-blocks {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -212,7 +219,7 @@
     <nav>
       <a href="#home" class="menu-link">Главная</a>
       <div class="genres-group" style="position:relative;">
-        <button>Жанры ▾</button>
+        <button id="genres-button">Жанры ▾</button>
         <div class="genres-dropdown" aria-label="Выбор жанра">
           <a href="#action">Боевики</a>
           <a href="#comedy">Комедии</a>
@@ -280,6 +287,7 @@
         heroTitle: "TopKino — Мир кино у тебя дома",
         heroDesc: "Добро пожаловать в блог о кино. Только лучшее. Только для тебя.",
         genresHeader: "Обзор жанров кино",
+        genresMenu: "Жанры ▾",
         blogsHeader: "Блоги",
         blogsDesc: "Здесь будут интересные статьи и обзоры кино, новости и рекомендации для настоящих киноманов.",
         genres: {
@@ -301,6 +309,7 @@
         heroTitle: "TopKino — Світ кіно у тебе вдома",
         heroDesc: "Ласкаво просимо до блогу про кіно. Тільки найкраще. Тільки для тебе.",
         genresHeader: "Огляд жанрів кіно",
+        genresMenu: "Жанри ▾",
         blogsHeader: "Блоги",
         blogsDesc: "Тут будуть цікаві статті та огляди кіно, новини та рекомендації для справжніх кіноманів.",
         genres: {
@@ -322,45 +331,58 @@
         heroTitle: "TopKino — The world of cinema at your home",
         heroDesc: "Welcome to the cinema blog. Only the best. Just for you.",
         genresHeader: "Movie Genres Overview",
+        genresMenu: "Genres ▾",
         blogsHeader: "Blogs",
-        blogsDesc: "Here you will find interesting articles and movie reviews, news and recommendations for true movie lovers.",
+        blogsDesc: "Here you'll find interesting articles and movie reviews, news, and recommendations for true movie lovers.",
         genres: {
           action: {
             title: "Action",
-            desc: "Energetic films with chases, battles, and heroic deeds that keep the viewer on the edge from start to finish."
+            desc: "Energetic films with chases, fights, and heroic feats that keep the viewer on edge from start to finish."
           },
           comedy: {
             title: "Comedy",
-            desc: "Films that bring smiles and laughter, filling the mood with joy and lightness, perfect for relaxation and uplifting spirit."
+            desc: "Films that bring smiles and laughter, filling the mood with joy and lightness, perfect for relaxation and uplifting spirits."
           },
           drama: {
             title: "Drama",
-            desc: "Deep and touching stories that make you think about life, relationships, and human experiences."
+            desc: "Deep and touching stories that make you think about life, relationships, and human emotions."
           }
         }
       }
     };
 
     const langButtons = document.querySelectorAll('.lang-switcher button');
-    const heroTitle = document.querySelector('.hero h2');
-    const heroDesc = document.querySelector('.hero p');
+    const heroSection = document.querySelector('.hero');
     const genresHeader = document.querySelector('main > h2');
-    const genreCards = document.querySelectorAll('.genre-card');
     const blogsSection = document.querySelector('#blogs');
-    
+    const blogsHeader = blogsSection.querySelector('h2');
+    const blogsDesc = blogsSection.querySelector('p');
+    const genresButton = document.getElementById('genres-button');
+
+    const genreCards = document.querySelectorAll('.genre-card');
+
     function setLanguage(lang) {
+      // Переключаем активный язык в переключателе
       langButtons.forEach(btn => {
         btn.classList.toggle('active', btn.dataset.lang === lang);
-        btn.setAttribute('aria-pressed', btn.dataset.lang === lang);
+        btn.setAttribute('aria-pressed', btn.dataset.lang === lang ? 'true' : 'false');
       });
 
-      document.documentElement.lang = lang;
-      heroTitle.textContent = texts[lang].heroTitle;
-      heroDesc.textContent = texts[lang].heroDesc;
-      genresHeader.textContent = texts[lang].genresHeader;
-      blogsSection.querySelector('h2').textContent = texts[lang].blogsHeader;
-      blogsSection.querySelector('p').textContent = texts[lang].blogsDesc;
+      // Меняем тексты в hero
+      heroSection.querySelector('h2').textContent = texts[lang].heroTitle;
+      heroSection.querySelector('p').textContent = texts[lang].heroDesc;
 
+      // Меняем заголовок жанров
+      genresHeader.textContent = texts[lang].genresHeader;
+
+      // Меняем текст кнопки жанров в меню
+      genresButton.textContent = texts[lang].genresMenu;
+
+      // Меняем заголовок блоги и описание
+      blogsHeader.textContent = texts[lang].blogsHeader;
+      blogsDesc.textContent = texts[lang].blogsDesc;
+
+      // Меняем тексты карточек жанров
       genreCards.forEach(card => {
         const id = card.id;
         card.querySelector('h3').textContent = texts[lang].genres[id].title;
@@ -375,6 +397,7 @@
       });
     });
 
+    // Стартовая установка языка - русский
     setLanguage('ru');
   </script>
 </body>
