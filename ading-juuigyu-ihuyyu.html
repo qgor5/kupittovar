@@ -6,20 +6,17 @@
   <title>TopKino — Лучшие трейлеры и обзоры фильмов</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Montserrat', sans-serif;
+      margin: 0;
       background-color: #f3f4f6;
       color: #111827;
       line-height: 1.6;
     }
-    header {
+    header, footer {
       background-color: #000;
       color: #fff;
-      padding: 1rem;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+      padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -27,93 +24,115 @@
     }
     nav {
       display: flex;
-      gap: 1rem;
       flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem;
     }
     nav a {
       color: #fff;
       text-decoration: none;
       font-weight: 700;
       font-size: 1rem;
+      transition: color 0.3s ease;
     }
     nav a:hover {
       color: #facc15;
     }
     .lang-switch {
-      margin-top: 0.5rem;
+      margin-left: auto;
     }
-    select {
-      padding: 0.3rem;
-      font-weight: bold;
+    select#languageSwitcher {
+      padding: 0.25rem 0.5rem;
       border-radius: 4px;
+      border: none;
+      font-weight: bold;
     }
+
     .hero {
-      background: linear-gradient(135deg, #facc15, #ef4444);
+      background: linear-gradient(135deg, #facc15 0%, #ef4444 100%);
       color: white;
-      padding: 3rem 1rem;
+      padding: 4rem 1rem;
       text-align: center;
     }
-    .hero h1 { font-size: 2.2rem; margin-bottom: 1rem; }
-    .hero p { font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
-
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      font-size: 1.25rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
     main {
       max-width: 1200px;
       margin: 2rem auto;
       padding: 0 1rem;
     }
-
-    section h2 {
+    main h2 {
       font-size: 2rem;
       font-weight: 700;
-      text-align: center;
       margin-bottom: 1.5rem;
+      text-align: center;
+      color: #111827;
     }
-
-    .genres-grid, .trailers-grid {
+    .genres-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap: 2rem;
     }
-
-    article {
+    article.genre {
       background: white;
       border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
       overflow: hidden;
       display: flex;
       flex-direction: column;
     }
-
-    article img {
+    article.genre img {
       width: 100%;
-      height: 180px;
+      display: block;
+      border-bottom: 4px solid #ef4444;
+      border-radius: 8px 8px 0 0;
       object-fit: cover;
+      height: 180px;
+      loading: lazy;
     }
-
-    article h3 {
-      font-size: 1.3rem;
+    article.genre h3 {
+      font-size: 1.5rem;
       margin: 1rem;
       color: #ef4444;
     }
-
-    article p {
+    article.genre p {
       margin: 0 1rem 1.5rem;
+      flex-grow: 1;
       color: #4b5563;
       font-size: 1rem;
     }
-
-    footer {
-      background: #000;
+    footer p {
+      margin: 0 auto;
+      font-size: 0.9rem;
       color: #d1d5db;
       text-align: center;
-      padding: 1rem;
-      margin-top: 2rem;
-      font-size: 0.9rem;
     }
 
     @media (max-width: 600px) {
-      .hero h1 { font-size: 1.8rem; }
-      .hero p { font-size: 1rem; }
+      .hero h1 {
+        font-size: 2rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      nav {
+        margin-bottom: 0.5rem;
+      }
+      .lang-switch {
+        align-self: flex-end;
+        margin-top: 0.5rem;
+      }
     }
   </style>
 </head>
@@ -123,7 +142,7 @@
     <nav>
       <a href="#home" id="nav-home">Главная</a>
       <a href="#genres" id="nav-genres">Жанры</a>
-      <a href="#trailers" id="nav-trailers">Трейлер</a>
+      <a href="#trailers" id="nav-trailers">Трейлеры</a>
     </nav>
     <div class="lang-switch">
       <select id="languageSwitcher">
@@ -136,45 +155,36 @@
 
   <section class="hero" id="home">
     <h1 id="hero-title">TopKino — Мир кино у тебя дома</h1>
-    <p id="hero-desc">Добро пожаловать в уникальный блог с лучшими обзорами и трейлерами фильмов. Погрузись в атмосферу кино прямо сейчас!</p>
+    <p id="hero-desc">Добро пожаловать в уникальный блог, где собраны лучшие обзоры и трейлеры фильмов разных жанров. Погрузитесь в мир кино с нами!</p>
   </section>
 
   <main>
-    <section id="genres">
-      <h2 id="genres-title">🎞 Популярные жанры</h2>
+    <section id="genres" aria-label="Популярные жанры кино">
+      <h2 id="genres-title">🎞 Популярные жанры кино</h2>
       <div class="genres-grid">
-        <article>
-          <img src="https://images.unsplash.com/photo-1524985069026-dd778a71c7b4" alt="">
+        <article class="genre">
+          <img src="https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?auto=format&fit=crop&w=800&q=80" alt="Боевик" />
           <h3 id="genre-action">Боевик</h3>
-          <p id="desc-action">Полный драйва, погонь и напряжения — для любителей экшена.</p>
+          <p id="desc-action">Жанр, полный драйва, погонь и героических подвигов. Боевики захватывают динамикой и напряжёнными сюжетами, даря острые ощущения.</p>
         </article>
-        <article>
-          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" alt="">
-          <h3 id="genre-comedy">Комедия</h3>
-          <p id="desc-comedy">Фильмы, поднимающие настроение и вызывающие улыбку.</p>
-        </article>
-        <article>
-          <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d" alt="">
-          <h3 id="genre-scifi">Фантастика</h3>
-          <p id="desc-scifi">Технологии будущего и невероятные миры ждут тебя.</p>
-        </article>
-      </div>
-    </section>
 
-    <section id="trailers">
-      <h2 id="trailers-title">🎬 Последние трейлеры</h2>
-      <div class="trailers-grid">
-        <article>
-          <img src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa" alt="Trailer Image">
-          <h3 id="trailer-1-title">Фильм: Город будущего</h3>
-          <p id="trailer-1-desc">Захватывающая история о борьбе за свободу в кибер-мире.</p>
+        <article class="genre">
+          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="Комедия" />
+          <h3 id="genre-comedy">Комедия</h3>
+          <p id="desc-comedy">Фильмы для поднятия настроения и смеха. Лёгкие сюжеты, юмор и яркие персонажи помогают расслабиться и получить удовольствие.</p>
+        </article>
+
+        <article class="genre">
+          <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80" alt="Фантастика" />
+          <h3 id="genre-scifi">Фантастика</h3>
+          <p id="desc-scifi">Этот жанр открывает двери в новые миры, исследует будущее и технологии, расширяя горизонты воображения и научных идей.</p>
         </article>
       </div>
     </section>
   </main>
 
   <footer>
-    <p id="footer-text">© 2025 TopKino. Все права защищены.</p>
+    <p id="footer-text">&copy; 2025 TopKino. Все права защищены.</p>
   </footer>
 
   <script>
@@ -182,79 +192,83 @@
       ru: {
         home: "Главная",
         genres: "Жанры",
-        trailers: "Трейлер",
+        trailers: "Трейлеры",
         heroTitle: "TopKino — Мир кино у тебя дома",
-        heroDesc: "Добро пожаловать в уникальный блог с лучшими обзорами и трейлерами фильмов. Погрузись в атмосферу кино прямо сейчас!",
-        genresTitle: "🎞 Популярные жанры",
+        heroDesc: "Добро пожаловать в уникальный блог, где собраны лучшие обзоры и трейлеры фильмов разных жанров. Погрузитесь в мир кино с нами!",
+        genresTitle: "🎞 Популярные жанры кино",
         action: "Боевик",
+        actionDesc: "Жанр, полный драйва, погонь и героических подвигов. Боевики захватывают динамикой и напряжёнными сюжетами, даря острые ощущения.",
         comedy: "Комедия",
+        comedyDesc: "Фильмы для поднятия настроения и смеха. Лёгкие сюжеты, юмор и яркие персонажи помогают расслабиться и получить удовольствие.",
         scifi: "Фантастика",
-        actionDesc: "Полный драйва, погонь и напряжения — для любителей экшена.",
-        comedyDesc: "Фильмы, поднимающие настроение и вызывающие улыбку.",
-        scifiDesc: "Технологии будущего и невероятные миры ждут тебя.",
-        trailersTitle: "🎬 Последние трейлеры",
-        trailer1Title: "Фильм: Город будущего",
-        trailer1Desc: "Захватывающая история о борьбе за свободу в кибер-мире.",
-        footer: "© 2025 TopKino. Все права защищены."
+        scifiDesc: "Этот жанр открывает двери в новые миры, исследует будущее и технологии, расширяя горизонты воображения и научных идей.",
+        footer: "&copy; 2025 TopKino. Все права защищены."
       },
       uk: {
         home: "Головна",
         genres: "Жанри",
-        trailers: "Трейлер",
+        trailers: "Трейлери",
         heroTitle: "TopKino — Світ кіно у тебе вдома",
-        heroDesc: "Ласкаво просимо в унікальний блог з оглядами та трейлерами. Поринь у світ кіно зараз!",
-        genresTitle: "🎞 Популярні жанри",
+        heroDesc: "Ласкаво просимо до унікального блогу з найкращими оглядами та трейлерами фільмів різних жанрів. Поринь у світ кіно з нами!",
+        genresTitle: "🎞 Популярні жанри кіно",
         action: "Бойовик",
+        actionDesc: "Жанр з динамікою, погонями та героїкою. Бойовики захоплюють сюжетом і дарують гострі враження.",
         comedy: "Комедія",
+        comedyDesc: "Фільми для підняття настрою та сміху. Легкі сюжети, гумор і яскраві персонажі дарують задоволення.",
         scifi: "Фантастика",
-        actionDesc: "Повний драйву, погонь і напруги — для шанувальників екшену.",
-        comedyDesc: "Фільми, що піднімають настрій і викликають усмішку.",
-        scifiDesc: "Технології майбутнього і неймовірні світи чекають на тебе.",
-        trailersTitle: "🎬 Останні трейлери",
-        trailer1Title: "Фільм: Місто майбутнього",
-        trailer1Desc: "Захоплива історія про боротьбу за свободу в кіберсвіті.",
-        footer: "© 2025 TopKino. Всі права захищені."
+        scifiDesc: "Фантастика відкриває двері в нові світи, досліджує майбутнє та технології.",
+        footer: "&copy; 2025 TopKino. Всі права захищені."
       },
       en: {
         home: "Home",
         genres: "Genres",
-        trailers: "Trailer",
+        trailers: "Trailers",
         heroTitle: "TopKino — The World of Movies at Home",
-        heroDesc: "Welcome to a unique blog with movie reviews and trailers. Dive into cinema now!",
-        genresTitle: "🎞 Popular Genres",
+        heroDesc: "Welcome to a unique blog with top film reviews and trailers. Dive into the world of cinema with us!",
+        genresTitle: "🎞 Popular Movie Genres",
         action: "Action",
+        actionDesc: "A genre full of thrill, chases, and heroic feats. Action films deliver adrenaline and gripping plots.",
         comedy: "Comedy",
+        comedyDesc: "Movies to lift your mood and bring laughter. Lighthearted plots, humor, and vivid characters.",
         scifi: "Sci-Fi",
-        actionDesc: "Full of thrill, chases and tension — for action lovers.",
-        comedyDesc: "Movies to lift your mood and bring a smile.",
-        scifiDesc: "Future technologies and incredible worlds await you.",
-        trailersTitle: "🎬 Latest Trailers",
-        trailer1Title: "Movie: Future City",
-        trailer1Desc: "A thrilling story of fighting for freedom in a cyber-world.",
-        footer: "© 2025 TopKino. All rights reserved."
+        scifiDesc: "Explore futuristic worlds, technologies, and ideas beyond imagination.",
+        footer: "&copy; 2025 TopKino. All rights reserved."
       }
     };
 
-    const switchLang = document.getElementById('languageSwitcher');
-    switchLang.addEventListener('change', () => {
-      const lang = switchLang.value;
+    const elements = {
+      navHome: document.getElementById('nav-home'),
+      navGenres: document.getElementById('nav-genres'),
+      navTrailers: document.getElementById('nav-trailers'),
+      heroTitle: document.getElementById('hero-title'),
+      heroDesc: document.getElementById('hero-desc'),
+      genresTitle: document.getElementById('genres-title'),
+      genreAction: document.getElementById('genre-action'),
+      descAction: document.getElementById('desc-action'),
+      genreComedy: document.getElementById('genre-comedy'),
+      descComedy: document.getElementById('desc-comedy'),
+      genreScifi: document.getElementById('genre-scifi'),
+      descScifi: document.getElementById('desc-scifi'),
+      footer: document.getElementById('footer-text')
+    };
+
+    document.getElementById('languageSwitcher').addEventListener('change', e => {
+      const lang = e.target.value;
       const t = translations[lang];
-      document.getElementById('nav-home').textContent = t.home;
-      document.getElementById('nav-genres').textContent = t.genres;
-      document.getElementById('nav-trailers').textContent = t.trailers;
-      document.getElementById('hero-title').textContent = t.heroTitle;
-      document.getElementById('hero-desc').textContent = t.heroDesc;
-      document.getElementById('genres-title').textContent = t.genresTitle;
-      document.getElementById('genre-action').textContent = t.action;
-      document.getElementById('desc-action').textContent = t.actionDesc;
-      document.getElementById('genre-comedy').textContent = t.comedy;
-      document.getElementById('desc-comedy').textContent = t.comedyDesc;
-      document.getElementById('genre-scifi').textContent = t.scifi;
-      document.getElementById('desc-scifi').textContent = t.scifiDesc;
-      document.getElementById('trailers-title').textContent = t.trailersTitle;
-      document.getElementById('trailer-1-title').textContent = t.trailer1Title;
-      document.getElementById('trailer-1-desc').textContent = t.trailer1Desc;
-      document.getElementById('footer-text').textContent = t.footer;
+
+      elements.navHome.textContent = t.home;
+      elements.navGenres.textContent = t.genres;
+      elements.navTrailers.textContent = t.trailers;
+      elements.heroTitle.textContent = t.heroTitle;
+      elements.heroDesc.textContent = t.heroDesc;
+      elements.genresTitle.textContent = t.genresTitle;
+      elements.genreAction.textContent = t.action;
+      elements.descAction.textContent = t.actionDesc;
+      elements.genreComedy.textContent = t.comedy;
+      elements.descComedy.textContent = t.comedyDesc;
+      elements.genreScifi.textContent = t.scifi;
+      elements.descScifi.textContent = t.scifiDesc;
+      elements.footer.innerHTML = t.footer;
     });
   </script>
 
