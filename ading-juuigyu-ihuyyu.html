@@ -11,9 +11,13 @@
       font-family: 'Montserrat', sans-serif;
     }
     .carousel {
-      position: relative;
-      height: 350px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
       overflow: hidden;
+      z-index: 0;
     }
     .carousel-images {
       display: flex;
@@ -29,6 +33,7 @@
       height: 100%;
       object-fit: cover;
       flex-shrink: 0;
+      opacity: 0.6;
     }
     @keyframes scrollCarousel {
       0% { transform: translateX(0); }
@@ -65,7 +70,7 @@
 
   <!-- Карусель на фоне -->
   <section id="home" class="relative">
-    <div class="carousel absolute top-0 left-0 w-full z-0">
+    <div class="carousel">
       <div class="carousel-images">
         <img src="https://cdn.pixabay.com/photo/2017/08/02/01/01/movie-2561084_1280.jpg" alt="1">
         <img src="https://cdn.pixabay.com/photo/2016/03/09/09/30/film-1245994_1280.jpg" alt="2">
@@ -76,7 +81,7 @@
         <img src="https://cdn.pixabay.com/photo/2015/09/05/22/46/actor-925079_1280.jpg" alt="7">
       </div>
     </div>
-    <div class="relative z-10 bg-gradient-to-br from-yellow-400 to-red-500 text-white py-32 text-center">
+    <div class="relative z-10 bg-gradient-to-br from-yellow-400/80 to-red-500/80 text-white py-32 text-center">
       <h2 class="text-4xl font-bold mb-4">TopKino — Мир кино у тебя дома</h2>
       <p class="text-lg">Добро пожаловать в уникальный блог о кино. Только лучшее. Только для тебя.</p>
     </div>
