@@ -29,7 +29,7 @@
       gap: 1.5rem;
       position: relative;
       justify-content: flex-start;
-      padding-right: 5.5rem; /* увеличил место под переключатель языков */
+      padding-right: 5.5rem; /* место под переключатель языков */
     }
     nav a, nav button {
       color: #fff;
@@ -81,7 +81,7 @@
     /* Языковой переключатель */
     .lang-switcher {
       position: absolute;
-      right: 0.75rem; /* сдвинул чуть правее */
+      right: 0.75rem;
       top: 50%;
       transform: translateY(-50%);
       display: flex;
@@ -109,11 +109,11 @@
     /* Адаптив для мобильных */
     @media (max-width: 600px) {
       nav {
-        padding-right: 4.5rem; /* чтобы хватало места */
+        padding-right: 4.5rem;
         gap: 1rem;
       }
       .lang-switcher {
-        right: 0.75rem; /* фиксируем */
+        right: 0.75rem;
         top: 50%;
         transform: translateY(-50%);
         gap: 0.5rem;
@@ -152,7 +152,6 @@
       margin-bottom: 1rem;
       line-height: 1.2;
     }
-    /* Сделаем блоги заголовок чуть меньше и чтобы помещался */
     #blogs h2 {
       font-size: 1.3rem;
       margin-top: 0;
@@ -218,9 +217,9 @@
 <body>
   <header>
     <nav>
-      <a href="#home" class="menu-link">Главная</a>
+      <a href="#home" class="menu-link" data-i18n="menuHome">Главная</a>
       <div class="genres-group" style="position:relative;">
-        <button id="genres-button">Жанры ▾</button>
+        <button id="genres-button" data-i18n="menuGenres">Жанры ▾</button>
         <div class="genres-dropdown" aria-label="Выбор жанра">
           <a href="#action" data-genre="action">Боевики</a>
           <a href="#comedy" data-genre="comedy">Комедии</a>
@@ -229,7 +228,7 @@
           <a href="#horror" data-genre="horror">Ужасы</a>
         </div>
       </div>
-      <a href="#blogs" class="menu-link">Блоги</a>
+      <a href="#blogs" class="menu-link" data-i18n="menuBlogs">Блоги</a>
     </nav>
 
     <div class="lang-switcher" role="group" aria-label="Переключение языков">
@@ -240,198 +239,20 @@
   </header>
 
   <section id="home" class="hero" lang="ru">
-    <h2>TopKino — Мир кино у тебя дома</h2>
-    <p>Добро пожаловать в блог о кино. Только лучшее. Только для тебя.</p>
+    <h2 data-i18n="heroTitle">TopKino — Мир кино у тебя дома</h2>
+    <p data-i18n="heroDesc">Добро пожаловать в блог о кино. Только лучшее. Только для тебя.</p>
   </section>
 
   <main>
-    <h2>Обзор жанров кино</h2>
+    <h2 data-i18n="genresHeader">Обзор жанров кино</h2>
     <div class="genres-blocks">
       <article class="genre-card" id="action" lang="ru">
         <img class="genre-image" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="Боевики — экшн сцена" />
         <div class="genre-content">
-          <h3>Боевики</h3>
-          <p>Энергичные фильмы с погонями, сражениями и героическими подвигами, которые держат зрителя в напряжении от начала до конца.</p>
+          <h3 data-genre-title="action">Боевики</h3>
+          <p data-genre-desc="action">Энергичные фильмы с погонями, сражениями и героическими подвигами, которые держат зрителя в напряжении от начала до конца.</p>
         </div>
       </article>
 
       <article class="genre-card" id="comedy" lang="ru">
-        <img class="genre-image" src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=800&q=80" alt="Комедии — весёлые моменты" />
-        <div class="genre-content">
-          <h3>Комедии</h3>
-          <p>Фильмы, которые вызывают улыбку и смех, наполняя настроение радостью и лёгкостью, идеально подходящие для отдыха и поднятия духа.</p>
-        </div>
-      </article>
-
-      <article class="genre-card" id="drama" lang="ru">
-        <img class="genre-image" src="https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?auto=format&fit=crop&w=800&q=80" alt="Драмы — эмоциональные сцены" />
-        <div class="genre-content">
-          <h3>Драмы</h3>
-          <p>Глубокие и трогательные истории, которые заставляют задуматься о жизни, отношениях и человеческих переживаниях.</p>
-        </div>
-      </article>
-    </div>
-
-    <section id="blogs" style="margin-top:3rem;">
-      <h2>Блоги</h2>
-      <p>Здесь будут интересные статьи и обзоры кино, новости и рекомендации для настоящих киноманов.</p>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 TopKino. Все права защищены.</p>
-  </footer>
-
-  <script>
-    const texts = {
-      ru: {
-        heroTitle: "TopKino — Мир кино у тебя дома",
-        heroDesc: "Добро пожаловать в блог о кино. Только лучшее. Только для тебя.",
-        genresHeader: "Обзор жанров кино",
-        genresMenu: "Жанры ▾",
-        blogsHeader: "Блоги",
-        blogsDesc: "Здесь будут интересные статьи и обзоры кино, новости и рекомендации для настоящих киноманов.",
-        genres: {
-          action: {
-            title: "Боевики",
-            desc: "Энергичные фильмы с погонями, сражениями и героическими подвигами, которые держат зрителя в напряжении от начала до конца."
-          },
-          comedy: {
-            title: "Комедии",
-            desc: "Фильмы, которые вызывают улыбку и смех, наполняя настроение радостью и лёгкостью, идеально подходящие для отдыха и поднятия духа."
-          },
-          drama: {
-            title: "Драмы",
-            desc: "Глубокие и трогательные истории, которые заставляют задуматься о жизни, отношениях и человеческих переживаниях."
-          },
-          "sci-fi": {
-            title: "Фантастика",
-            desc: "Захватывающие истории о будущем, технологиях и космосе, которые расширяют границы воображения."
-          },
-          horror: {
-            title: "Ужасы",
-            desc: "Фильмы, вызывающие страх и напряжение, которые заставляют переживать каждую сцену с замиранием сердца."
-          }
-        },
-      },
-      uk: {
-        heroTitle: "TopKino — Світ кіно у тебе вдома",
-        heroDesc: "Ласкаво просимо до блогу про кіно. Тільки найкраще. Тільки для тебе.",
-        genresHeader: "Огляд жанрів кіно",
-        genresMenu: "Жанри ▾",
-        blogsHeader: "Блоги",
-        blogsDesc: "Тут будуть цікаві статті та огляди кіно, новини та рекомендації для справжніх кіноманів.",
-        genres: {
-          action: {
-            title: "Бойовики",
-            desc: "Енергійні фільми з погонями, боями та героїчними подвигами, які тримають глядача в напрузі від початку до кінця."
-          },
-          comedy: {
-            title: "Комедії",
-            desc: "Фільми, що викликають усмішку та сміх, наповнюючи настрій радістю та легкістю, ідеально підходять для відпочинку та підняття духу."
-          },
-          drama: {
-            title: "Драми",
-            desc: "Глибокі та зворушливі історії, які змушують задуматися про життя, стосунки та людські переживання."
-          },
-          "sci-fi": {
-            title: "Фантастика",
-            desc: "Захоплюючі історії про майбутнє, технології та космос, які розширюють межі уяви."
-          },
-          horror: {
-            title: "Жахи",
-            desc: "Фільми, що викликають страх і напругу, які змушують переживати кожну сцену з затамуванням подиху."
-          }
-        },
-      },
-      en: {
-        heroTitle: "TopKino — The World of Cinema at Your Home",
-        heroDesc: "Welcome to the movie blog. Only the best. Only for you.",
-        genresHeader: "Movie Genres Overview",
-        genresMenu: "Genres ▾",
-        blogsHeader: "Blogs",
-        blogsDesc: "Here you'll find interesting articles and movie reviews, news, and recommendations for true movie lovers.",
-        genres: {
-          action: {
-            title: "Action",
-            desc: "Energetic films with chases, fights, and heroic feats that keep the viewer on edge from start to finish."
-          },
-          comedy: {
-            title: "Comedy",
-            desc: "Films that bring smiles and laughter, filling the mood with joy and lightness, perfect for relaxation and uplifting spirits."
-          },
-          drama: {
-            title: "Drama",
-            desc: "Deep and touching stories that make you think about life, relationships, and human emotions."
-          },
-          "sci-fi": {
-            title: "Sci-Fi",
-            desc: "Exciting stories about the future, technology, and space that expand the boundaries of imagination."
-          },
-          horror: {
-            title: "Horror",
-            desc: "Films that evoke fear and tension, making you experience every scene with bated breath."
-          }
-        },
-      }
-    };
-
-    const langButtons = document.querySelectorAll('.lang-switcher button');
-    const heroSection = document.querySelector('.hero');
-    const genresHeader = document.querySelector('main > h2');
-    const blogsSection = document.querySelector('#blogs');
-    const blogsHeader = blogsSection.querySelector('h2');
-    const blogsDesc = blogsSection.querySelector('p');
-    const genresButton = document.getElementById('genres-button');
-    const genresDropdownLinks = document.querySelectorAll('.genres-dropdown a');
-    const genreCards = document.querySelectorAll('.genre-card');
-
-    function setLanguage(lang) {
-      // Переключаем активный язык в переключателе
-      langButtons.forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.lang === lang);
-        btn.setAttribute('aria-pressed', btn.dataset.lang === lang ? 'true' : 'false');
-      });
-
-      // Меняем тексты в hero
-      heroSection.querySelector('h2').textContent = texts[lang].heroTitle;
-      heroSection.querySelector('p').textContent = texts[lang].heroDesc;
-
-      // Меняем заголовок жанров
-      genresHeader.textContent = texts[lang].genresHeader;
-
-      // Меняем текст кнопки жанров в меню
-      genresButton.textContent = texts[lang].genresMenu;
-
-      // Меняем заголовок блоги и описание
-      blogsHeader.textContent = texts[lang].blogsHeader;
-      blogsDesc.textContent = texts[lang].blogsDesc;
-
-      // Меняем тексты карточек жанров
-      genreCards.forEach(card => {
-        const id = card.id;
-        card.querySelector('h3').textContent = texts[lang].genres[id].title;
-        card.querySelector('p').textContent = texts[lang].genres[id].desc;
-        card.setAttribute('lang', lang);
-      });
-
-      // Меняем тексты в выпадающем меню жанров
-      genresDropdownLinks.forEach(link => {
-        const genreKey = link.dataset.genre;
-        if (texts[lang].genres[genreKey]) {
-          link.textContent = texts[lang].genres[genreKey].title;
-        }
-      });
-    }
-
-    langButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        setLanguage(btn.dataset.lang);
-      });
-    });
-
-    // Стартовая установка языка - русский
-    setLanguage('ru');
-  </script>
-</body>
-</html>
+        <img class="genre-image" src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=800&q=
