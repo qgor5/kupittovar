@@ -10,9 +10,48 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" media="all">
 
-  <!-- Минимизированный CSS -->
+  <!-- Минимальный стиль -->
   <style>
-    *{box-sizing:border-box;margin:0;padding:0}body{font-family:'Montserrat',sans-serif;background:#f3f4f6;color:#111827}header,footer{background:#000;color:#fff;padding:1rem}nav a{color:#fff;text-decoration:none;margin-right:1rem;font-weight:700}nav a:hover{color:#facc15}.hero{background:linear-gradient(to bottom right,#facc15,#ef4444);color:#fff;text-align:center;padding:4rem 1rem}.grid{display:grid;gap:1rem;grid-template-columns:1fr}@media(min-width:768px){.grid{grid-template-columns:repeat(3,1fr)}}iframe{width:100%;aspect-ratio:16/9;border:none}.yt-placeholder{background:#ddd;height:0;padding-bottom:56.25%;position:relative}.yt-placeholder::after{content:"🎬 Загрузка видео...";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#555}
+    * { box-sizing: border-box; margin: 0; padding: 0 }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #f3f4f6;
+      color: #111827;
+    }
+    header, footer {
+      background: #000;
+      color: #fff;
+      padding: 1rem;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin-right: 1rem;
+      font-weight: bold;
+    }
+    nav a:hover {
+      color: #facc15;
+    }
+    .hero {
+      background: linear-gradient(to bottom right, #facc15, #ef4444);
+      color: white;
+      text-align: center;
+      padding: 4rem 1rem;
+    }
+    section {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+    ul {
+      list-style: disc;
+      padding-left: 1.5rem;
+    }
   </style>
 </head>
 <body>
@@ -25,12 +64,12 @@
   </header>
 
   <section id="home" class="hero">
-    <h2 style="font-size:2rem;font-weight:bold">TopKino — Мир кино у тебя дома</h2>
+    <h2 style="font-size: 2rem; font-weight: bold;">TopKino — Мир кино у тебя дома</h2>
     <p>Добро пожаловать в блог о кино. Только лучшее. Только для тебя.</p>
   </section>
 
-  <section style="max-width:800px;margin:2rem auto;padding:0 1rem">
-    <h2 style="font-size:1.5rem;font-weight:bold">Все жанры кино — подробный обзор</h2>
+  <section>
+    <h2>Все жанры кино — подробный обзор</h2>
     <ul>
       <li><strong>Боевики</strong>: герои, спасения, экшен.</li>
       <li><strong>Комедии</strong>: смех, романтика, лёгкость.</li>
@@ -40,70 +79,14 @@
     </ul>
   </section>
 
-  <section id="trailers" style="max-width:1000px;margin:2rem auto;padding:0 1rem">
-    <h2 style="font-size:1.25rem;font-weight:bold">🎬 Популярные трейлеры</h2>
-    <div class="grid">
-      <div>
-        <h3>Дюна 2</h3>
-        <div class="yt-placeholder" data-src="https://www.youtube.com/embed/n9xhJrPXop4"></div>
-      </div>
-      <div>
-        <h3>Джон Уик 4</h3>
-        <div class="yt-placeholder" data-src="https://www.youtube.com/embed/qEVUtrk8_B4"></div>
-      </div>
-      <div>
-        <h3>Стражи Галактики 3</h3>
-        <div class="yt-placeholder" data-src="https://www.youtube.com/embed/u3V5KDHRQvk"></div>
-      </div>
-    </div>
+  <section id="trailers">
+    <h2>🎬 Популярные трейлеры</h2>
+    <p>Скоро здесь появятся лучшие трейлеры фильмов! Следите за обновлениями.</p>
   </section>
 
   <footer>
     <p>&copy; 2025 TopKino. Все права защищены.</p>
   </footer>
 
-  <!-- Скрипт: отложенная загрузка YouTube -->
-  <script>
-    window.addEventListener("DOMContentLoaded", () => {
-      const placeholders = document.querySelectorAll('.yt-placeholder');
-      if (!'IntersectionObserver' in window) {
-        // Fallback — просто вставим iframe
-        placeholders.forEach(div => {
-          const src = div.dataset.src;
-          div.outerHTML = `<iframe src="${src}" loading="lazy" allowfullscreen style="width:100%;aspect-ratio:16/9;border:none"></iframe>`;
-        });
-        return;
-      }
-
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const div = entry.target;
-            const src = div.dataset.src;
-            const iframe = document.createElement('iframe');
-            iframe.src = src;
-            iframe.loading = 'lazy';
-            iframe.allowFullscreen = true;
-            iframe.style.position = 'absolute';
-            iframe.style.top = '0';
-            iframe.style.left = '0';
-            iframe.style.width = '100%';
-            iframe.style.height = '100%';
-
-            const wrapper = document.createElement('div');
-            wrapper.style.position = 'relative';
-            wrapper.style.paddingBottom = '56.25%';
-            wrapper.style.height = '0';
-            wrapper.appendChild(iframe);
-
-            div.replaceWith(wrapper);
-            observer.unobserve(div);
-          }
-        });
-      }, { rootMargin: '300px' });
-
-      placeholders.forEach(el => observer.observe(el));
-    });
-  </script>
 </body>
 </html>
