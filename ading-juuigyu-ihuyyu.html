@@ -30,16 +30,21 @@
       flex-wrap: wrap;
       align-items: center;
       gap: 1rem;
+      position: relative;
     }
-    nav a {
+    nav a, nav button {
       color: #fff;
       text-decoration: none;
       font-weight: 700;
       font-size: 1rem;
       transition: color 0.3s ease;
       cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      font-family: inherit;
     }
-    nav a:hover {
+    nav a:hover, nav button:hover {
       color: #facc15;
     }
     .lang-switch {
@@ -52,38 +57,36 @@
       font-weight: bold;
     }
 
-    /* Выпадающее меню Жанры */
-    .dropdown {
-      position: relative;
-    }
-
-    .dropdown-content {
+    /* Выпадающее меню Жанры при клике */
+    .dropdown-menu {
       display: none;
       position: absolute;
-      top: 2.2rem;
+      top: 2.8rem;
       left: 0;
       background-color: #1f2937;
-      padding: 0.5rem;
+      padding: 0.5rem 0;
       border-radius: 4px;
       z-index: 999;
-      min-width: 120px;
+      min-width: 150px;
+      box-shadow: 0 4px 8px rgb(0 0 0 / 0.3);
     }
 
-    .dropdown-content a {
+    .dropdown-menu.active {
       display: block;
-      padding: 0.25rem 0.5rem;
+    }
+
+    .dropdown-menu a {
+      display: block;
+      padding: 0.5rem 1rem;
       color: #fff;
       text-decoration: none;
       font-size: 0.9rem;
       white-space: nowrap;
     }
 
-    .dropdown-content a:hover {
-      color: #facc15;
-    }
-
-    .dropdown:hover .dropdown-content {
-      display: block;
+    .dropdown-menu a:hover {
+      background-color: #facc15;
+      color: #111827;
     }
 
     .hero {
@@ -179,17 +182,22 @@
   <header>
     <nav>
       <a href="#home" id="nav-home">Главная</a>
-      <div class="dropdown">
-        <a href="#genres" id="nav-genres">Жанры</a>
-        <div class="dropdown-content">
-          <a href="#genre-animation">Мультфильмы</a>
+
+      <div style="position: relative;">
+        <button id="genresBtn" aria-haspopup="true" aria-expanded="false" aria-controls="genresDropdown">Жанры ▾</button>
+        <div class="dropdown-menu" id="genresDropdown" role="menu" aria-label="Список жанров">
+          <a href="#genre-action" role="menuitem" id="menu-action">Боевик</a>
+          <a href="#genre-comedy" role="menuitem" id="menu-comedy">Комедия</a>
+          <a href="#genre-scifi" role="menuitem" id="menu-scifi">Фантастика</a>
+          <a href="#genre-animation" role="menuitem" id="menu-animation">Мультфильмы</a>
         </div>
       </div>
+
       <a href="#trailers" id="nav-trailers">Трейлеры</a>
     </nav>
     <div class="lang-switch">
-      <select id="languageSwitcher">
-        <option value="ru">Рус</option>
+      <select id="languageSwitcher" aria-label="Выбор языка">
+        <option value="ru" selected>Рус</option>
         <option value="uk">Укр</option>
         <option value="en">Eng</option>
       </select>
@@ -205,29 +213,28 @@
     <section id="genres" aria-label="Популярные жанры кино">
       <h2 id="genres-title">🎞 Популярные жанры кино</h2>
       <div class="genres-grid">
-        <article class="genre">
+        <article class="genre" id="genre-action">
           <img src="https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?auto=format&fit=crop&w=800&q=80" alt="Боевик" />
-          <h3 id="genre-action">Боевик</h3>
+          <h3 id="genre-action-title">Боевик</h3>
           <p id="desc-action">Жанр, полный драйва, погонь и героических подвигов. Боевики захватывают динамикой и напряжёнными сюжетами, даря острые ощущения.</p>
         </article>
 
-        <article class="genre">
+        <article class="genre" id="genre-comedy">
           <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="Комедия" />
-          <h3 id="genre-comedy">Комедия</h3>
+          <h3 id="genre-comedy-title">Комедия</h3>
           <p id="desc-comedy">Фильмы для поднятия настроения и смеха. Лёгкие сюжеты, юмор и яркие персонажи помогают расслабиться и получить удовольствие.</p>
         </article>
 
-        <article class="genre">
+        <article class="genre" id="genre-scifi">
           <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80" alt="Фантастика" />
-          <h3 id="genre-scifi">Фантастика</h3>
+          <h3 id="genre-scifi-title">Фантастика</h3>
           <p id="desc-scifi">Этот жанр открывает двери в новые миры, исследует будущее и технологии, расширяя горизонты воображения и научных идей.</p>
         </article>
 
-        <!-- Добавленный блок Мультфильмы -->
         <article class="genre" id="genre-animation">
           <img src="https://images.unsplash.com/photo-1583337130417-3346a1a4e032?auto=format&fit=crop&w=800&q=80" alt="Мультфильмы" />
-          <h3>Мультфильмы</h3>
-          <p>Красочные и увлекательные истории для всей семьи. Анимационные фильмы радуют зрителей всех возрастов своими сюжетами и визуальным стилем.</p>
+          <h3 id="genre-animation-title">Мультфильмы</h3>
+          <p id="desc-animation">Красочные и увлекательные истории для всей семьи. Анимационные фильмы радуют зрителей всех возрастов своими сюжетами и визуальным стилем.</p>
         </article>
       </div>
     </section>
@@ -238,10 +245,11 @@
   </footer>
 
   <script>
+    // Переводы
     const translations = {
       ru: {
         home: "Главная",
-        genres: "Жанры",
+        genres: "Жанры ▾",
         trailers: "Трейлеры",
         heroTitle: "TopKino — Мир кино у тебя дома",
         heroDesc: "Добро пожаловать в уникальный блог, где собраны лучшие обзоры и трейлеры фильмов разных жанров. Погрузитесь в мир кино с нами!",
@@ -252,11 +260,13 @@
         comedyDesc: "Фильмы для поднятия настроения и смеха. Лёгкие сюжеты, юмор и яркие персонажи помогают расслабиться и получить удовольствие.",
         scifi: "Фантастика",
         scifiDesc: "Этот жанр открывает двери в новые миры, исследует будущее и технологии, расширяя горизонты воображения и научных идей.",
+        animation: "Мультфильмы",
+        animationDesc: "Красочные и увлекательные истории для всей семьи. Анимационные фильмы радуют зрителей всех возрастов своими сюжетами и визуальным стилем.",
         footer: "&copy; 2025 TopKino. Все права защищены."
       },
       uk: {
         home: "Головна",
-        genres: "Жанри",
+        genres: "Жанри ▾",
         trailers: "Трейлери",
         heroTitle: "TopKino — Світ кіно у тебе вдома",
         heroDesc: "Ласкаво просимо до унікального блогу з найкращими оглядами та трейлерами фільмів різних жанрів. Поринь у світ кіно з нами!",
@@ -267,11 +277,13 @@
         comedyDesc: "Фільми для підняття настрою та сміху. Легкі сюжети, гумор і яскраві персонажі дарують задоволення.",
         scifi: "Фантастика",
         scifiDesc: "Фантастика відкриває двері в нові світи, досліджує майбутнє та технології.",
+        animation: "Мультфільми",
+        animationDesc: "Яскраві та захоплюючі історії для всієї родини. Анімаційні фільми радують глядачів усіх вікових категорій.",
         footer: "&copy; 2025 TopKino. Всі права захищені."
       },
       en: {
         home: "Home",
-        genres: "Genres",
+        genres: "Genres ▾",
         trailers: "Trailers",
         heroTitle: "TopKino — The World of Movies at Home",
         heroDesc: "Welcome to a unique blog with top film reviews and trailers. Dive into the world of cinema with us!",
@@ -282,44 +294,94 @@
         comedyDesc: "Movies to lift your mood and bring laughter. Lighthearted plots, humor, and vivid characters.",
         scifi: "Sci-Fi",
         scifiDesc: "Explore futuristic worlds, technologies, and ideas beyond imagination.",
+        animation: "Animation",
+        animationDesc: "Colorful and engaging stories for the whole family. Animated films delight viewers of all ages with their plots and visual style.",
         footer: "&copy; 2025 TopKino. All rights reserved."
       }
     };
 
+    // Элементы для перевода
     const elements = {
       navHome: document.getElementById('nav-home'),
-      navGenres: document.getElementById('nav-genres'),
+      navGenresBtn: document.getElementById('genresBtn'),
       navTrailers: document.getElementById('nav-trailers'),
       heroTitle: document.getElementById('hero-title'),
       heroDesc: document.getElementById('hero-desc'),
       genresTitle: document.getElementById('genres-title'),
-      genreAction: document.getElementById('genre-action'),
-      descAction: document.getElementById('desc-action'),
-      genreComedy: document.getElementById('genre-comedy'),
-      descComedy: document.getElementById('desc-comedy'),
-      genreScifi: document.getElementById('genre-scifi'),
-      descScifi: document.getElementById('desc-scifi'),
-      footer: document.getElementById('footer-text')
+
+      menuAction: document.getElementById('menu-action'),
+      menuComedy: document.getElementById('menu-comedy'),
+      menuScifi: document.getElementById('menu-scifi'),
+      menuAnimation: document.getElementById('menu-animation'),
+
+      genreActionTitle: document.getElementById('genre-action-title'),
+      genreActionDesc: document.getElementById('desc-action'),
+      genreComedyTitle: document.getElementById('genre-comedy-title'),
+      genreComedyDesc: document.getElementById('desc-comedy'),
+      genreScifiTitle: document.getElementById('genre-scifi-title'),
+      genreScifiDesc: document.getElementById('desc-scifi'),
+      genreAnimationTitle: document.getElementById('genre-animation-title'),
+      genreAnimationDesc: document.getElementById('desc-animation'),
+
+      footerText: document.getElementById('footer-text')
     };
 
-    document.getElementById('languageSwitcher').addEventListener('change', e => {
-      const lang = e.target.value;
+    function translate(lang) {
       const t = translations[lang];
 
       elements.navHome.textContent = t.home;
-      elements.navGenres.textContent = t.genres;
+      elements.navGenresBtn.textContent = t.genres;
       elements.navTrailers.textContent = t.trailers;
       elements.heroTitle.textContent = t.heroTitle;
       elements.heroDesc.textContent = t.heroDesc;
       elements.genresTitle.textContent = t.genresTitle;
-      elements.genreAction.textContent = t.action;
-      elements.descAction.textContent = t.actionDesc;
-      elements.genreComedy.textContent = t.comedy;
-      elements.descComedy.textContent = t.comedyDesc;
-      elements.genreScifi.textContent = t.scifi;
-      elements.descScifi.textContent = t.scifiDesc;
-      elements.footer.innerHTML = t.footer;
+
+      elements.menuAction.textContent = t.action;
+      elements.menuComedy.textContent = t.comedy;
+      elements.menuScifi.textContent = t.scifi;
+      elements.menuAnimation.textContent = t.animation;
+
+      elements.genreActionTitle.textContent = t.action;
+      elements.genreActionDesc.textContent = t.actionDesc;
+      elements.genreComedyTitle.textContent = t.comedy;
+      elements.genreComedyDesc.textContent = t.comedyDesc;
+      elements.genreScifiTitle.textContent = t.scifi;
+      elements.genreScifiDesc.textContent = t.scifiDesc;
+      elements.genreAnimationTitle.textContent = t.animation;
+      elements.genreAnimationDesc.textContent = t.animationDesc;
+
+      elements.footerText.innerHTML = t.footer;
+    }
+
+    document.getElementById('languageSwitcher').addEventListener('change', (e) => {
+      translate(e.target.value);
     });
+
+    // Управление открытием/закрытием меню жанров по клику
+    const genresBtn = elements.navGenresBtn;
+    const dropdownMenu = document.getElementById('genresDropdown');
+
+    genresBtn.addEventListener('click', () => {
+      const isActive = dropdownMenu.classList.contains('active');
+      if (isActive) {
+        dropdownMenu.classList.remove('active');
+        genresBtn.setAttribute('aria-expanded', 'false');
+      } else {
+        dropdownMenu.classList.add('active');
+        genresBtn.setAttribute('aria-expanded', 'true');
+      }
+    });
+
+    // Закрывать меню при клике вне его
+    document.addEventListener('click', (e) => {
+      if (!genresBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+        dropdownMenu.classList.remove('active');
+        genresBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Инициализация с русским языком
+    translate('ru');
   </script>
 
 </body>
