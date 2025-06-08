@@ -4,53 +4,104 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>TopKino — Лучшие трейлеры и обзоры фильмов</title>
-
-  <!-- Оптимизация шрифта -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" media="all">
-
-  <!-- Минимальный стиль -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0 }
     body {
       font-family: 'Montserrat', sans-serif;
-      background: #f3f4f6;
+      margin: 0;
+      background-color: #f3f4f6;
       color: #111827;
+      line-height: 1.6;
     }
     header, footer {
-      background: #000;
+      background-color: #000;
       color: #fff;
-      padding: 1rem;
+      padding: 1rem 2rem;
+      text-align: center;
     }
     nav a {
       color: #fff;
       text-decoration: none;
-      margin-right: 1rem;
-      font-weight: bold;
+      margin: 0 1rem;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: color 0.3s ease;
     }
     nav a:hover {
       color: #facc15;
     }
     .hero {
-      background: linear-gradient(to bottom right, #facc15, #ef4444);
+      background: linear-gradient(135deg, #facc15 0%, #ef4444 100%);
       color: white;
-      text-align: center;
       padding: 4rem 1rem;
+      text-align: center;
     }
-    section {
-      max-width: 800px;
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      font-size: 1.25rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    main {
+      max-width: 1200px;
       margin: 2rem auto;
       padding: 0 1rem;
     }
-    h2 {
-      font-size: 1.5rem;
-      font-weight: bold;
-      margin-bottom: 1rem;
+    main h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      color: #111827;
     }
-    ul {
-      list-style: disc;
-      padding-left: 1.5rem;
+    .genres-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap: 2rem;
+    }
+    article.genre {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    article.genre img {
+      width: 100%;
+      display: block;
+      border-bottom: 4px solid #ef4444;
+      border-radius: 8px 8px 0 0;
+      object-fit: cover;
+      height: 180px;
+      loading: lazy;
+    }
+    article.genre h3 {
+      font-size: 1.5rem;
+      margin: 1rem;
+      color: #ef4444;
+    }
+    article.genre p {
+      margin: 0 1rem 1.5rem;
+      flex-grow: 1;
+      color: #4b5563;
+      font-size: 1rem;
+    }
+    footer p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #d1d5db;
+    }
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
@@ -59,30 +110,40 @@
   <header>
     <nav>
       <a href="#home">Главная</a>
+      <a href="#genres">Жанры</a>
       <a href="#trailers">Трейлеры</a>
     </nav>
   </header>
 
-  <section id="home" class="hero">
-    <h2 style="font-size: 2rem; font-weight: bold;">TopKino — Мир кино у тебя дома</h2>
-    <p>Добро пожаловать в блог о кино. Только лучшее. Только для тебя.</p>
+  <section class="hero" id="home">
+    <h1>TopKino — Мир кино у тебя дома</h1>
+    <p>Добро пожаловать в уникальный блог, где собраны лучшие обзоры и трейлеры фильмов разных жанров. Погрузитесь в мир кино с нами!</p>
   </section>
 
-  <section>
-    <h2>Все жанры кино — подробный обзор</h2>
-    <ul>
-      <li><strong>Боевики</strong>: герои, спасения, экшен.</li>
-      <li><strong>Комедии</strong>: смех, романтика, лёгкость.</li>
-      <li><strong>Драмы</strong>: глубина, чувства, реальность.</li>
-      <li><strong>Фантастика</strong>: будущее, технологии, космос.</li>
-      <li><strong>Ужасы</strong>: страх, мистика, напряжение.</li>
-    </ul>
-  </section>
+  <main>
+    <section id="genres" aria-label="Популярные жанры кино">
+      <h2>🎞 Популярные жанры кино</h2>
+      <div class="genres-grid">
+        <article class="genre" tabindex="0">
+          <img src="https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?auto=format&fit=crop&w=800&q=80" alt="Боевик — сцена с динамичным экшеном" loading="lazy" />
+          <h3>Боевик</h3>
+          <p>Жанр, полный драйва, погонь и героических подвигов. Боевики захватывают динамикой и напряжёнными сюжетами, даря острые ощущения.</p>
+        </article>
 
-  <section id="trailers">
-    <h2>🎬 Популярные трейлеры</h2>
-    <p>Скоро здесь появятся лучшие трейлеры фильмов! Следите за обновлениями.</p>
-  </section>
+        <article class="genre" tabindex="0">
+          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="Комедия — актёры в забавных ситуациях" loading="lazy" />
+          <h3>Комедия</h3>
+          <p>Фильмы для поднятия настроения и смеха. Лёгкие сюжеты, юмор и яркие персонажи помогают расслабиться и получить удовольствие.</p>
+        </article>
+
+        <article class="genre" tabindex="0">
+          <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80" alt="Фантастика — космос и футуристические технологии" loading="lazy" />
+          <h3>Фантастика</h3>
+          <p>Этот жанр открывает двери в новые миры, исследует будущее и технологии, расширяя горизонты воображения и научных идей.</p>
+        </article>
+      </div>
+    </section>
+  </main>
 
   <footer>
     <p>&copy; 2025 TopKino. Все права защищены.</p>
