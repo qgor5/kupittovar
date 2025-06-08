@@ -4,11 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TopKino — Лучшие трейлеры и обзоры</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kupittovar.netlify.app"></script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Montserrat', sans-serif;
+    }
+    .lazyload {
+      opacity: 0;
+      transition: opacity 0.5s ease-in;
+    }
+    .lazyloaded {
+      opacity: 1;
     }
   </style>
 </head>
@@ -41,35 +48,20 @@
     </div>
   </section>
 
-  <!-- Контент с трейлерами -->
+  <!-- Вступительный текст -->
+  <section class="max-w-4xl mx-auto py-10 px-4">
+    <h2 class="text-2xl font-bold mb-4">Добро пожаловать в TopKino!</h2>
+    <p class="text-lg text-gray-700">
+      Мы собрали для вас лучшие трейлеры и обзоры фильмов. Наш сайт быстро загружается, не перегружен рекламой и предоставляет только самое важное — актуальные видео и обзоры по жанрам. Приятного просмотра!
+    </p>
+  </section>
+
+  <!-- Контент с трейлерами (ленивая загрузка) -->
   <main class="max-w-7xl mx-auto px-4 py-12">
     <section id="trailers">
-      <h2 class="text-3xl font-bold mb-6">🔥 Популярные трейлеры</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="bg-white p-4 rounded shadow">
-          <h3 class="text-lg font-semibold mb-2">Дюна 2</h3>
-          <iframe class="w-full aspect-video rounded" src="https://www.youtube.com/embed/n9xhJrPXop4" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <div class="bg-white p-4 rounded shadow">
-          <h3 class="text-lg font-semibold mb-2">Джон Уик 4</h3>
-          <iframe class="w-full aspect-video rounded" src="https://www.youtube.com/embed/qEVUtrk8_B4" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <div class="bg-white p-4 rounded shadow">
-          <h3 class="text-lg font-semibold mb-2">Стражи Галактики 3</h3>
-          <iframe class="w-full aspect-video rounded" src="https://www.youtube.com/embed/u3V5KDHRQvk" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <div class="bg-white p-4 rounded shadow">
-          <h3 class="text-lg font-semibold mb-2">Миссия: невыполнима</h3>
-          <iframe class="w-full aspect-video rounded" src="https://www.youtube.com/embed/avz06PDqDbM" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <div class="bg-white p-4 rounded shadow">
-          <h3 class="text-lg font-semibold mb-2">Неудержимые 4</h3>
-          <iframe class="w-full aspect-video rounded" src="https://www.youtube.com/embed/Xa1S1k5Pp8g" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <div class="bg-white p-4 rounded shadow">
-          <h3 class="text-lg font-semibold mb-2">Форсаж 10</h3>
-          <iframe class="w-full aspect-video rounded" src="https://www.youtube.com/embed/eoOaKN4qCKw" frameborder="0" allowfullscreen></iframe>
-        </div>
+      <h2 class="text-3xl font-bold mb-6">🎬 Популярные трейлеры (загружаются после открытия)</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="videoGrid">
+        <!-- Видео загружаются динамически -->
       </div>
     </section>
   </main>
@@ -78,6 +70,44 @@
   <footer class="bg-black text-white text-center py-6 mt-20">
     <p>&copy; 2025 TopKino. Все права защищены.</p>
   </footer>
+
+  <!-- Скрипт для ленивой подгрузки YouTube -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const videos = [
+        { title: "Дюна 2", url: "n9xhJrPXop4" },
+        { title: "Джон Уик 4", url: "qEVUtrk8_B4" },
+        { title: "Стражи Галактики 3", url: "u3V5KDHRQvk" },
+        { title: "Миссия: невыполнима", url: "avz06PDqDbM" },
+        { title: "Неудержимые 4", url: "Xa1S1k5Pp8g" },
+        { title: "Форсаж 10", url: "eoOaKN4qCKw" },
+      ];
+
+      const container = document.getElementById("videoGrid");
+      videos.forEach(v => {
+        const wrapper = document.createElement("div");
+        wrapper.className = "bg-white p-4 rounded shadow";
+        wrapper.innerHTML = `
+          <h3 class="text-lg font-semibold mb-2">${v.title}</h3>
+          <iframe class="w-full aspect-video rounded lazyload" data-src="https://www.youtube.com/embed/${v.url}" frameborder="0" allowfullscreen></iframe>
+        `;
+        container.appendChild(wrapper);
+      });
+
+      const lazyload = () => {
+        const iframes = document.querySelectorAll("iframe.lazyload");
+        iframes.forEach(iframe => {
+          iframe.src = iframe.dataset.src;
+          iframe.classList.remove("lazyload");
+          iframe.classList.add("lazyloaded");
+        });
+      };
+
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) lazyload();
+      }, { once: true });
+    });
+  </script>
 
 </body>
 </html>
