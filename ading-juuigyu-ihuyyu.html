@@ -29,7 +29,7 @@
       gap: 1.5rem;
       position: relative;
       justify-content: flex-start;
-      padding-right: 4.5rem; /* место под переключатель языков */
+      padding-right: 5.5rem; /* увеличил место под переключатель языков */
     }
     nav a, nav button {
       color: #fff;
@@ -68,6 +68,7 @@
       text-decoration: none;
       font-weight: 500;
       transition: background-color 0.3s ease;
+      white-space: nowrap;
     }
     .genres-dropdown a:hover {
       background-color: #facc15;
@@ -80,7 +81,7 @@
     /* Языковой переключатель */
     .lang-switcher {
       position: absolute;
-      right: 1rem;
+      right: 0.75rem; /* сдвинул чуть правее */
       top: 50%;
       transform: translateY(-50%);
       display: flex;
@@ -108,11 +109,11 @@
     /* Адаптив для мобильных */
     @media (max-width: 600px) {
       nav {
-        padding-right: 3.5rem;
+        padding-right: 4.5rem; /* чтобы хватало места */
         gap: 1rem;
       }
       .lang-switcher {
-        right: 1rem;
+        right: 0.75rem; /* фиксируем */
         top: 50%;
         transform: translateY(-50%);
         gap: 0.5rem;
@@ -221,11 +222,11 @@
       <div class="genres-group" style="position:relative;">
         <button id="genres-button">Жанры ▾</button>
         <div class="genres-dropdown" aria-label="Выбор жанра">
-          <a href="#action">Боевики</a>
-          <a href="#comedy">Комедии</a>
-          <a href="#drama">Драмы</a>
-          <a href="#sci-fi">Фантастика</a>
-          <a href="#horror">Ужасы</a>
+          <a href="#action" data-genre="action">Боевики</a>
+          <a href="#comedy" data-genre="comedy">Комедии</a>
+          <a href="#drama" data-genre="drama">Драмы</a>
+          <a href="#sci-fi" data-genre="sci-fi">Фантастика</a>
+          <a href="#horror" data-genre="horror">Ужасы</a>
         </div>
       </div>
       <a href="#blogs" class="menu-link">Блоги</a>
@@ -302,8 +303,16 @@
           drama: {
             title: "Драмы",
             desc: "Глубокие и трогательные истории, которые заставляют задуматься о жизни, отношениях и человеческих переживаниях."
+          },
+          "sci-fi": {
+            title: "Фантастика",
+            desc: "Захватывающие истории о будущем, технологиях и космосе, которые расширяют границы воображения."
+          },
+          horror: {
+            title: "Ужасы",
+            desc: "Фильмы, вызывающие страх и напряжение, которые заставляют переживать каждую сцену с замиранием сердца."
           }
-        }
+        },
       },
       uk: {
         heroTitle: "TopKino — Світ кіно у тебе вдома",
@@ -319,17 +328,25 @@
           },
           comedy: {
             title: "Комедії",
-            desc: "Фільми, які викликають усмішку та сміх, наповнюючи настрій радістю і легкістю, ідеальні для відпочинку і підняття духу."
+            desc: "Фільми, що викликають усмішку та сміх, наповнюючи настрій радістю та легкістю, ідеально підходять для відпочинку та підняття духу."
           },
           drama: {
             title: "Драми",
-            desc: "Глибокі і зворушливі історії, що змушують задуматися про життя, стосунки і людські переживання."
+            desc: "Глибокі та зворушливі історії, які змушують задуматися про життя, стосунки та людські переживання."
+          },
+          "sci-fi": {
+            title: "Фантастика",
+            desc: "Захоплюючі історії про майбутнє, технології та космос, які розширюють межі уяви."
+          },
+          horror: {
+            title: "Жахи",
+            desc: "Фільми, що викликають страх і напругу, які змушують переживати кожну сцену з затамуванням подиху."
           }
-        }
+        },
       },
       en: {
-        heroTitle: "TopKino — The world of cinema at your home",
-        heroDesc: "Welcome to the cinema blog. Only the best. Just for you.",
+        heroTitle: "TopKino — The World of Cinema at Your Home",
+        heroDesc: "Welcome to the movie blog. Only the best. Only for you.",
         genresHeader: "Movie Genres Overview",
         genresMenu: "Genres ▾",
         blogsHeader: "Blogs",
@@ -346,8 +363,16 @@
           drama: {
             title: "Drama",
             desc: "Deep and touching stories that make you think about life, relationships, and human emotions."
+          },
+          "sci-fi": {
+            title: "Sci-Fi",
+            desc: "Exciting stories about the future, technology, and space that expand the boundaries of imagination."
+          },
+          horror: {
+            title: "Horror",
+            desc: "Films that evoke fear and tension, making you experience every scene with bated breath."
           }
-        }
+        },
       }
     };
 
@@ -358,7 +383,7 @@
     const blogsHeader = blogsSection.querySelector('h2');
     const blogsDesc = blogsSection.querySelector('p');
     const genresButton = document.getElementById('genres-button');
-
+    const genresDropdownLinks = document.querySelectorAll('.genres-dropdown a');
     const genreCards = document.querySelectorAll('.genre-card');
 
     function setLanguage(lang) {
@@ -388,6 +413,14 @@
         card.querySelector('h3').textContent = texts[lang].genres[id].title;
         card.querySelector('p').textContent = texts[lang].genres[id].desc;
         card.setAttribute('lang', lang);
+      });
+
+      // Меняем тексты в выпадающем меню жанров
+      genresDropdownLinks.forEach(link => {
+        const genreKey = link.dataset.genre;
+        if (texts[lang].genres[genreKey]) {
+          link.textContent = texts[lang].genres[genreKey].title;
+        }
       });
     }
 
