@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>TopKino — Лучшие трейлеры и обзоры фильмов</title>
 
-  <!-- Шрифт -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" media="all" />
   
   <style>
@@ -30,7 +29,7 @@
       gap: 1.5rem;
       position: relative;
       justify-content: flex-start;
-      padding-right: 4.5rem; /* пространство для переключателя языков */
+      padding-right: 4.5rem; /* место под переключатель языков */
     }
     nav a, nav button {
       color: #fff;
@@ -109,7 +108,7 @@
     /* Адаптив для мобильных */
     @media (max-width: 600px) {
       nav {
-        padding-right: 3.5rem; /* чуть меньше для мобильного */
+        padding-right: 3.5rem;
         gap: 1rem;
       }
       .lang-switcher {
@@ -211,7 +210,7 @@
 <body>
   <header>
     <nav>
-      <a href="#home">Главная</a>
+      <a href="#home" class="menu-link">Главная</a>
       <div class="genres-group" style="position:relative;">
         <button>Жанры ▾</button>
         <div class="genres-dropdown" aria-label="Выбор жанра">
@@ -222,6 +221,7 @@
           <a href="#horror">Ужасы</a>
         </div>
       </div>
+      <a href="#blogs" class="menu-link">Блоги</a>
     </nav>
 
     <div class="lang-switcher" role="group" aria-label="Переключение языков">
@@ -263,6 +263,11 @@
         </div>
       </article>
     </div>
+
+    <section id="blogs" style="margin-top:3rem;">
+      <h2>Блоги</h2>
+      <p>Здесь будут интересные статьи и обзоры кино, новости и рекомендации для настоящих киноманов.</p>
+    </section>
   </main>
 
   <footer>
@@ -270,12 +275,13 @@
   </footer>
 
   <script>
-    // Языковая логика: простой перевод
     const texts = {
       ru: {
         heroTitle: "TopKino — Мир кино у тебя дома",
         heroDesc: "Добро пожаловать в блог о кино. Только лучшее. Только для тебя.",
         genresHeader: "Обзор жанров кино",
+        blogsHeader: "Блоги",
+        blogsDesc: "Здесь будут интересные статьи и обзоры кино, новости и рекомендации для настоящих киноманов.",
         genres: {
           action: {
             title: "Боевики",
@@ -295,6 +301,8 @@
         heroTitle: "TopKino — Світ кіно у тебе вдома",
         heroDesc: "Ласкаво просимо до блогу про кіно. Тільки найкраще. Тільки для тебе.",
         genresHeader: "Огляд жанрів кіно",
+        blogsHeader: "Блоги",
+        blogsDesc: "Тут будуть цікаві статті та огляди кіно, новини та рекомендації для справжніх кіноманів.",
         genres: {
           action: {
             title: "Бойовики",
@@ -314,6 +322,8 @@
         heroTitle: "TopKino — The world of cinema at your home",
         heroDesc: "Welcome to the cinema blog. Only the best. Just for you.",
         genresHeader: "Movie Genres Overview",
+        blogsHeader: "Blogs",
+        blogsDesc: "Here you will find interesting articles and movie reviews, news and recommendations for true movie lovers.",
         genres: {
           action: {
             title: "Action",
@@ -336,19 +346,20 @@
     const heroDesc = document.querySelector('.hero p');
     const genresHeader = document.querySelector('main > h2');
     const genreCards = document.querySelectorAll('.genre-card');
-
+    const blogsSection = document.querySelector('#blogs');
+    
     function setLanguage(lang) {
-      // Меняем активную кнопку
       langButtons.forEach(btn => {
         btn.classList.toggle('active', btn.dataset.lang === lang);
         btn.setAttribute('aria-pressed', btn.dataset.lang === lang);
       });
 
-      // Меняем контент
       document.documentElement.lang = lang;
       heroTitle.textContent = texts[lang].heroTitle;
       heroDesc.textContent = texts[lang].heroDesc;
       genresHeader.textContent = texts[lang].genresHeader;
+      blogsSection.querySelector('h2').textContent = texts[lang].blogsHeader;
+      blogsSection.querySelector('p').textContent = texts[lang].blogsDesc;
 
       genreCards.forEach(card => {
         const id = card.id;
@@ -364,7 +375,6 @@
       });
     });
 
-    // Установка языка по умолчанию
     setLanguage('ru');
   </script>
 </body>
