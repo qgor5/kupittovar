@@ -132,6 +132,8 @@
       overflow: hidden;
       cursor: pointer;
       transition: transform 0.3s ease;
+      text-decoration: none;
+      color: inherit;
     }
     .genre-card:hover {
       transform: translateY(-5px);
@@ -207,18 +209,18 @@
 
   <header>
     <nav>
-      <a href="#home">Главная</a>
+      <a href="#home" data-key="navHome">Главная</a>
       <div class="dropdown">
-        <button type="button" aria-haspopup="true" aria-expanded="false">Жанры ▼</button>
+        <button type="button" aria-haspopup="true" aria-expanded="false" data-key="navGenres">Жанры ▼</button>
         <div class="dropdown-menu" role="menu" aria-label="Жанры фильмов">
-          <a href="#boeviki" role="menuitem">Боевики</a>
-          <a href="#komedii" role="menuitem">Комедии</a>
-          <a href="#dramy" role="menuitem">Драмы</a>
-          <a href="#fantastika" role="menuitem">Фантастика</a>
-          <a href="#uzhasy" role="menuitem">Ужасы</a>
+          <a href="#boeviki" role="menuitem" data-key="genreBoeviki">Боевики</a>
+          <a href="#komedii" role="menuitem" data-key="genreKomedii">Комедии</a>
+          <a href="#dramy" role="menuitem" data-key="genreDramy">Драмы</a>
+          <a href="#fantastika" role="menuitem" data-key="genreFantastika">Фантастика</a>
+          <a href="#uzhasy" role="menuitem" data-key="genreUzhasy">Ужасы</a>
         </div>
       </div>
-      <a href="#trailers">Трейлеры</a>
+      <a href="#trailers" data-key="navTrailers">Трейлеры</a>
 
       <!-- Языковой переключатель -->
       <div class="lang-switcher" role="group" aria-label="Переключатель языков">
@@ -230,33 +232,33 @@
   </header>
 
   <section id="home" class="hero">
-    <h2>TopKino — Мир кино у тебя дома</h2>
-    <p>Добро пожаловать в блог о кино. Только лучшее. Только для тебя.</p>
+    <h2 data-key="heroTitle">TopKino — Мир кино у тебя дома</h2>
+    <p data-key="heroText">Добро пожаловать в блог о кино. Только лучшее. Только для тебя.</p>
   </section>
 
   <section class="seo-section">
-    <h2>Все жанры кино — подробный обзор</h2>
+    <h2 data-key="seoTitle">Все жанры кино — подробный обзор</h2>
     <ul>
-      <li><strong>Боевики</strong> — динамичные фильмы с захватывающими сценами, полные приключений, погони и героических подвигов.</li>
-      <li><strong>Комедии</strong> — лёгкие и веселые фильмы, которые поднимают настроение, с юмором и романтикой.</li>
-      <li><strong>Драмы</strong> — глубокие истории о жизни, любви и испытаниях, вызывающие сильные эмоции и размышления.</li>
-      <li><strong>Фантастика</strong> — удивительные миры будущего, технологии и невероятные приключения в космосе и за его пределами.</li>
-      <li><strong>Ужасы</strong> — напряжённые и страшные фильмы, которые заставляют сердце биться чаще и погружают в мрачные тайны.</li>
+      <li data-key="seoBoeviki"><strong>Боевики</strong> — динамичные фильмы с захватывающими сценами, полные приключений, погони и героических подвигов.</li>
+      <li data-key="seoKomedii"><strong>Комедии</strong> — лёгкие и веселые фильмы, которые поднимают настроение, с юмором и романтикой.</li>
+      <li data-key="seoDramy"><strong>Драмы</strong> — глубокие истории о жизни, любви и испытаниях, вызывающие сильные эмоции и размышления.</li>
+      <li data-key="seoFantastika"><strong>Фантастика</strong> — удивительные миры будущего, технологии и невероятные приключения в космосе и за его пределами.</li>
+      <li data-key="seoUzhasy"><strong>Ужасы</strong> — напряжённые и страшные фильмы, которые заставляют сердце биться чаще и погружают в мрачные тайны.</li>
     </ul>
   </section>
 
   <section class="genres-grid">
-    <a href="#boeviki" class="genre-card">
+    <a href="#boeviki" class="genre-card" aria-label="Боевики">
       <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="Боевики" />
-      <h3>Боевики</h3>
+      <h3 data-key="genreBoeviki">Боевики</h3>
     </a>
-    <a href="#komedii" class="genre-card">
+    <a href="#komedii" class="genre-card" aria-label="Комедии">
       <img src="https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?auto=format&fit=crop&w=600&q=80" alt="Комедии" />
-      <h3>Комедии</h3>
+      <h3 data-key="genreKomedii">Комедии</h3>
     </a>
-    <a href="#dramy" class="genre-card">
+    <a href="#dramy" class="genre-card" aria-label="Драмы">
       <img src="https://images.unsplash.com/photo-1549924231-f129b911e442?auto=format&fit=crop&w=600&q=80" alt="Драмы" />
-      <h3>Драмы</h3>
+      <h3 data-key="genreDramy">Драмы</h3>
     </a>
   </section>
 
@@ -265,21 +267,90 @@
   </footer>
 
   <script>
-    // Логика переключения языка: подсвечиваем активный язык
-    const langButtons = document.querySelectorAll('.lang-switcher button');
-    langButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        langButtons.forEach(btn => {
-          btn.classList.remove('active');
-          btn.setAttribute('aria-pressed', 'false');
-        });
-        button.classList.add('active');
-        button.setAttribute('aria-pressed', 'true');
-        // Тут можно добавить логику смены языка (например, подгрузка текста)
-        console.log('Выбран язык:', button.dataset.lang);
+    const translations = {
+      ru: {
+        navHome: "Главная",
+        navGenres: "Жанры ▼",
+        navTrailers: "Трейлеры",
+        heroTitle: "TopKino — Мир кино у тебя дома",
+        heroText: "Добро пожаловать в блог о кино. Только лучшее. Только для тебя.",
+        seoTitle: "Все жанры кино — подробный обзор",
+        seoBoeviki: "Боевики — динамичные фильмы с захватывающими сценами, полные приключений, погони и героических подвигов.",
+        seoKomedii: "Комедии — лёгкие и веселые фильмы, которые поднимают настроение, с юмором и романтикой.",
+        seoDramy: "Драмы — глубокие истории о жизни, любви и испытаниях, вызывающие сильные эмоции и размышления.",
+        seoFantastika: "Фантастика — удивительные миры будущего, технологии и невероятные приключения в космосе и за его пределами.",
+        seoUzhasy: "Ужасы — напряжённые и страшные фильмы, которые заставляют сердце биться чаще и погружают в мрачные тайны.",
+        genreBoeviki: "Боевики",
+        genreKomedii: "Комедии",
+        genreDramy: "Драмы",
+        genreFantastika: "Фантастика",
+        genreUzhasy: "Ужасы",
+      },
+      ua: {
+        navHome: "Головна",
+        navGenres: "Жанри ▼",
+        navTrailers: "Трейлери",
+        heroTitle: "TopKino — Світ кіно у тебе вдома",
+        heroText: "Ласкаво просимо до блогу про кіно. Тільки найкраще. Тільки для тебе.",
+        seoTitle: "Всі жанри кіно — докладний огляд",
+        seoBoeviki: "Бойовики — динамічні фільми з захоплюючими сценами, повні пригод, погонь та героїчних подвигів.",
+        seoKomedii: "Комедії — легкі та веселі фільми, які піднімають настрій, з гумором та романтикою.",
+        seoDramy: "Драми — глибокі історії про життя, кохання та випробування, що викликають сильні емоції та роздуми.",
+        seoFantastika: "Фантастика — дивовижні світи майбутнього, технології та неймовірні пригоди в космосі та за його межами.",
+        seoUzhasy: "Жахи — напружені та страшні фільми, які змушують серце битися частіше і занурюють у темні таємниці.",
+        genreBoeviki: "Бойовики",
+        genreKomedii: "Комедії",
+        genreDramy: "Драми",
+        genreFantastika: "Фантастика",
+        genreUzhasy: "Жахи",
+      },
+      en: {
+        navHome: "Home",
+        navGenres: "Genres ▼",
+        navTrailers: "Trailers",
+        heroTitle: "TopKino — The world of cinema at your home",
+        heroText: "Welcome to the movie blog. Only the best. Just for you.",
+        seoTitle: "All movie genres — detailed review",
+        seoBoeviki: "Action — dynamic movies with exciting scenes, full of adventures, chases and heroic feats.",
+        seoKomedii: "Comedy — light and fun movies that lift your mood, with humor and romance.",
+        seoDramy: "Drama — deep stories about life, love and trials, evoking strong emotions and reflections.",
+        seoFantastika: "Sci-Fi — amazing worlds of the future, technologies and incredible adventures in space and beyond.",
+        seoUzhasy: "Horror — tense and scary films that make your heart beat faster and plunge you into dark mysteries.",
+        genreBoeviki: "Action",
+        genreKomedii: "Comedy",
+        genreDramy: "Drama",
+        genreFantastika: "Sci-Fi",
+        genreUzhasy: "Horror",
+      }
+    };
+
+    function setLanguage(lang) {
+      // Меняем тексты по ключам
+      document.querySelectorAll('[data-key]').forEach(el => {
+        const key = el.getAttribute('data-key');
+        if (translations[lang] && translations[lang][key]) {
+          el.textContent = translations[lang][key];
+        }
+      });
+
+      // Обновляем aria-pressed и классы у кнопок
+      document.querySelectorAll('.lang-switcher button').forEach(btn => {
+        const isActive = btn.getAttribute('data-lang') === lang;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+    }
+
+    // Событие переключения языка
+    document.querySelectorAll('.lang-switcher button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.getAttribute('data-lang');
+        setLanguage(lang);
       });
     });
-  </script>
 
+    // По умолчанию русский
+    setLanguage('ru');
+  </script>
 </body>
 </html>
