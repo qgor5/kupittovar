@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TopKino — Лучшие трейлеры и обзоры фильмов</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+
+  <!-- Шрифт -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" media="all">
   <style>
     body {
       font-family: 'Montserrat', sans-serif;
@@ -49,12 +49,19 @@
       aspect-ratio: 16/9;
       border: none;
     }
-    .lazy {
-      opacity: 0;
-      transition: opacity 0.3s ease-in;
+    .yt-placeholder {
+      background: #ddd;
+      height: 0;
+      padding-bottom: 56.25%;
+      position: relative;
     }
-    .lazy-loaded {
-      opacity: 1;
+    .yt-placeholder::after {
+      content: "🎬 Загрузка видео...";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #555;
     }
   </style>
 </head>
@@ -64,6 +71,85 @@
   <header>
     <nav>
       <a href="#home">Главная</a>
-      <div style="display: inline-block; position: relative;">
-        <button onclick="toggleDropdown()">Жанры ▾</button>
-        <div id="dropdown" style="display: none; position: absolute; backgrou
+      <a href="#trailers">Трейлеры</a>
+    </nav>
+  </header>
+
+  <!-- Герой -->
+  <section id="home" class="hero">
+    <h2 style="font-size: 2rem; font-weight: bold;">TopKino — Мир кино у тебя дома</h2>
+    <p>Добро пожаловать в блог о кино. Только лучшее. Только для тебя.</p>
+  </section>
+
+  <!-- SEO текст -->
+  <section style="max-width: 800px; margin: 2rem auto; padding: 0 1rem;">
+    <h2 style="font-size: 1.5rem; font-weight: bold;">Все жанры кино — подробный обзор</h2>
+    <ul>
+      <li><strong>Боевики</strong>: герои, спасения, экшен.</li>
+      <li><strong>Комедии</strong>: смех, романтика, лёгкость.</li>
+      <li><strong>Драмы</strong>: глубина, чувства, реальность.</li>
+      <li><strong>Фантастика</strong>: будущее, технологии, космос.</li>
+      <li><strong>Ужасы</strong>: страх, мистика, напряжение.</li>
+    </ul>
+  </section>
+
+  <!-- Трейлеры -->
+  <section id="trailers" style="max-width: 1000px; margin: 2rem auto; padding: 0 1rem;">
+    <h2 style="font-size: 1.25rem; font-weight: bold;">🎬 Популярные трейлеры</h2>
+    <div class="grid">
+      <div>
+        <h3>Дюна 2</h3>
+        <div class="yt-placeholder" data-src="https://www.youtube.com/embed/n9xhJrPXop4"></div>
+      </div>
+      <div>
+        <h3>Джон Уик 4</h3>
+        <div class="yt-placeholder" data-src="https://www.youtube.com/embed/qEVUtrk8_B4"></div>
+      </div>
+      <div>
+        <h3>Стражи Галактики 3</h3>
+        <div class="yt-placeholder" data-src="https://www.youtube.com/embed/u3V5KDHRQvk"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Футер -->
+  <footer>
+    <p>&copy; 2025 TopKino. Все права защищены.</p>
+  </footer>
+
+  <!-- Скрипт для ленивой загрузки iframe -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const placeholders = document.querySelectorAll('.yt-placeholder');
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const div = entry.target;
+            const src = div.dataset.src;
+            const iframe = document.createElement('iframe');
+            iframe.src = src;
+            iframe.loading = "lazy";
+            iframe.allowFullscreen = true;
+            iframe.style.position = "absolute";
+            iframe.style.top = "0";
+            iframe.style.left = "0";
+            iframe.style.width = "100%";
+            iframe.style.height = "100%";
+
+            const wrapper = document.createElement('div');
+            wrapper.style.position = "relative";
+            wrapper.style.paddingBottom = "56.25%";
+            wrapper.style.height = "0";
+            wrapper.appendChild(iframe);
+
+            div.replaceWith(wrapper);
+            obs.unobserve(div);
+          }
+        });
+      }, { rootMargin: "200px" });
+
+      placeholders.forEach(el => observer.observe(el));
+    });
+  </script>
+</body>
+</html>
