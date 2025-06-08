@@ -4,7 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>TopKino — Лучшие трейлеры и обзоры фильмов</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- Шрифт -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" media="all" />
+  
   <style>
     body {
       font-family: 'Montserrat', sans-serif;
@@ -12,196 +15,70 @@
       background: #f3f4f6;
       color: #111827;
     }
-    header {
+    header, footer {
       background: #000;
-      padding: 1rem 0;
-      position: sticky; /* фиксируем */
+      color: #fff;
+      padding: 1rem 1.5rem;
+      position: sticky;
       top: 0;
-      z-index: 10000;
-      box-shadow: 0 2px 8px rgb(0 0 0 / 0.3);
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.4);
     }
     nav {
       display: flex;
-      justify-content: center;
-      gap: 2.5rem;
-      max-width: 1200px;
-      margin: 0 auto;
       align-items: center;
+      gap: 1.5rem;
       position: relative;
+      justify-content: flex-start;
+      padding-right: 4.5rem; /* пространство для переключателя языков */
     }
     nav a, nav button {
       color: #fff;
-      font-weight: 700;
       text-decoration: none;
+      font-weight: 700;
       cursor: pointer;
       background: none;
       border: none;
       font-size: 1rem;
-      line-height: 1.5;
       padding: 0;
-      user-select: none;
       position: relative;
+      white-space: nowrap;
     }
     nav a:hover, nav button:hover {
       color: #facc15;
     }
-    /* Выпадающее меню */
-    .dropdown {
-      position: relative;
-    }
-    .dropdown-menu {
+
+    /* Выпадающее меню жанров */
+    .genres-dropdown {
       position: absolute;
-      top: 100%;
+      top: 110%;
       left: 0;
-      background: #111;
-      padding: 0.5rem 0;
-      min-width: 180px;
+      background: #fff;
+      color: #111827;
       border-radius: 6px;
-      box-shadow: 0 4px 8px rgb(0 0 0 / 0.3);
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease;
-      z-index: 1000;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      display: none;
+      flex-direction: column;
+      min-width: 160px;
+      z-index: 1100;
+      padding: 0.5rem 0;
     }
-    .dropdown-menu a {
-      display: block;
-      padding: 0.5rem 1.25rem;
-      color: #fff;
+    .genres-dropdown a {
+      padding: 0.5rem 1rem;
+      color: #111827;
       text-decoration: none;
       font-weight: 500;
-      white-space: nowrap;
-      transition: background-color 0.2s ease;
+      transition: background-color 0.3s ease;
     }
-    .dropdown-menu a:hover {
+    .genres-dropdown a:hover {
       background-color: #facc15;
       color: #000;
     }
-    /* Показ меню при наведении */
-    .dropdown:hover .dropdown-menu {
-      opacity: 1;
-      visibility: visible;
+    nav .genres-group:hover .genres-dropdown {
+      display: flex;
     }
 
-    /* Герой */
-    .hero {
-      background: linear-gradient(to bottom right, #facc15, #ef4444);
-      color: white;
-      text-align: center;
-      padding: 4rem 1rem;
-      margin-top: 1rem; /* Чтобы меню не перекрывало */
-    }
-    .hero h2 {
-      font-size: 2rem;
-      font-weight: 700;
-      margin: 0 0 1rem;
-    }
-    .hero p {
-      font-size: 1.125rem;
-      margin: 0;
-    }
-
-    /* SEO текст */
-    .seo-section {
-      max-width: 800px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
-    .seo-section h2 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-    }
-    .seo-section ul {
-      padding-left: 1.25rem;
-      color: #333;
-      font-weight: 500;
-      line-height: 1.6;
-    }
-    .seo-section ul li {
-      margin-bottom: 0.6rem;
-    }
-
-    /* Три блока с картинками */
-    .genres-grid {
-      max-width: 1000px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-    }
-    .genre-card {
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-      text-decoration: none;
-      color: inherit;
-    }
-    .genre-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgb(0 0 0 / 0.15);
-    }
-    .genre-card img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      display: block;
-    }
-    .genre-card h3 {
-      margin: 1rem;
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: #111827;
-    }
-
-    /* Футер */
-    footer {
-      background: #000;
-      color: #fff;
-      text-align: center;
-      padding: 1rem 0;
-      margin-top: 4rem;
-      font-size: 0.9rem;
-    }
-
-    /* Адаптив */
-    @media (max-width: 900px) {
-      .genres-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-    @media (max-width: 600px) {
-      .genres-grid {
-        grid-template-columns: 1fr;
-      }
-      nav {
-        gap: 1.5rem;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      /* Переключатель языков — теперь по центру сверху */
-      .lang-switcher {
-        position: static;
-        transform: none;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        margin-top: 0.5rem;
-        gap: 1rem;
-        order: 1; /* выводим ниже в потоке для мобильных */
-      }
-      .lang-switcher button {
-        padding: 0.5rem 1rem;
-        font-size: 1.1rem;
-        border-radius: 6px;
-        border: 2px solid transparent;
-      }
-    }
-
-    /* Языковой переключатель - для десктопа */
+    /* Языковой переключатель */
     .lang-switcher {
       position: absolute;
       right: 1rem;
@@ -210,6 +87,7 @@
       display: flex;
       gap: 0.75rem;
       user-select: none;
+      z-index: 1200;
     }
     .lang-switcher button {
       background: none;
@@ -227,149 +105,266 @@
       border-color: #facc15;
       color: #facc15;
     }
+
+    /* Адаптив для мобильных */
+    @media (max-width: 600px) {
+      nav {
+        padding-right: 3.5rem; /* чуть меньше для мобильного */
+        gap: 1rem;
+      }
+      .lang-switcher {
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        gap: 0.5rem;
+      }
+      nav a, nav button {
+        font-size: 0.95rem;
+      }
+    }
+
+    /* Герой */
+    .hero {
+      background: linear-gradient(to bottom right, #facc15, #ef4444);
+      color: white;
+      text-align: center;
+      padding: 4rem 1rem;
+    }
+    .hero h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .hero p {
+      font-size: 1.125rem;
+      margin: 0;
+    }
+
+    /* Основной контент */
+    main {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    main h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .genres-blocks {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    @media (max-width: 700px) {
+      .genres-blocks {
+        grid-template-columns: 1fr;
+      }
+    }
+    .genre-card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease;
+      cursor: default;
+    }
+    .genre-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgb(0 0 0 / 0.2);
+    }
+    .genre-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .genre-content {
+      padding: 1rem;
+      flex-grow: 1;
+    }
+    .genre-content h3 {
+      margin: 0 0 0.5rem;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: #111827;
+    }
+    .genre-content p {
+      margin: 0;
+      color: #4b5563;
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    /* Футер */
+    footer {
+      text-align: center;
+      padding: 1.5rem 1rem;
+      font-size: 0.9rem;
+      color: #aaa;
+      background: #000;
+    }
   </style>
 </head>
 <body>
-
   <header>
     <nav>
-      <a href="#home" data-key="navHome">Главная</a>
-      <div class="dropdown">
-        <button type="button" aria-haspopup="true" aria-expanded="false" data-key="navGenres">Жанры ▼</button>
-        <div class="dropdown-menu" role="menu" aria-label="Жанры фильмов">
-          <a href="#boeviki" role="menuitem" data-key="genreBoeviki">Боевики</a>
-          <a href="#komedii" role="menuitem" data-key="genreKomedii">Комедии</a>
-          <a href="#dramy" role="menuitem" data-key="genreDramy">Драмы</a>
-          <a href="#fantastika" role="menuitem" data-key="genreFantastika">Фантастика</a>
-          <a href="#uzhasy" role="menuitem" data-key="genreUzhasy">Ужасы</a>
+      <a href="#home">Главная</a>
+      <div class="genres-group" style="position:relative;">
+        <button>Жанры ▾</button>
+        <div class="genres-dropdown" aria-label="Выбор жанра">
+          <a href="#action">Боевики</a>
+          <a href="#comedy">Комедии</a>
+          <a href="#drama">Драмы</a>
+          <a href="#sci-fi">Фантастика</a>
+          <a href="#horror">Ужасы</a>
         </div>
       </div>
-      <a href="#trailers" data-key="navTrailers">Трейлеры</a>
-
-      <!-- Языковой переключатель -->
-      <div class="lang-switcher" role="group" aria-label="Переключатель языков">
-        <button type="button" class="active" data-lang="ru" aria-pressed="true" title="Русский">RU</button>
-        <button type="button" data-lang="ua" aria-pressed="false" title="Українська">UA</button>
-        <button type="button" data-lang="en" aria-pressed="false" title="English">EN</button>
-      </div>
     </nav>
+
+    <div class="lang-switcher" role="group" aria-label="Переключение языков">
+      <button class="active" data-lang="ru" aria-pressed="true">RU</button>
+      <button data-lang="uk" aria-pressed="false">UK</button>
+      <button data-lang="en" aria-pressed="false">EN</button>
+    </div>
   </header>
 
-  <section id="home" class="hero">
-    <h2 data-key="heroTitle">TopKino — Мир кино у тебя дома</h2>
-    <p data-key="heroText">Добро пожаловать в блог о кино. Только лучшее. Только для тебя.</p>
+  <section id="home" class="hero" lang="ru">
+    <h2>TopKino — Мир кино у тебя дома</h2>
+    <p>Добро пожаловать в блог о кино. Только лучшее. Только для тебя.</p>
   </section>
 
-  <section class="seo-section">
-    <h2 data-key="seoTitle">Все жанры кино — подробный обзор</h2>
-    <ul>
-      <li data-key="seoBoeviki"><strong>Боевики</strong> — динамичные фильмы с захватывающими сценами, полные приключений, погони и героических подвигов.</li>
-      <li data-key="seoKomedii"><strong>Комедии</strong> — лёгкие и веселые фильмы, которые поднимают настроение, с юмором и романтикой.</li>
-      <li data-key="seoDramy"><strong>Драмы</strong> — глубокие истории о жизни, любви и испытаниях, вызывающие сильные эмоции и размышления.</li>
-      <li data-key="seoFantastika"><strong>Фантастика</strong> — удивительные миры будущего, технологии и невероятные приключения в космосе и за его пределами.</li>
-      <li data-key="seoUzhasy"><strong>Ужасы</strong> — напряжённые и страшные фильмы, которые заставляют сердце биться чаще и погружают в мрачные тайны.</li>
-    </ul>
-  </section>
+  <main>
+    <h2>Обзор жанров кино</h2>
+    <div class="genres-blocks">
+      <article class="genre-card" id="action" lang="ru">
+        <img class="genre-image" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="Боевики — экшн сцена" />
+        <div class="genre-content">
+          <h3>Боевики</h3>
+          <p>Энергичные фильмы с погонями, сражениями и героическими подвигами, которые держат зрителя в напряжении от начала до конца.</p>
+        </div>
+      </article>
 
-  <section class="genres-grid">
-    <a href="#boeviki" class="genre-card" aria-label="Боевики">
-      <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="Боевики" />
-      <h3 data-key="genreBoeviki">Боевики</h3>
-    </a>
-    <a href="#komedii" class="genre-card" aria-label="Комедии">
-      <img src="https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?auto=format&fit=crop&w=600&q=80" alt="Комедии" />
-      <h3 data-key="genreKomedii">Комедии</h3>
-    </a>
-    <a href="#dramy" class="genre-card" aria-label="Драмы">
-      <img src="https://images.unsplash.com/photo-1549924231-f129b911e442?auto=format&fit=crop&w=600&q=80" alt="Драмы" />
-      <h3 data-key="genreDramy">Драмы</h3>
-    </a>
-  </section>
+      <article class="genre-card" id="comedy" lang="ru">
+        <img class="genre-image" src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=800&q=80" alt="Комедии — весёлые моменты" />
+        <div class="genre-content">
+          <h3>Комедии</h3>
+          <p>Фильмы, которые вызывают улыбку и смех, наполняя настроение радостью и лёгкостью, идеально подходящие для отдыха и поднятия духа.</p>
+        </div>
+      </article>
+
+      <article class="genre-card" id="drama" lang="ru">
+        <img class="genre-image" src="https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?auto=format&fit=crop&w=800&q=80" alt="Драмы — эмоциональные сцены" />
+        <div class="genre-content">
+          <h3>Драмы</h3>
+          <p>Глубокие и трогательные истории, которые заставляют задуматься о жизни, отношениях и человеческих переживаниях.</p>
+        </div>
+      </article>
+    </div>
+  </main>
 
   <footer>
     <p>&copy; 2025 TopKino. Все права защищены.</p>
   </footer>
 
   <script>
-    const translations = {
+    // Языковая логика: простой перевод
+    const texts = {
       ru: {
-        navHome: "Главная",
-        navGenres: "Жанры ▼",
-        navTrailers: "Трейлеры",
         heroTitle: "TopKino — Мир кино у тебя дома",
-        heroText: "Добро пожаловать в блог о кино. Только лучшее. Только для тебя.",
-        seoTitle: "Все жанры кино — подробный обзор",
-        seoBoeviki: "Боевики — динамичные фильмы с захватывающими сценами, полные приключений, погони и героических подвигов.",
-        seoKomedii: "Комедии — лёгкие и веселые фильмы, которые поднимают настроение, с юмором и романтикой.",
-        seoDramy: "Драмы — глубокие истории о жизни, любви и испытаниях, вызывающие сильные эмоции и размышления.",
-        seoFantastika: "Фантастика — удивительные миры будущего, технологии и невероятные приключения в космосе и за его пределами.",
-        seoUzhasy: "Ужасы — напряжённые и страшные фильмы, которые заставляют сердце биться чаще и погружают в мрачные тайны.",
-        genreBoeviki: "Боевики",
-        genreKomedii: "Комедии",
-        genreDramy: "Драмы",
-        genreFantastika: "Фантастика",
-        genreUzhasy: "Ужасы",
+        heroDesc: "Добро пожаловать в блог о кино. Только лучшее. Только для тебя.",
+        genresHeader: "Обзор жанров кино",
+        genres: {
+          action: {
+            title: "Боевики",
+            desc: "Энергичные фильмы с погонями, сражениями и героическими подвигами, которые держат зрителя в напряжении от начала до конца."
+          },
+          comedy: {
+            title: "Комедии",
+            desc: "Фильмы, которые вызывают улыбку и смех, наполняя настроение радостью и лёгкостью, идеально подходящие для отдыха и поднятия духа."
+          },
+          drama: {
+            title: "Драмы",
+            desc: "Глубокие и трогательные истории, которые заставляют задуматься о жизни, отношениях и человеческих переживаниях."
+          }
+        }
       },
-      ua: {
-        navHome: "Головна",
-        navGenres: "Жанри ▼",
-        navTrailers: "Трейлери",
-        heroTitle: "TopKino — Світ кіно у вас вдома",
-        heroText: "Ласкаво просимо до блогу про кіно. Тільки найкраще. Тільки для вас.",
-        seoTitle: "Усі жанри кіно — докладний огляд",
-        seoBoeviki: "Бойовики — динамічні фільми з захоплюючими сценами, повні пригод, погонь та героїчних подвигів.",
-        seoKomedii: "Комедії — легкі та веселі фільми, які піднімають настрій, з гумором та романтикою.",
-        seoDramy: "Драми — глибокі історії про життя, кохання та випробування, що викликають сильні емоції та роздуми.",
-        seoFantastika: "Фантастика — дивовижні світи майбутнього, технології та неймовірні пригоди в космосі та за його межами.",
-        seoUzhasy: "Жахи — напружені та страшні фільми, які змушують серце битися частіше і занурюють у темні таємниці.",
-        genreBoeviki: "Бойовики",
-        genreKomedii: "Комедії",
-        genreDramy: "Драми",
-        genreFantastika: "Фантастика",
-        genreUzhasy: "Жахи",
+      uk: {
+        heroTitle: "TopKino — Світ кіно у тебе вдома",
+        heroDesc: "Ласкаво просимо до блогу про кіно. Тільки найкраще. Тільки для тебе.",
+        genresHeader: "Огляд жанрів кіно",
+        genres: {
+          action: {
+            title: "Бойовики",
+            desc: "Енергійні фільми з погонями, боями та героїчними подвигами, які тримають глядача в напрузі від початку до кінця."
+          },
+          comedy: {
+            title: "Комедії",
+            desc: "Фільми, які викликають усмішку та сміх, наповнюючи настрій радістю і легкістю, ідеальні для відпочинку і підняття духу."
+          },
+          drama: {
+            title: "Драми",
+            desc: "Глибокі і зворушливі історії, що змушують задуматися про життя, стосунки і людські переживання."
+          }
+        }
       },
       en: {
-        navHome: "Home",
-        navGenres: "Genres ▼",
-        navTrailers: "Trailers",
         heroTitle: "TopKino — The world of cinema at your home",
-        heroText: "Welcome to the movie blog. Only the best. Just for you.",
-        seoTitle: "All movie genres — detailed review",
-        seoBoeviki: "Action — dynamic movies with exciting scenes, full of adventures, chases and heroic feats.",
-        seoKomedii: "Comedy — light and fun movies that lift your mood, with humor and romance.",
-        seoDramy: "Drama — deep stories about life, love and trials, evoking strong emotions and reflections.",
-        seoFantastika: "Sci-Fi — amazing worlds of the future, technologies and incredible adventures in space and beyond.",
-        seoUzhasy: "Horror — tense and scary films that make your heart beat faster and plunge you into dark mysteries.",
-        genreBoeviki: "Action",
-        genreKomedii: "Comedy",
-        genreDramy: "Drama",
-        genreFantastika: "Sci-Fi",
-        genreUzhasy: "Horror",
+        heroDesc: "Welcome to the cinema blog. Only the best. Just for you.",
+        genresHeader: "Movie Genres Overview",
+        genres: {
+          action: {
+            title: "Action",
+            desc: "Energetic films with chases, battles, and heroic deeds that keep the viewer on the edge from start to finish."
+          },
+          comedy: {
+            title: "Comedy",
+            desc: "Films that bring smiles and laughter, filling the mood with joy and lightness, perfect for relaxation and uplifting spirit."
+          },
+          drama: {
+            title: "Drama",
+            desc: "Deep and touching stories that make you think about life, relationships, and human experiences."
+          }
+        }
       }
     };
 
+    const langButtons = document.querySelectorAll('.lang-switcher button');
+    const heroTitle = document.querySelector('.hero h2');
+    const heroDesc = document.querySelector('.hero p');
+    const genresHeader = document.querySelector('main > h2');
+    const genreCards = document.querySelectorAll('.genre-card');
+
     function setLanguage(lang) {
-      document.querySelectorAll('[data-key]').forEach(el => {
-        const key = el.getAttribute('data-key');
-        if (translations[lang] && translations[lang][key]) {
-          el.textContent = translations[lang][key];
-        }
+      // Меняем активную кнопку
+      langButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+        btn.setAttribute('aria-pressed', btn.dataset.lang === lang);
       });
 
-      document.querySelectorAll('.lang-switcher button').forEach(btn => {
-        const isActive = btn.getAttribute('data-lang') === lang;
-        btn.classList.toggle('active', isActive);
-        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      // Меняем контент
+      document.documentElement.lang = lang;
+      heroTitle.textContent = texts[lang].heroTitle;
+      heroDesc.textContent = texts[lang].heroDesc;
+      genresHeader.textContent = texts[lang].genresHeader;
+
+      genreCards.forEach(card => {
+        const id = card.id;
+        card.querySelector('h3').textContent = texts[lang].genres[id].title;
+        card.querySelector('p').textContent = texts[lang].genres[id].desc;
+        card.setAttribute('lang', lang);
       });
     }
 
-    document.querySelectorAll('.lang-switcher button').forEach(btn => {
+    langButtons.forEach(btn => {
       btn.addEventListener('click', () => {
-        const lang = btn.getAttribute('data-lang');
-        setLanguage(lang);
+        setLanguage(btn.dataset.lang);
       });
     });
 
+    // Установка языка по умолчанию
     setLanguage('ru');
   </script>
 </body>
