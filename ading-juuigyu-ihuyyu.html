@@ -17,6 +17,29 @@
     .lazyloaded {
       opacity: 1;
     }
+    .carousel {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .carousel img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    .carousel img.active {
+      opacity: 0.4;
+      z-index: -1;
+    }
   </style>
 </head>
 <body class="bg-gray-100 text-gray-900">
@@ -40,11 +63,20 @@
     </div>
   </header>
 
-  <!-- Герой секция -->
-  <section id="home" class="bg-gradient-to-br from-yellow-400 to-red-500 text-white py-20 text-center">
-    <div class="max-w-3xl mx-auto">
-      <h2 class="text-4xl font-bold mb-4">TopKino — Мир кино у тебя дома</h2>
-      <p class="text-lg mb-6">Добро пожаловать в уникальный блог о кино. Только лучшее. Только для тебя.</p>
+  <!-- Герой секция с каруселью фоном -->
+  <section id="home" class="relative text-white py-20 text-center overflow-hidden">
+    <div class="carousel" id="carousel">
+      <img src="https://source.unsplash.com/1600x900/?movie,1" class="active" />
+      <img src="https://source.unsplash.com/1600x900/?cinema,2" />
+      <img src="https://source.unsplash.com/1600x900/?film,3" />
+      <img src="https://source.unsplash.com/1600x900/?trailer,4" />
+      <img src="https://source.unsplash.com/1600x900/?hollywood,5" />
+      <img src="https://source.unsplash.com/1600x900/?blockbuster,6" />
+      <img src="https://source.unsplash.com/1600x900/?screenplay,7" />
+    </div>
+    <div class="relative z-10 max-w-3xl mx-auto">
+      <h2 class="text-4xl font-bold mb-4 bg-yellow-400 bg-opacity-70 inline-block px-4 py-2 rounded">TopKino — Мир кино у тебя дома</h2>
+      <p class="text-lg mb-6 bg-yellow-400 bg-opacity-60 inline-block px-4 py-1 rounded">Добро пожаловать в уникальный блог о кино. Только лучшее. Только для тебя.</p>
     </div>
   </section>
 
@@ -52,7 +84,6 @@
   <section class="max-w-5xl mx-auto py-12 px-4 text-gray-800">
     <h2 class="text-3xl font-bold mb-6">Все жанры кино — подробный обзор</h2>
     <p class="mb-4">Мир кино богат и многогранен. В нашем блоге вы найдёте обзоры и трейлеры по всем основным жанрам фильмов. Мы подготовили уникальное описание каждого направления, чтобы вы могли лучше ориентироваться в разнообразии кинематографа:</p>
-
     <ul class="space-y-3">
       <li><strong>Боевики</strong> — жанр, где адреналин зашкаливает. Погони, перестрелки, спасение мира и герои, готовые на всё ради справедливости.</li>
       <li><strong>Комедии</strong> — фильмы, которые заставят вас смеяться до слёз. Юмор, абсурд, романтика и лёгкость — всё, что нужно для отличного настроения.</li>
@@ -60,11 +91,10 @@
       <li><strong>Фантастика</strong> — путешествия в будущее, новые миры и технологии. Любовь зрителей к sci-fi не ослабевает десятилетиями.</li>
       <li><strong>Ужасы</strong> — жуткие истории, от которых бегут мурашки. Призраки, монстры и всё, что пугает, но привлекает.</li>
     </ul>
-
     <p class="mt-6">TopKino — это место, где каждый найдёт фильм по душе. Мы постоянно обновляем коллекцию трейлеров и делимся мнением о самых горячих премьерах.</p>
   </section>
 
-  <!-- Видео трейлеры (в один ряд, три блока по ширине) -->
+  <!-- Видео трейлеры -->
   <section id="trailers" class="max-w-7xl mx-auto px-4 pb-20">
     <h2 class="text-2xl font-bold mb-6">🎬 Популярные трейлеры</h2>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -87,6 +117,21 @@
   <footer class="bg-black text-white text-center py-6">
     <p>&copy; 2025 TopKino. Все права защищены. Контент обновляется ежедневно.</p>
   </footer>
+
+  <script>
+    const images = document.querySelectorAll('.carousel img');
+    let current = 0;
+    let interval = setInterval(nextImage, 5000);
+
+    function nextImage() {
+      images[current].classList.remove('active');
+      current = (current + 1) % images.length;
+      images[current].classList.add('active');
+    }
+
+    document.getElementById('carousel').addEventListener('mouseover', () => clearInterval(interval));
+    document.getElementById('carousel').addEventListener('mouseout', () => interval = setInterval(nextImage, 5000));
+  </script>
 
 </body>
 </html>
