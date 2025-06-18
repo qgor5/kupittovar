@@ -13,7 +13,7 @@ const products = [
     price: 2999,
     description: "Сучасна кавоварка з сенсорним управлінням і швидким приготуванням.",
     category: "Кухонна техніка",
-    image: "https://cdn.pixabay.com/photo/2017/02/10/12/48/coffee-2055074_1280.jpg"
+    image: "https://raw.githubusercontent.com/qgor5/kupittovar/refs/heads/main/kozhani-remintsi-u-styli-nato-riznykh-koloriv.webp.jpg"
   },
   {
     id: 3,
