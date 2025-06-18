@@ -5,7 +5,7 @@ const products = [
     price: 499,
     description: "Стильний та зручний еко-рюкзак з міцного матеріалу.",
     category: "Рюкзаки",
-    image: "https://raw.githubusercontent.com/qgor5/kupittovar/refs/heads/main/remintsi-dlya-hodynnyka-z-naturalnoi-yakisnoi-shkiry%20(2).webp"
+    image: "https://raw.githubusercontent.com/qgor5/kupittovar/refs/heads/main/Leather-Watch-Straps.webp"
   },
   {
     id: 2,
