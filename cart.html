@@ -2,9 +2,8 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Кошик</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Кошик | КупиТовар</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <header>
@@ -17,16 +16,28 @@
   </header>
   <main>
     <div id="cart-items"></div>
-    <form id="order-form">
-      <h2>Оформлення замовлення</h2>
-      <input type="text" name="name" placeholder="Ваше ім’я" required>
-      <input type="tel" name="phone" placeholder="Телефон" required>
-      <button type="submit">Замовити</button>
-    </form>
+    <a href="order.html">Оформити замовлення</a>
   </main>
-  <footer>
-    <p>Контакти: <a href="#">YouTube</a> | <a href="#">Facebook</a> | <a href="#">Instagram</a></p>
-  </footer>
-  <script src="cart.js"></script>
+  <footer><p>© 2025 КупиТовар</p></footer>
+  <script src="js/products.js"></script>
+  <script>
+    const items = JSON.parse(localStorage.getItem("cart") || "[]");
+    const cartContainer = document.getElementById("cart-items");
+    if (items.length === 0) {
+      cartContainer.innerHTML = "<p>Кошик порожній</p>";
+    } else {
+      items.forEach(id => {
+        const product = products.find(p => p.id === id);
+        if (product) {
+          cartContainer.innerHTML += `
+            <div class="product">
+              <img src="${product.image}" alt="${product.name}">
+              <h3>${product.name}</h3>
+              <p>${product.price} грн</p>
+            </div>`;
+        }
+      });
+    }
+  </script>
 </body>
 </html>
