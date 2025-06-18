@@ -21,6 +21,6 @@ const products = [
     price: 1299,
     description: "Легкі та комфортні кросівки для бігу та тренувань.",
     category: "Взуття",
-    image: "https://cdn.pixabay.com/photo/2016/11/29/09/17/shoes-1866576_1280.jpg"
+    image: "https://raw.githubusercontent.com/qgor5/kupittovar/refs/heads/main/skiryani-remintsi-u-stili-nato.webp"
   }
 ];
