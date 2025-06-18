@@ -5,7 +5,7 @@ const products = [
     price: 499,
     description: "Стильний та зручний еко-рюкзак з міцного матеріалу.",
     category: "Рюкзаки",
-    image: "https://cdn.pixabay.com/photo/2017/06/11/01/03/backpack-2393238_1280.jpg"
+    image: "https://kupittovar.netlify.ap/remintsi-dlya-hodynnyka-z-naturalnoi-yakisnoi-shkiry (2).webp"
   },
   {
     id: 2,
