@@ -1,1 +1,42 @@
-<!-- Оформление заказа с выбранными товарами -->
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Оформлення замовлення | КупиТовар</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header><h1>Оформити замовлення</h1></header>
+  <main>
+    <form onsubmit="submitOrder(); return false;">
+      <input type="text" placeholder="Ваше ім'я" required><br>
+      <input type="tel" placeholder="Телефон" required><br>
+      <textarea placeholder="Адреса доставки" required></textarea><br>
+      <button type="submit">Підтвердити замовлення</button>
+    </form>
+    <div id="order-summary"></div>
+  </main>
+  <footer><p>© 2025 КупиТовар</p></footer>
+  <script src="js/products.js"></script>
+  <script>
+    const items = JSON.parse(localStorage.getItem("cart") || "[]");
+    const summary = document.getElementById("order-summary");
+    let total = 0;
+    summary.innerHTML = "<h3>Ваше замовлення:</h3>";
+    items.forEach(id => {
+      const product = products.find(p => p.id === id);
+      if (product) {
+        total += product.price;
+        summary.innerHTML += `<p>${product.name} — ${product.price} грн</p>`;
+      }
+    });
+    summary.innerHTML += `<p><strong>Загалом: ${total} грн</strong></p>`;
+
+    function submitOrder() {
+      alert("Замовлення оформлено! Очікуйте дзвінка.");
+      localStorage.removeItem("cart");
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>

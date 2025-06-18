@@ -1,1 +1,43 @@
-<!-- Корзина с товарами, картинками, суммой -->
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Кошик | КупиТовар</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Ваш кошик</h1>
+    <nav>
+      <a href="index.html">Головна</a>
+      <a href="catalog.html">Каталог</a>
+      <a href="cart.html">Кошик</a>
+    </nav>
+  </header>
+  <main>
+    <div id="cart-items"></div>
+    <a href="order.html">Оформити замовлення</a>
+  </main>
+  <footer><p>© 2025 КупиТовар</p></footer>
+  <script src="js/products.js"></script>
+  <script>
+    const items = JSON.parse(localStorage.getItem("cart") || "[]");
+    const cartContainer = document.getElementById("cart-items");
+    if (items.length === 0) {
+      cartContainer.innerHTML = "<p>Кошик порожній</p>";
+    } else {
+      items.forEach(id => {
+        const product = products.find(p => p.id === id);
+        if (product) {
+          cartContainer.innerHTML += `
+            <div class="product">
+              <img src="${product.image}" alt="${product.name}">
+              <h3>${product.name}</h3>
+              <p>${product.price} грн</p>
+            </div>`;
+        }
+      });
+    }
+  </script>
+</body>
+</html>
