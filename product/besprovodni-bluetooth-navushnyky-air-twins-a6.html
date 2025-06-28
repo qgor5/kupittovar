@@ -1,178 +1,207 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Air Twins A6 TWS — Бездротові Bluetooth навушники з зарядним кейсом | Купити в Україні</title>
-  <meta name="description" content="Air Twins A6 — професійні бездротові TWS навушники з чистим звуком, Bluetooth 5.0, зручним зарядним кейсом і довгим часом автономної роботи. Ідеально підходять для спорту, музики та дзвінків. Купити в Україні — найкраща ціна!">
-  <meta name="keywords" content="бездротові навушники, Bluetooth гарнітура, Air Twins A6, TWS навушники, вакуумні навушники, купити навушники Україна, навушники з кейсом">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Schema.org Product з відгуками -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org/",
-    "@type": "Product",
-    "name": "Бездротові вакуумні Bluetooth навушники Air Twins A6 TWS",
-    "image": [
-      "https://example.com/images/airtwins-a6-1.jpg",
-      "https://example.com/images/airtwins-a6-2.jpg"
-    ],
-    "description": "Професійні бездротові навушники з Bluetooth 5.0, зарядним кейсом і стереозвуком. Підходять для спорту, роботи, дзвінків та розваг.",
-    "sku": "AT-A6-TWS",
-    "mpn": "AT6TWS2025",
-    "brand": { "@type": "Brand", "name": "Air Twins" },
-    "review": [
-      {
-        "@type": "Review",
-        "reviewRating": { "@type": "Rating", "ratingValue": "10", "bestRating": "10" },
-        "author": { "@type": "Person", "name": "Ірина" },
-        "reviewBody": "Звук на найвищому рівні! Гарна ізоляція шуму. Ідеально підходять для поїздок."
-      },
-      {
-        "@type": "Review",
-        "reviewRating": { "@type": "Rating", "ratingValue": "9", "bestRating": "10" },
-        "author": { "@type": "Person", "name": "Олександр" },
-        "reviewBody": "Підключення швидке, заряд тримає добре. Можна було б краще упаковку."
-      },
-      {
-        "@type": "Review",
-        "reviewRating": { "@type": "Rating", "ratingValue": "9.5", "bestRating": "10" },
-        "author": { "@type": "Person", "name": "Тетяна" },
-        "reviewBody": "Навушники легкі, зручні, не випадають. Гідна альтернатива дорогим брендам."
-      },
-      {
-        "@type": "Review",
-        "reviewRating": { "@type": "Rating", "ratingValue": "9.5", "bestRating": "10" },
-        "author": { "@type": "Person", "name": "Юрій" },
-        "reviewBody": "Якість мікрофона вразила — співрозмовники чують ідеально. Заряджаються швидко."
-      }
-    ],
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "9.5",
-      "bestRating": "10",
-      "ratingCount": "4"
-    },
-    "offers": {
-      "@type": "Offer",
-      "url": "https://kupittovar.netlify.app/airtwins-a6",
-      "priceCurrency": "UAH",
-      "price": "899",
-      "priceValidUntil": "2025-12-31",
-      "itemCondition": "https://schema.org/NewCondition",
-      "availability": "https://schema.org/InStock",
-      "seller": { "@type": "Organization", "name": "TechShop UA" }
-    }
-  }
-  </script>
-
+  <meta name="description" content="Air Twins A6 — професійні бездротові TWS навушники з чистим звуком, Bluetooth 5.0, зручним зарядним кейсом і довгим часом автономної роботи. Ідеально підходять для спорту, музики та дзвінків. Купити в Україні — найкраща ціна!" />
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f9f9f9;
-      color: #333;
-    }
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 20px;
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: 20px auto;
       background: #fff;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      color: #222;
+      line-height: 1.5;
+      padding: 0 15px;
+    }
+    h1, h2 {
+      color: #0077ff;
+      margin-top: 1em;
+    }
+    .carousel-container {
+      position: relative;
+      max-width: 600px;
+      height: 400px;
+      margin: 20px auto;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .carousel-slide {
+      display: flex;
+      transition: transform 0.4s ease-in-out;
+      width: 100%;
+      height: 100%;
+    }
+    .carousel-slide img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      flex-shrink: 0;
       border-radius: 10px;
     }
-    nav ul {
-      list-style: none;
-      padding: 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
+    .carousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.8);
+      border: none;
+      font-size: 32px;
+      color: #0077ff;
+      padding: 5px 12px;
+      border-radius: 50%;
+      cursor: pointer;
+      user-select: none;
+      z-index: 10;
     }
-    nav a {
-      color: #007acc;
-      background: #eef6fb;
-      padding: 6px 12px;
-      border-radius: 6px;
-      text-decoration: none;
+    .carousel-arrow:hover {
+      background: #ddd;
+    }
+    .carousel-arrow.prev {
+      left: 10px;
+    }
+    .carousel-arrow.next {
+      right: 10px;
+    }
+    .product-action {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 25px;
+      flex-wrap: wrap;
+    }
+    .price {
+      font-size: 1.6em;
+      font-weight: bold;
+      color: #0077ff;
+    }
+    .quantity-label {
       font-weight: bold;
     }
-    nav a:hover { background: #d0eafc; }
-    img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
-      margin: 15px 0;
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
-    ul { padding-left: 20px; }
-    section { margin-top: 40px; }
-    .stars { color: #f5c518; font-size: 1.3rem; }
-    blockquote {
-      background: #f0f8ff;
-      border-left: 4px solid #007acc;
-      padding: 10px 15px;
-      margin: 20px 0;
+    .quantity-controls button {
+      font-size: 1.3em;
+      width: 36px;
+      height: 36px;
+      border: 1px solid #ccc;
+      background: #f7f7f7;
+      cursor: pointer;
+      border-radius: 6px;
+      user-select: none;
+      transition: background 0.3s;
+    }
+    .quantity-controls button:hover {
+      background: #ddd;
+    }
+    .quantity-input {
+      width: 60px;
+      font-size: 1.2em;
+      text-align: center;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 6px 8px;
+      color: black;
+    }
+    .btn-buy {
+      padding: 12px 28px;
+      background: #0077ff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+      text-decoration: none;
+      user-select: none;
+      display: inline-block;
+    }
+    .btn-buy:hover {
+      background: #005fcc;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div><span class="stars">★★★★★★★★★☆</span> <small>(Середній рейтинг: 9.5 / 10)</small></div>
 
-    <h1>Air Twins A6 TWS — Бездротові вакуумні Bluetooth навушники з кейсом для зарядки</h1>
-    <img src="https://example.com/images/airtwins-a6-1.jpg" alt="Air Twins A6 TWS бездротові навушники">
+  <h1>Air Twins A6 TWS — Бездротові Bluetooth вакуумні навушники з кейсом</h1>
 
-    <nav>
-      <h2>Зміст:</h2>
-      <ul>
-        <li><a href="#about">Про продукт</a></li>
-        <li><a href="#specs">Характеристики</a></li>
-        <li><a href="#compare">Порівняння</a></li>
-        <li><a href="#how">Інструкція</a></li>
-        <li><a href="#reviews">Відгуки</a></li>
-        <li><a href="#buy">Купити</a></li>
-      </ul>
-    </nav>
-
-    <section id="about">
-      <h2>Про продукт</h2>
-      <p>Air Twins A6 — це нове покоління бездротових Bluetooth навушників для щоденного використання. Легкі, стильні, з високоякісним мікрофоном та зарядним кейсом.</p>
-    </section>
-
-    <section id="specs">
-      <h2>Характеристики</h2>
-      <ul>
-        <li>Bluetooth 5.0, радіус — 10 м</li>
-        <li>Час роботи — 3.5 год (очікування — 100 год)</li>
-        <li>Час зарядки — 1–2 год</li>
-        <li>Діапазон — 20–20000 Гц</li>
-        <li>Ємність акумулятора: 50 мАг / кейса — 300 мАг</li>
-        <li>Мікрофон: чутливість -42 dB</li>
-      </ul>
-    </section>
-
-    <section id="compare">
-      <h2>Порівняння з конкурентами</h2>
-      <p>У порівнянні з аналогами, Air Twins A6 мають кращу автономність, легшу вагу, а головне — вигідну ціну при збереженні якості.</p>
-    </section>
-
-    <section id="how">
-      <h2>Як користуватись</h2>
-      <p>Дістаньте з кейсу, підключіть через Bluetooth. Керування — через сенсор на корпусі.</p>
-    </section>
-
-    <section id="reviews">
-      <h2>Відгуки покупців</h2>
-      <blockquote>“Звук на найвищому рівні!” — <strong>Ірина</strong> ★★★★★</blockquote>
-      <blockquote>“Підключення швидке, заряд тримає добре.” — <strong>Олександр</strong> ★★★★☆</blockquote>
-      <blockquote>“Легкі, зручні, не випадають.” — <strong>Тетяна</strong> ★★★★☆</blockquote>
-      <blockquote>“Мікрофон вразив, заряджаються швидко.” — <strong>Юрій</strong> ★★★★☆</blockquote>
-    </section>
-
-    <section id="buy">
-      <h2>Купити зараз</h2>
-      <p><a href="https://kupittovar.netlify.app/airtwins-a6">Перейти до замовлення &rarr;</a></p>
-    </section>
+  <div class="carousel-container" aria-label="Галерея навушників Air Twins A6">
+    <button class="carousel-arrow prev" aria-label="Попередній слайд">&#10094;</button>
+    <div id="carousel-slide" class="carousel-slide">
+      <img src="https://example.com/images/airtwins-a6-1.jpg" alt="Air Twins A6 - зображення 1" />
+      <img src="https://example.com/images/airtwins-a6-2.jpg" alt="Air Twins A6 - зображення 2" />
+      <img src="https://example.com/images/airtwins-a6-3.jpg" alt="Air Twins A6 - зображення 3" />
+    </div>
+    <button class="carousel-arrow next" aria-label="Наступний слайд">&#10095;</button>
   </div>
+
+  <div class="product-action" aria-label="Вибір кількості і покупка">
+    <span class="price">899 грн</span>
+
+    <label for="quantity" class="quantity-label">Кількість:</label>
+    <div class="quantity-controls">
+      <button type="button" id="btn-minus" aria-label="Зменшити кількість">−</button>
+      <input type="number" id="quantity" class="quantity-input" value="1" min="1" max="10" aria-live="polite" />
+      <button type="button" id="btn-plus" aria-label="Збільшити кількість">+</button>
+    </div>
+
+    <a href="https://kupittovar.netlify.app/airtwins-a6" class="btn-buy" id="buyBtn" aria-label="Купити навушники">Купити</a>
+  </div>
+
+<script>
+  // Карусель
+  const slide = document.getElementById('carousel-slide');
+  const images = slide.querySelectorAll('img');
+  const prevBtn = document.querySelector('.carousel-arrow.prev');
+  const nextBtn = document.querySelector('.carousel-arrow.next');
+  let currentIndex = 0;
+
+  function showSlide(index) {
+    if (index < 0) index = images.length - 1;
+    if (index >= images.length) index = 0;
+    slide.style.transform = `translateX(${-index * 100}%)`;
+    currentIndex = index;
+  }
+  prevBtn.addEventListener('click', () => showSlide(currentIndex - 1));
+  nextBtn.addEventListener('click', () => showSlide(currentIndex + 1));
+  showSlide(0);
+
+  // Счётчик количества
+  const qtyInput = document.getElementById('quantity');
+  const btnMinus = document.getElementById('btn-minus');
+  const btnPlus = document.getElementById('btn-plus');
+
+  btnMinus.addEventListener('click', () => {
+    let val = parseInt(qtyInput.value) || 1;
+    if (val > 1) qtyInput.value = val - 1;
+  });
+  btnPlus.addEventListener('click', () => {
+    let val = parseInt(qtyInput.value) || 1;
+    if (val < 10) qtyInput.value = val + 1;
+  });
+
+  // Запретить ввод вне диапазона
+  qtyInput.addEventListener('input', () => {
+    let val = parseInt(qtyInput.value);
+    if (isNaN(val) || val < 1) qtyInput.value = 1;
+    else if (val > 10) qtyInput.value = 10;
+  });
+
+  // Кнопка "Купити" с передачей количества в ссылку
+  document.getElementById('buyBtn').addEventListener('click', function(e){
+    e.preventDefault();
+    const qty = qtyInput.value || 1;
+    const baseUrl = this.href;
+    const url = new URL(baseUrl);
+    url.searchParams.set('qty', qty);
+    window.location.href = url.toString();
+  });
+</script>
+
 </body>
 </html>
