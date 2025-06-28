@@ -119,6 +119,112 @@
 </head>
 <body>
 
+  {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px 15px;
+  background-color: #f9f9f9;
+  color: #333;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 720px;    /* Ограничение ширины текста */
+  margin: 0 auto;      /* Центрируем блок */
+  padding: 25px 30px;
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+
+h1, h2 {
+  color: #222;
+  font-weight: 700;
+  margin-top: 1.5em;
+  margin-bottom: 0.6em;
+}
+
+p, ul {
+  font-size: 1rem;
+  color: #444;
+}
+
+ul {
+  padding-left: 1.4em;
+  margin-bottom: 1.2em;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 2rem;
+}
+
+nav a {
+  color: #007acc;
+  background: #eef6fb;
+  padding: 8px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+nav a:hover {
+  background: #d0eafc;
+}
+
+.stars-outer {
+  color: #ccc;
+  font-size: 1.3rem;
+  position: relative;
+  display: inline-block;
+}
+
+.stars-outer::before {
+  content: "★★★★★";
+}
+
+.stars-inner {
+  color: #f5b301;
+  font-size: 1.3rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 95%; /* рейтинг 9.5 из 10 */
+}
+
+.rating-number {
+  margin-left: 10px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  vertical-align: middle;
+}
+
+/* Адаптивность */
+
+@media (max-width: 768px) {
+  .container {
+    padding: 20px 15px;
+    max-width: 100%;
+  }
+
+  nav ul {
+    flex-direction: column;
+  }
+
+  nav a {
+    display: inline-block;
+    width: fit-content;
+    padding: 10px 15px;
+  }
+}
+
 <nav id="toc">
   <p><strong>Зміст:</strong></p>
   <ul>
