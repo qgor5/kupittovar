@@ -264,5 +264,42 @@
       };
     })();
   </script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const buyBtn = document.getElementById('buy'); // кнопка "Купити"
+    if (!buyBtn) return; // если кнопки нет — ничего не делаем
+
+    buyBtn.addEventListener('click', () => {
+      // По умолчанию элементы с такими id на странице:
+      const nameEl = document.getElementById('product-name');
+      const priceEl = document.getElementById('product-price');
+      const imageEl = document.getElementById('product-image');
+      const qtyInput = document.getElementById('quantity');
+
+      // Получаем значения
+      const name = nameEl ? nameEl.textContent.trim() : 'Невідомий товар';
+      let priceText = priceEl ? priceEl.textContent.trim() : '0';
+      let price = parseFloat(priceText.replace(/[^\d.]/g, ''));
+      if (isNaN(price)) price = 0;
+
+      const image = imageEl ? imageEl.src : '';
+      let quantity = qtyInput ? parseInt(qtyInput.value) : 1;
+      if (isNaN(quantity) || quantity < 1) quantity = 1;
+
+      // Формируем URL для страницы order.html с параметрами
+      const orderUrl = new URL('order.html', window.location.origin);
+      orderUrl.searchParams.set('productName', name);
+      orderUrl.searchParams.set('price', price.toFixed(2));
+      orderUrl.searchParams.set('productImage', image);
+      orderUrl.searchParams.set('quantity', quantity);
+
+      // Перенаправляем
+      window.location.href = orderUrl.toString();
+    });
+  });
+</script>
+
+  
 </body>
 </html>
