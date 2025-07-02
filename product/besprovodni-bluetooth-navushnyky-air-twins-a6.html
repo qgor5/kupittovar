@@ -63,112 +63,6 @@
       #toc ul { flex-direction: column; }
     }
   </style>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org/",
-    "@type": "Product",
-    "name": "Бездротові вакуумні Bluetooth навушники Air Twins A6 TWS",
-    "image": [
-      "https://example.com/images/airtwins-a6-1.jpg",
-      "https://example.com/images/airtwins-a6-2.jpg"
-    ],
-    "description": "Професійні бездротові навушники з Bluetooth 5.0, зарядним кейсом і стереозвуком. Підходять для спорту, роботи, дзвінків та розваг.",
-    "sku": "AT-A6-TWS",
-    "mpn": "AT6TWS2025",
-    "brand": { "@type": "Brand", "name": "Air Twins" },
-    "review": [
-      {
-        "@type": "Review",
-        "reviewRating": { "@type": "Rating", "ratingValue": "10", "bestRating": "10" },
-        "author": { "@type": "Person", "name": "Ірина" },
-        "reviewBody": "Звук на найвищому рівні! Гарна ізоляція шуму. Ідеально підходять для поїздок."
-      },
-      {
-        "@type": "Review",
-        "reviewRating": { "@type": "Rating", "ratingValue": "9", "bestRating": "10" },
-        "author": { "@type": "Person", "name": "Олександр" },
-        "reviewBody": "Підключення швидке, заряд тримає добре. Можна було б краще упаковку."
-      },
-      {
-        "@type": "Review",
-        "reviewRating": { "@type": "Rating", "ratingValue": "9.5", "bestRating": "10" },
-        "author": { "@type": "Person", "name": "Тетяна" },
-        "reviewBody": "Навушники легкі, зручні, не випадають. Гідна альтернатива дорогим брендам."
-      },
-      {
-        "@type": "Review",
-        "reviewRating": { "@type": "Rating", "ratingValue": "9.5", "bestRating": "10" },
-        "author": { "@type": "Person", "name": "Юрій" },
-        "reviewBody": "Якість мікрофона вразила — співрозмовники чують ідеально. Заряджаються швидко."
-      }
-    ],
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "9.5",
-      "bestRating": "10",
-      "ratingCount": "4"
-    },
-    "offers": {
-      "@type": "Offer",
-      "url": "https://kupittovar.netlify.app/airtwins-a6",
-      "priceCurrency": "UAH",
-      "price": "899",
-      "priceValidUntil": "2025-12-31",
-      "itemCondition": "https://schema.org/NewCondition",
-      "availability": "https://schema.org/InStock",
-      "seller": { "@type": "Organization", "name": "TechShop UA" }
-    }
-  }
-  </script>
-
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f9f9f9;
-      color: #333;
-    }
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 20px;
-      background: #fff;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
-      border-radius: 10px;
-    }
-    nav ul {
-      list-style: none;
-      padding: 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    nav a {
-      color: #007acc;
-      background: #eef6fb;
-      padding: 6px 12px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    nav a:hover { background: #d0eafc; }
-    img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
-      margin: 15px 0;
-    }
-    ul { padding-left: 20px; }
-    section { margin-top: 40px; }
-    .stars { color: #f5c518; font-size: 1.3rem; }
-    blockquote {
-      background: #f0f8ff;
-      border-left: 4px solid #007acc;
-      padding: 10px 15px;
-      margin: 20px 0;
-    }
-  </style>
 </head>
 <body>
   <div class="container">
@@ -182,7 +76,7 @@
       </ul>
     </nav>
 
-    <h1>Бездротові Bluetooth-навушники Air Twins A6 TWS з кейсом для зарядки</h1>
+    <h1 id="product-name">Бездротові Bluetooth-навушники Air Twins A6 TWS з кейсом для зарядки</h1>
 
     <div id="gallery">
       <div id="carousel">
@@ -193,13 +87,15 @@
       </div>
     </div>
 
-    <p class="price">Ціна: <span>375</span>₴</p>
+    <p class="price">Ціна за одиницю: <span id="unit-price">375.00</span>₴</p>
 
     <div class="quantity-selector">
       <button id="decrease">−</button>
-      <input type="text" id="quantity" value="1" />
+      <input type="number" id="quantity" value="1" min="1" />
       <button id="increase">+</button>
     </div>
+
+    <p>Загальна сума: <span id="total-price">375.00</span>₴</p>
 
     <button id="buy">Купити 1</button>
 
@@ -210,7 +106,7 @@
 
     <section id="description">
       <h2>Опис</h2>
-      <p>Air Twins A6 TWS – це компактні бездротові Bluetooth-навушники останнього покоління. Завдяки версії Bluetooth 5.0 вони швидко з’єднуються з вашим пристроєм на відстані до 10 метрів:contentReference[oaicite:5]{index=5}, а вбудована цифрова система DSP забезпечує кришталево чистий звук. Кожен навушник має акумулятор 50 мА·г, а кейс для зарядки оснащений батареєю на 300 мА·г – цього достатньо для тривалого прослуховування музики. Легкий корпус і ергономічний дизайн роблять навушники зручними для щоденного використання.</p>
+      <p>Air Twins A6 TWS – це компактні бездротові Bluetooth-навушники останнього покоління. Завдяки версії Bluetooth 5.0 вони швидко з’єднуються з вашим пристроєм на відстані до 10 метрів, а вбудована цифрова система DSP забезпечує кришталево чистий звук. Кожен навушник має акумулятор 50 мА·г, а кейс для зарядки оснащений батареєю на 300 мА·г – цього достатньо для тривалого прослуховування музики. Легкий корпус і ергономічний дизайн роблять навушники зручними для щоденного використання.</p>
     </section>
 
     <section id="specs">
@@ -252,84 +148,46 @@
     (function() {
       const qtyInput = document.getElementById('quantity');
       const btnBuy = document.getElementById('buy');
-      document.getElementById('increase').onclick = () => {
+      const unitPriceEl = document.getElementById('unit-price');
+      const totalPriceEl = document.getElementById('total-price');
+
+      function updateTotal() {
         let val = parseInt(qtyInput.value) || 1;
-        qtyInput.value = ++val;
+        if (val < 1) val = 1;
+        qtyInput.value = val;
         btnBuy.textContent = 'Купити ' + val;
+        if (unitPriceEl && totalPriceEl) {
+          const price = parseFloat(unitPriceEl.textContent.replace(',', '.')) || 0;
+          totalPriceEl.textContent = (price * val).toFixed(2);
+        }
+      }
+
+      document.getElementById('increase').onclick = () => {
+        qtyInput.value = parseInt(qtyInput.value) + 1;
+        updateTotal();
       };
       document.getElementById('decrease').onclick = () => {
-        let val = parseInt(qtyInput.value) || 1;
-        if (val > 1) { qtyInput.value = --val; }
-        btnBuy.textContent = 'Купити ' + qtyInput.value;
+        let val = parseInt(qtyInput.value);
+        if (val > 1) {
+          qtyInput.value = val - 1;
+          updateTotal();
+        }
       };
+      qtyInput.addEventListener('input', updateTotal);
+
+      updateTotal();
+
+      // При кліку "Купити" — переходимо на сторінку оформлення замовлення, передаючи параметри через URL
+      btnBuy.addEventListener('click', () => {
+        const productName = encodeURIComponent(document.getElementById('product-name').textContent.trim());
+        const unitPrice = encodeURIComponent(unitPriceEl.textContent.trim());
+        const quantity = encodeURIComponent(qtyInput.value.trim());
+        // Укажи здесь URL страницы оформления заказа, например:
+        const orderPageUrl = 'order.html';
+        const params = `?productName=${productName}&price=${unitPrice}&quantity=${quantity}`;
+        window.location.href = orderPageUrl + params;
+      });
     })();
   </script>
-
-<script>
-  // Функция получения параметра из URL
-  function getQueryParam(param) {
-    const params = new URLSearchParams(window.location.search);
-    return params.get(param);
-  }
-
-  // Получаем параметры из URL
-  const productName = getQueryParam('productName') || 'Невідомий товар';
-  const unitPrice = parseFloat(getQueryParam('price')) || 0;
-  let quantity = parseInt(getQueryParam('quantity')) || 1;
-  if (quantity < 1) quantity = 1;
-
-  // Элементы для вывода (вставь эти id в HTML)
-  const nameEl = document.getElementById('product-name');
-  const priceEl = document.getElementById('unit-price');
-  const quantityInput = document.getElementById('quantity');
-  const totalEl = document.getElementById('total-price');
-
-  // Заполняем значения на странице
-  if (nameEl) nameEl.textContent = productName;
-  if (priceEl) priceEl.textContent = unitPrice.toFixed(2);
-  if (quantityInput) quantityInput.value = quantity;
-  if (totalEl) totalEl.textContent = (unitPrice * quantity).toFixed(2);
-
-  // Если есть кнопки изменения количества, обновляем общую сумму при изменении
-  const btnInc = document.getElementById('increase');
-  const btnDec = document.getElementById('decrease');
-
-  function updateTotal() {
-    let qty = parseInt(quantityInput.value);
-    if (isNaN(qty) || qty < 1) qty = 1;
-    quantityInput.value = qty;
-    if (totalEl) totalEl.textContent = (unitPrice * qty).toFixed(2);
-  }
-
-  if (btnInc) btnInc.addEventListener('click', () => {
-    quantityInput.value = parseInt(quantityInput.value) + 1;
-    updateTotal();
-  });
-
-  if (btnDec) btnDec.addEventListener('click', () => {
-    let val = parseInt(quantityInput.value);
-    if (val > 1) {
-      quantityInput.value = val - 1;
-      updateTotal();
-    }
-  });
-
-  // Также обновляем сумму при ручном вводе
-  if (quantityInput) {
-    quantityInput.addEventListener('input', () => {
-      updateTotal();
-    });
-  }
-
-  // Заполняем скрытые поля формы для отправки (если есть)
-  const hiddenName = document.getElementById('hidden-name');
-  const hiddenPrice = document.getElementById('hidden-unit-price');
-  const hiddenQuantity = document.getElementById('hidden-quantity');
-
-  if (hiddenName) hiddenName.value = productName;
-  if (hiddenPrice) hiddenPrice.value = unitPrice.toFixed(2);
-  if (hiddenQuantity) hiddenQuantity.value = quantityInput ? quantityInput.value : quantity;
-</script>
-  
 </body>
 </html>
