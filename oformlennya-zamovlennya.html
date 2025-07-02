@@ -1,11 +1,10 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="uk">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Оформлення замовлення</title>
   <style>
-    /* — Стили (без изменений) — */
     body {
       font-family: Arial, sans-serif;
       max-width: 480px;
@@ -147,6 +146,10 @@
     .hidden {
       display: none;
     }
+    #form-errors {
+      color: red;
+      margin-top: 15px;
+    }
   </style>
 </head>
 <body>
@@ -219,6 +222,7 @@
   <input type="hidden" name="_next" value="https://kupittovar.netlify.app/order-success.html" />
   <input type="hidden" name="_captcha" value="false" />
 
+  <div id="form-errors"></div>
   <button type="submit" class="submit-btn">Підтвердити замовлення</button>
 </form>
 
@@ -306,6 +310,8 @@
   document.getElementById('order-form').addEventListener('submit', async function(event) {
     event.preventDefault();
     const form = this;
+    const errorContainer = document.getElementById('form-errors');
+    errorContainer.innerHTML = "";
 
     const fullname = form.fullname.value.trim();
     const phone = form.phone.value.trim();
@@ -313,41 +319,22 @@
     let valid = true;
     let messages = [];
 
-    if (!fullname) {
-      valid = false;
-      messages.push("Вкажіть ПІБ.");
-    }
-    if (!phone.match(/^\+?\d{7,15}$/)) {
-      valid = false;
-      messages.push("Вкажіть коректний телефон.");
-    }
-    if (!deliveryService) {
-      valid = false;
-      messages.push("Оберіть службу доставки.");
-    } else if(deliveryService === 'ukrpost') {
-      if (!form['ukrpost-index'].value.trim().match(/^\d{5}$/)) {
-        valid = false; messages.push("Поштовий індекс має містити 5 цифр.");
-      }
-      if (!form['ukrpost-city'].value.trim()) {
-        valid = false; messages.push("Вкажіть місто для Укрпошти.");
-      }
-      if (!form['ukrpost-street'].value.trim()) {
-        valid = false; messages.push("Вкажіть вулицю для Укрпошти.");
-      }
-    } else if(deliveryService === 'np') {
-      if (!form['np-region'].value.trim()) {
-        valid = false; messages.push("Вкажіть область для Нової пошти.");
-      }
-      if (!form['np-city'].value.trim()) {
-        valid = false; messages.push("Вкажіть місто для Нової пошти.");
-      }
-      if (!form['np-branch'].value.trim()) {
-        valid = false; messages.push("Вкажіть номер відділення для Нової пошти.");
-      }
+    if (!fullname) messages.push("Вкажіть ПІБ.");
+    if (!phone.match(/^\+?\d{7,15}$/)) messages.push("Вкажіть коректний телефон.");
+    if (!deliveryService) messages.push("Оберіть службу доставки.");
+
+    if (deliveryService === 'ukrpost') {
+      if (!form['ukrpost-index'].value.trim().match(/^\d{5}$/)) messages.push("Поштовий індекс має містити 5 цифр.");
+      if (!form['ukrpost-city'].value.trim()) messages.push("Вкажіть місто для Укрпошти.");
+      if (!form['ukrpost-street'].value.trim()) messages.push("Вкажіть вулицю для Укрпошти.");
+    } else if (deliveryService === 'np') {
+      if (!form['np-region'].value.trim()) messages.push("Вкажіть область для Нової пошти.");
+      if (!form['np-city'].value.trim()) messages.push("Вкажіть місто для Нової пошти.");
+      if (!form['np-branch'].value.trim()) messages.push("Вкажіть номер відділення для Нової пошти.");
     }
 
-    if (!valid) {
-      alert(messages.join("\n"));
+    if (messages.length > 0) {
+      errorContainer.innerHTML = messages.map(msg => `<div>${msg}</div>`).join('');
       return;
     }
 
@@ -357,17 +344,15 @@
       const response = await fetch(form.action, {
         method: form.method,
         body: formData,
-        headers: {
-          'Accept': 'application/json'
-        }
+        headers: { 'Accept': 'application/json' }
       });
       if (response.ok) {
         window.location.href = form.querySelector('input[name="_next"]').value;
       } else {
-        alert("Помилка при відправці форми. Спробуйте пізніше.");
+        errorContainer.innerHTML = "Помилка при відправці форми. Спробуйте пізніше.";
       }
     } catch (error) {
-      alert("Помилка з’єднання. Спробуйте пізніше.");
+      errorContainer.innerHTML = "Помилка з’єднання. Спробуйте пізніше.";
     }
   });
 </script>
