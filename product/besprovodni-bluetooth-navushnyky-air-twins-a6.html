@@ -1,189 +1,37 @@
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Бездротові Bluetooth-навушники Air Twins A6 TWS з кейсом для зарядки – опис та відгуки</title>
-  <meta name="description" content="Детальний опис бездротових навушників Air Twins A6 TWS з зарядним кейсом. Характеристики, ціна, відгуки покупців та рейтинг." />
-  <meta name="keywords" content="бездротові навушники, Bluetooth, Air Twins A6, TWS, зарядний кейс, купити, відгуки" />
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      line-height: 1.5;
-      background-color: #f9f9f9;
+<script>
+  (function () {
+    const qtyInput = document.getElementById('quantity');
+    const buyLink = document.getElementById('buy-link');
+    const productName = 'Air Twins A6 TWS';
+    const productImage = 'https://content.rozetka.com.ua/goods/images/big/167184644.jpg';
+    const unitPrice = 375;
+
+    function updateBuyLink() {
+      const qty = parseInt(qtyInput.value) || 1;
+      const baseUrl = '/order.html'; // относительный путь
+      const params = new URLSearchParams({
+        productName: productName,
+        productImage: productImage,
+        price: unitPrice.toFixed(2),
+        quantity: qty
+      });
+      buyLink.href = `${baseUrl}?${params.toString()}`;
+      buyLink.textContent = `Купити ${qty}`;
     }
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 20px;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
-    }
-    nav ul {
-      list-style: none;
-      padding: 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    nav a {
-      color: #007acc;
-      background: #eef6fb;
-      padding: 6px 12px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    nav a:hover { background: #d0eafc; }
-    img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
-      margin: 15px 0;
-    }
-    .price { font-size: 20px; font-weight: bold; margin-top: 10px; }
-    .quantity-selector {
-      margin: 15px 0;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .quantity-selector button {
-      width: 30px; height: 30px; font-size: 18px; cursor: pointer;
-    }
-    #quantity {
-      width: 40px;
-      text-align: center;
-      font-size: 16px;
-    }
-    #buy-link {
-      display: inline-block;
-      background: #28a745;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      font-size: 16px;
-      text-decoration: none;
-      border-radius: 5px;
-      margin-top: 10px;
-    }
-    #buy-link:hover {
-      background: #218838;
-    }
-    .stars-outer {
-      position: relative; display: inline-block; color: #ccc;
-    }
-    .stars-outer::before {
-      content: "★★★★★"; font-size: 20px;
-    }
-    .stars-inner {
-      position: absolute; top: 0; left: 0; overflow: hidden; white-space: nowrap;
-      width: 95%;
-    }
-    .stars-inner::before {
-      content: "★★★★★"; font-size: 20px; color: #f5b301;
-    }
-    .rating-number { margin-left: 10px; font-weight: bold; }
-    .review { border-bottom: 1px solid #ddd; padding: 10px 0; }
-    .review:last-child { border: none; }
-    .review strong { color: #000; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <nav id="toc">
-      <p><strong>Зміст:</strong></p>
-      <ul>
-        <li><a href="#gallery">Фотогалерея</a></li>
-        <li><a href="#description">Опис</a></li>
-        <li><a href="#specs">Характеристики</a></li>
-        <li><a href="#reviews">Відгуки</a></li>
-      </ul>
-    </nav>
 
-    <h1>Бездротові Bluetooth-навушники Air Twins A6 TWS з кейсом для зарядки</h1>
-
-    <div id="gallery">
-      <img src="https://content.rozetka.com.ua/goods/images/big/167184644.jpg" alt="Air Twins A6 у кейсі" />
-    </div>
-
-    <p class="price">Ціна: <span id="unit-price">375</span>₴</p>
-
-    <div class="quantity-selector">
-      <button id="decrease">−</button>
-      <input type="text" id="quantity" value="1" />
-      <button id="increase">+</button>
-    </div>
-
-    <a id="buy-link" href="#">Купити 1</a>
-
-    <div class="rating" style="margin-top: 15px;">
-      <div class="stars-outer"><div class="stars-inner"></div></div>
-      <span class="rating-number">9.5 / 10</span>
-    </div>
-
-    <section id="description">
-      <h2>Опис</h2>
-      <p>Air Twins A6 TWS – це компактні бездротові Bluetooth-навушники останнього покоління. Завдяки версії Bluetooth 5.0 вони швидко з’єднуються з вашим пристроєм на відстані до 10 метрів, а вбудована цифрова система DSP забезпечує кришталево чистий звук. Кожен навушник має акумулятор 50 мА·г, а кейс для зарядки оснащений батареєю на 300 мА·г – цього достатньо для тривалого прослуховування музики. Легкий корпус і ергономічний дизайн роблять навушники зручними для щоденного використання.</p>
-    </section>
-
-    <section id="specs">
-      <h2>Характеристики</h2>
-      <ul>
-        <li>Bluetooth: версія 5.0</li>
-        <li>Сумісність: Android, iOS та інші пристрої з Bluetooth</li>
-        <li>Частотний діапазон: 20 – 20 000 Гц</li>
-        <li>Час роботи навушників: понад 3 години безперервного звучання</li>
-        <li>Об’єм батареї навушників: 50 мА·г (кожен), кейс: 300 мА·г</li>
-        <li>Автовідключення та швидка зарядка</li>
-      </ul>
-    </section>
-
-    <section id="reviews">
-      <h2>Відгуки покупців</h2>
-      <div class="review"><strong>Ірина – 10/10:</strong> Чудові навушники з відмінною якістю звуку. Батарея тримає довго.</div>
-      <div class="review"><strong>Олексій – 9/10:</strong> Зручні та легкі, Bluetooth підключаються миттєво. Дуже задоволений.</div>
-      <div class="review"><strong>Марія – 10/10:</strong> Глибокий бас і чистий звук. Дуже приємна покупка, рекомендую!</div>
-      <div class="review"><strong>Антон – 9/10:</strong> Хороший звук і комфортна посадка, але хотілося б довший час роботи без підзарядки.</div>
-    </section>
-  </div>
-
-  <script>
-    (function () {
-      const qtyInput = document.getElementById('quantity');
-      const buyLink = document.getElementById('buy-link');
-      const productName = 'Бездротові Bluetooth-навушники Air Twins A6 TWS з кейсом для зарядки';
-      const productImage = 'https://content.rozetka.com.ua/goods/images/big/167184644.jpg';
-      const unitPrice = 375;
-
-      function updateBuyLink() {
-        const qty = parseInt(qtyInput.value) || 1;
-        const url = new URL('https://kupittovar.netlify.app/order.html');
-        url.searchParams.set('productName', productName);
-        url.searchParams.set('productImage', productImage);
-        url.searchParams.set('price', unitPrice.toFixed(2));
-        url.searchParams.set('quantity', qty);
-        buyLink.href = url.toString();
-        buyLink.textContent = `Купити ${qty}`;
-      }
-
-      document.getElementById('increase').onclick = () => {
-        qtyInput.value = parseInt(qtyInput.value || 1) + 1;
-        updateBuyLink();
-      };
-
-      document.getElementById('decrease').onclick = () => {
-        let val = parseInt(qtyInput.value || 1);
-        if (val > 1) qtyInput.value = val - 1;
-        updateBuyLink();
-      };
-
-      qtyInput.addEventListener('input', updateBuyLink);
-
+    document.getElementById('increase').onclick = () => {
+      qtyInput.value = parseInt(qtyInput.value || 1) + 1;
       updateBuyLink();
-    })();
-  </script>
-</body>
-</html>
+    };
+
+    document.getElementById('decrease').onclick = () => {
+      let val = parseInt(qtyInput.value || 1);
+      if (val > 1) qtyInput.value = val - 1;
+      updateBuyLink();
+    };
+
+    qtyInput.addEventListener('input', updateBuyLink);
+
+    updateBuyLink();
+  })();
+</script>
