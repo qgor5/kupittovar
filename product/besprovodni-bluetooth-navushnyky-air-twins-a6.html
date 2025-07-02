@@ -266,40 +266,70 @@
   </script>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const buyBtn = document.getElementById('buy'); // кнопка "Купити"
-    if (!buyBtn) return; // если кнопки нет — ничего не делаем
+  // Функция получения параметра из URL
+  function getQueryParam(param) {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(param);
+  }
 
-    buyBtn.addEventListener('click', () => {
-      // По умолчанию элементы с такими id на странице:
-      const nameEl = document.getElementById('product-name');
-      const priceEl = document.getElementById('product-price');
-      const imageEl = document.getElementById('product-image');
-      const qtyInput = document.getElementById('quantity');
+  // Получаем параметры из URL
+  const productName = getQueryParam('productName') || 'Невідомий товар';
+  const unitPrice = parseFloat(getQueryParam('price')) || 0;
+  let quantity = parseInt(getQueryParam('quantity')) || 1;
+  if (quantity < 1) quantity = 1;
 
-      // Получаем значения
-      const name = nameEl ? nameEl.textContent.trim() : 'Невідомий товар';
-      let priceText = priceEl ? priceEl.textContent.trim() : '0';
-      let price = parseFloat(priceText.replace(/[^\d.]/g, ''));
-      if (isNaN(price)) price = 0;
+  // Элементы для вывода (вставь эти id в HTML)
+  const nameEl = document.getElementById('product-name');
+  const priceEl = document.getElementById('unit-price');
+  const quantityInput = document.getElementById('quantity');
+  const totalEl = document.getElementById('total-price');
 
-      const image = imageEl ? imageEl.src : '';
-      let quantity = qtyInput ? parseInt(qtyInput.value) : 1;
-      if (isNaN(quantity) || quantity < 1) quantity = 1;
+  // Заполняем значения на странице
+  if (nameEl) nameEl.textContent = productName;
+  if (priceEl) priceEl.textContent = unitPrice.toFixed(2);
+  if (quantityInput) quantityInput.value = quantity;
+  if (totalEl) totalEl.textContent = (unitPrice * quantity).toFixed(2);
 
-      // Формируем URL для страницы order.html с параметрами
-      const orderUrl = new URL('order.html', window.location.origin);
-      orderUrl.searchParams.set('productName', name);
-      orderUrl.searchParams.set('price', price.toFixed(2));
-      orderUrl.searchParams.set('productImage', image);
-      orderUrl.searchParams.set('quantity', quantity);
+  // Если есть кнопки изменения количества, обновляем общую сумму при изменении
+  const btnInc = document.getElementById('increase');
+  const btnDec = document.getElementById('decrease');
 
-      // Перенаправляем
-      window.location.href = orderUrl.toString();
-    });
+  function updateTotal() {
+    let qty = parseInt(quantityInput.value);
+    if (isNaN(qty) || qty < 1) qty = 1;
+    quantityInput.value = qty;
+    if (totalEl) totalEl.textContent = (unitPrice * qty).toFixed(2);
+  }
+
+  if (btnInc) btnInc.addEventListener('click', () => {
+    quantityInput.value = parseInt(quantityInput.value) + 1;
+    updateTotal();
   });
-</script>
 
+  if (btnDec) btnDec.addEventListener('click', () => {
+    let val = parseInt(quantityInput.value);
+    if (val > 1) {
+      quantityInput.value = val - 1;
+      updateTotal();
+    }
+  });
+
+  // Также обновляем сумму при ручном вводе
+  if (quantityInput) {
+    quantityInput.addEventListener('input', () => {
+      updateTotal();
+    });
+  }
+
+  // Заполняем скрытые поля формы для отправки (если есть)
+  const hiddenName = document.getElementById('hidden-name');
+  const hiddenPrice = document.getElementById('hidden-unit-price');
+  const hiddenQuantity = document.getElementById('hidden-quantity');
+
+  if (hiddenName) hiddenName.value = productName;
+  if (hiddenPrice) hiddenPrice.value = unitPrice.toFixed(2);
+  if (hiddenQuantity) hiddenQuantity.value = quantityInput ? quantityInput.value : quantity;
+</script>
   
 </body>
 </html>
