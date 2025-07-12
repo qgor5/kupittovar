@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Купити шкіряний ремінець NATO для годинника | Український виробник | Натуральна шкіра</title>
+  <meta name="description" content="✔ Ремінці NATO з італійської шкіри ручної роботи. Широкий вибір кольорів (чорний, коричневий, червоний) та розмірів (16-22 мм). Гарантія 12 місяців. Доставка по Україні 1-3 дні." />
+  <meta name="keywords" content="купити ремінець nato, шкіряний ремінець для годинника, натуральна шкіра, якісні ремінці nato, український виробник, ремінець 20 мм, ремінець для casio g shock" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://kupittovar.netlify.app/kozhani-remintsi-nato-dlya-godynnykiv.html" />
+  <style>
+    /* Ваші стилі залишаються без змін */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0 auto;
+      padding: 20px;
+      max-width: 900px;
+      background: #fff;
+      color: #222;
+      line-height: 1.6;
+    }
+    h1, h2 { color: #0055aa; margin-top: 1.2em; margin-bottom: 0.5em; }
+    a { color: #0055aa; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .btn-buy {
+      display: inline-block;
+      padding: 12px 24px;
+      background: #0077ff;
+      color: #fff;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+      text-decoration: none;
+    }
+    .btn-buy:hover { background: #005fcc; }
+    /* Інші ваші стилі... */
+  </style>
+  
+  <!-- Схема для розширених сниппетів у Google -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Шкіряний ремінець NATO для годинника",
+    "image": [
+      "https://raw.githubusercontent.com/qgor5/kupittovar/refs/heads/main/Leather-Watch-Straps.webp",
+      "https://raw.githubusercontent.com/qgor5/kupittovar/refs/heads/main/skiryani-remintsi-u-stili-nato.webp"
+    ],
+    "description": "Виготовлений вручну з італійської шкіри. Доступні розміри 16-22 мм. Безкоштовна доставка по Україні.",
+    "brand": { "@type": "Brand", "name": "KupitTovar" },
+    "offers": {
+      "@type": "Offer",
+      "price": "183",
+      "priceCurrency": "UAH",
+      "availability": "https://schema.org/InStock"
+    }
+  }
+  </script>
+</head>
+
+<body>
+  <header>
+    <h1>Ексклюзивні шкіряні ремінці NATO для годинників — ручна робота з натуральної шкіри</h1>
+    <p>🛡️ <strong>Гарантія 12 місяців</strong> | 🚚 <strong>Доставка 1-3 дні</strong> | 💯 <strong>Натуральна італійська шкіра</strong></p>
+  </header>
+
+  <main>
+    <!-- Карусель (ваш код без змін) -->
+    <div class="carousel-container">
+      <button class="carousel-arrow prev">&#10094;</button>
+      <div class="carousel-slide" id="carousel-slide">
+        <img src="https://raw.githubusercontent.com/qgor5/kupittovar/refs/heads/main/Leather-Watch-Straps.webp" alt="Шкіряний ремінець NATO червоного кольору для годинників - ручна робота" />
+        <img src="https://raw.githubusercontent.com/qgor5/kupittovar/refs/heads/main/skiryani-remintsi-u-stili-nato.webp" alt="Чорний шкіряний ремінець NATO - преміум якість для годинників" />
+      </div>
+      <button class="carousel-arrow next">&#10095;</button>
+    </div>
+
+    <!-- Блок замовлення (ваш код без змін) -->
+    <div class="product-action">
+      <span class="price">Ціна: 183&nbsp;грн</span>
+      <label for="quantity" class="quantity-label">Кількість:</label>
+      <input type="number" id="quantity" class="quantity-input" value="1" min="1" />
+      <a href="https://kupittovar.netlify.app/kozhani-korzina" class="btn-buy">Замовити зі знижкою 10%</a>
+    </div>
+
+    <!-- Новий продаючий текст -->
+    <section>
+      <h2>Чому наші ремінці NATO обирають понад 1,000 клієнтів?</h2>
+      
+      <div style="display: flex; flex-wrap: wrap; gap: 20px; margin: 25px 0;">
+        <div style="flex: 1; min-width: 250px; background: #f8f8f8; padding: 15px; border-radius: 8px;">
+          <h3 style="color: #0055aa; margin-top: 0;">🏆 Переваги</h3>
+          <ul>
+            <li>✅ Виготовлено з <strong>італійської шкіри</strong> (товщина 2.4 мм)</li>
+            <li>✅ <strong>Не розтягується</strong> та не лущиться</li>
+            <li>✅ <strong>Гіпоалергенна</strong> обробка</li>
+            <li>✅ Підходить для <strong>Casio, Seiko, Orient</strong></li>
+          </ul>
+        </div>
+        
+        <div style="flex: 1; min-width: 250px; background: #f8f8f8; padding: 15px; border-radius: 8px;">
+          <h3 style="color: #0055aa; margin-top: 0;">📏 Таблиця сумісності</h3>
+          <table style="width: 100%; border-collapse: collapse;">
+            <tr><td><strong>Casio G-Shock</strong></td><td>22 мм</td></tr>
+            <tr><td><strong>Seiko 5</strong></td><td>20 мм</td></tr>
+            <tr><td><strong>Orient Bambino</strong></td><td>18 мм</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <h3>🔍 Детальний опис</h3>
+      <p>Наші ремінці NATO — це <strong>ідеальне поєднання стилю та функціональності</strong>. Вони:</p>
+      <ul>
+        <li><strong>Легко замінюються</strong> без інструментів (10 секунд)</li>
+        <li><strong>Не натирають зап'ястя</strong> навіть після 12-годинного носіння</li>
+        <li><strong>Стійкі до вологи</strong> (спеціальна пропитка)</li>
+      </ul>
+    </section>
+
+    <!-- Відгуки (ваш код) -->
+    <section class="reviews">
+      <h3>📢 Відгуки покупців</h3>
+      <div class="review-item">
+        <p class="review-author">Олена, Київ:</p>
+        <p class="review-text">«Замовляла вже 3 рази! Шкіра м'яка, приємна на дотик. Чорний ношу щодня вже 8 місяців — як новий.»</p>
+      </div>
+    </section>
+
+    <!-- Останній CTA -->
+    <div style="text-align: center; margin: 40px 0;">
+      <a href="#buyBtn" class="btn-buy" style="font-size: 1.2em;">ХОЧУ ТАКИЙ РЕМІНЕЦЬ!</a>
+      <p style="font-size: 0.9em; color: #666;">Акційна ціна діє до 31.07.2025</p>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2025 KupitTovar. Всі права захищені.
+  </footer>
+
+  <!-- Ваш JavaScript для каруселі -->
+  <script>
+    const slide = document.getElementById('carousel-slide');
+    const images = slide.querySelectorAll('img');
+    const prevBtn = document.querySelector('.carousel-arrow.prev');
+    const nextBtn = document.querySelector('.carousel-arrow.next');
+    let currentIndex = 0;
+
+    function showSlide(index) {
+      if (index < 0) index = images.length - 1;
+      if (index >= images.length) index = 0;
+      slide.style.transform = `translateX(${-index * 100}%)`;
+      currentIndex = index;
+    }
+    prevBtn.addEventListener('click', () => showSlide(currentIndex - 1));
+    nextBtn.addEventListener('click', () => showSlide(currentIndex + 1));
+    showSlide(0);
+  </script>
+</body>
+</html>
